@@ -1,0 +1,65 @@
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+import MainLayout from '../components/MainLayout';
+
+import Login from '../modules/Login';
+import Dashboard from '../modules/Dashboard';
+import Articulos from "../modules/catalogos/Articulos";
+import Clientes from "../modules/catalogos/Clientes";
+import UsuariosScreen from "../modules/Usuarios/Usuarios.tsx";
+
+export const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <Navigate to="/login" replace />,
+    },
+    {
+        path: '/app/login',
+        element: <Login />,
+    },
+    {
+        path: '/app',
+        element: <MainLayout />, // El layout envuelve a los hijos
+        children: [
+            {
+                path: 'dashboard',
+                element: <Dashboard />,
+            },
+            {
+                path: 'guias',
+                element: <div>Módulo de Guías (Próximamente)</div>,
+            },
+            {
+                path: 'asignaciones',
+                element: <div>Módulo de Asignaciones (Próximamente)</div>,
+            },
+            {
+                path: 'rutas',
+                element: <div>Modulo de rutas</div>
+            },
+            {
+                path: 'seguros',
+                element: <div>Modulo de Seguros</div>
+            },
+            {
+                path: 'sucursales',
+                element: <div>Modulo de sucursales</div>
+            },
+            {
+                path: 'usuarios',
+                element: <UsuariosScreen />
+            },
+            {
+                path: 'clientes',
+                element: <Clientes />,
+            },
+            {
+                path: 'choferes',
+                element: <div> Modulo de Choferes </div>,
+            },
+            {
+                path: 'articulos',
+                element: <Articulos />,
+            },
+        ],
+    },
+]);
