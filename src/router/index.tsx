@@ -10,7 +10,7 @@ import UsuariosScreen from "../modules/Usuarios/Usuarios.tsx";
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <Navigate to="/login" replace />,
+        element: <Navigate to="/app/login" replace />,
     },
     {
         path: '/app/login',
@@ -18,7 +18,7 @@ export const router = createBrowserRouter([
     },
     {
         path: '/app',
-        element: <MainLayout />, // El layout envuelve a los hijos
+        element: <MainLayout />,
         children: [
             {
                 path: 'dashboard',

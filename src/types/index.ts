@@ -4,6 +4,7 @@ export * from './ChoferDto';
 export * from './ClienteDto';
 export * from './DireccionDto';
 export * from './EstadoDto';
+export * from './GuiaDto';
 export * from './MunicipioDto';
 export * from './UsuarioDto';
 export * from './AuthDto';

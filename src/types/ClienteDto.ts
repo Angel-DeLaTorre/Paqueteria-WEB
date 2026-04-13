@@ -13,7 +13,7 @@ export interface ClienteDto {
     direcciones?: DireccionDto[];
 }
 
-export interface ClienteCreate {
+export interface ClienteCreateDto {
     nombre: string;
     rfc: string;
     telefono: string;
@@ -24,7 +24,7 @@ export interface ClienteCreate {
     polizaSeguro?: string;
 }
 
-export interface ClienteUpdate {
+export interface ClienteUpdateDto {
     id: string;
     nombre: string;
     rfc: string;

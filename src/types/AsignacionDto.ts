@@ -11,3 +11,12 @@ export interface AsignacionDto {
     numContenedor2: number;
 }
 
+export interface AsignacionCreateDto {
+    id: string;
+}
+export interface AsignacionUpdateDto {
+    id: string;
+}
+
+
+

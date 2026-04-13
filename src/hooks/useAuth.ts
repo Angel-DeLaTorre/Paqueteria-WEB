@@ -14,7 +14,6 @@ export const useAuth = () => {
         setLoading(true);
         try {
             const data = await postLogin(values);
-            // El backend ya corregido envía el string JWT en data.token
             setSession(data.token);
             message.success('Acceso correcto');
             return true;

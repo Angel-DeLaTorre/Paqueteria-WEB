@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getUsuarios, createUsuario } from '@api/usuariosService';
+import { getUsuarios, createUsuario } from '@api/usuarioService.ts';
 import type { UsuarioDto, UsuarioCreateDto } from '@types';
 import { message } from 'antd';
 
-export const useUsuarios = () => {
+export const useUsuario = () => {
     const [usuarios, setUsuarios] = useState<UsuarioDto[]>([]);
     const [loading, setLoading] = useState(false);
 
@@ -37,7 +37,7 @@ export const useUsuarios = () => {
     };
 
     useEffect(() => {
-        fetchUsuarios();
+        void fetchUsuarios();
     }, []);
 
     return { usuarios, loading, handleCreate, refresh: fetchUsuarios };

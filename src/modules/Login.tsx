@@ -13,7 +13,7 @@ const Login: React.FC = () => {
 
     const onFinish = async (values: LoginDto) => {
         const success = await executeLogin(values);
-        if (success) navigate('/usuarios');
+        if (success) navigate('/app/usuarios');
     };
 
     return (

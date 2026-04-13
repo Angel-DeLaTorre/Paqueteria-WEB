@@ -4,10 +4,10 @@ import { UserAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons
 import { CatalogoModal } from '@components/ModalCatalogo'
 import type { UsuarioDto } from '@types';
 import { RolUsuario } from '@types';
-import { useUsuarios } from '@hooks';
+import { useUsuario } from '@hooks';
 
 const UsuariosScreen = () => {
-    const { usuarios, loading, handleCreate } = useUsuarios();
+    const { usuarios, loading, handleCreate } = useUsuario();
     const [form] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -52,8 +52,8 @@ const UsuariosScreen = () => {
     };
 
     const rolOptions = Object.entries(RolUsuario).map(([label, value]) => ({
-        label: label, // "Super", "Admin", etc.
-        value: value  // 1, 2, etc.
+        label: label,
+        value: value
     }));
 
     return (

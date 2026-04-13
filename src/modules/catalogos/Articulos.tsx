@@ -8,6 +8,7 @@ const { Title } = Typography;
 
 const Articulos: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+
     const [form] = Form.useForm();
     const [editingId, setEditingId] = useState<string | null>(null);
 
