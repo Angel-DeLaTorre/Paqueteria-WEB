@@ -5,7 +5,7 @@ import { getErrorMessage } from '@utils';
 import {message} from 'antd';
 
 export const useCliente = () => {
-    const [Clientes, setClientes] = useState<ClienteDto[]>([]);
+    const [clientes, setClientes] = useState<ClienteDto[]>([]);
     const [loading, setLoading] = useState(false);
 
     const fetchClientes = async () => {
@@ -39,7 +39,7 @@ export const useCliente = () => {
         try {
             await ClienteService.createCliente(nuevoCliente);
             message.success('Cliente creado con éxito');
-            await fetchClientes();
+            //await fetchClientes();
             return true;
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -54,5 +54,5 @@ export const useCliente = () => {
         void fetchClientes();
     }, []);
 
-    return { Clientes, loading, fetchCliente, handleCreate, refresh: fetchClientes };
+    return { clientes, loading, fetchCliente, handleCreate, refresh: fetchClientes };
 };

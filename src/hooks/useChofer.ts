@@ -5,8 +5,8 @@ import { getErrorMessage } from '@utils';
 import {message} from 'antd';
 
 export const useChofer = () => {
-    const [Choferes, setChoferes] = useState<ChoferDto[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [ choferes, setChoferes ] = useState<ChoferDto[]>([]);
+    const [ loading, setLoading ] = useState(false);
 
     const fetchChoferes = async () => {
         setLoading(true);
@@ -55,5 +55,5 @@ export const useChofer = () => {
         void fetchChoferes();
     }, []);
 
-    return { Choferes, loading, fetchChofer, handleCreate, refresh: fetchChoferes };
+    return { choferes, loading, fetchChofer, handleCreate, refresh: fetchChoferes };
 };

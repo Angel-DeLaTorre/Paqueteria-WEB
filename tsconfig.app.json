@@ -29,6 +29,7 @@
     "paths": {
       "@api/*": ["api/*"],
       "@components/*": ["components/*"],
+      "@constants/*": ["constants/*"],
       "@hooks": ["hooks"],
       "@layouts": ["layouts"],
       "@store/*": ["store/*"],

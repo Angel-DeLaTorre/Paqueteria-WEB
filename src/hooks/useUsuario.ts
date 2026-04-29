@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUsuarios, createUsuario } from '@api/usuarioService.ts';
 import type { UsuarioDto, UsuarioCreateDto } from '@types';
-import { message } from 'antd';
 
 export const useUsuario = () => {
     const [usuarios, setUsuarios] = useState<UsuarioDto[]>([]);
@@ -14,7 +13,6 @@ export const useUsuario = () => {
             setUsuarios(data);
         } catch (error) {
             console.error(error);
-            message.error('Error al cargar usuarios ' );
         } finally {
             setLoading(false);
         }
@@ -24,12 +22,10 @@ export const useUsuario = () => {
         setLoading(true);
         try {
             await createUsuario(nuevoUsuario);
-            message.success('Usuario creado con éxito');
             await fetchUsuarios();
             return true;
         } catch (error) {
             console.error(error);
-            message.error('Error al crear usuario');
             return false;
         } finally {
             setLoading(false);

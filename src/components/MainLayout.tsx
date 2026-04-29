@@ -31,6 +31,7 @@ const MainLayout: React.FC = () => {
                 { key: '/app/rutas', icon: <NodeIndexOutlined />, label: 'Rutas' },
                 { key: '/app/articulos', icon: <BarcodeOutlined />, label: 'Artículos' },
                 { key: '/app/camiones', icon: <CarOutlined />, label: 'Camiones' },
+                { key: '/app/sucursales', icon: <CarOutlined />, label: 'Sucursales' },
             ],},
         { key: '/configuracion', icon: <SettingOutlined />, label: 'Configuracion' },
         { key: '/login', icon: <LogoutOutlined />, label: 'Salir', danger: true },

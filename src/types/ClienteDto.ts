@@ -1,7 +1,7 @@
 import type {DireccionDto} from "./DireccionDto.ts";
 
 export interface ClienteDto {
-    id: string;
+    idCliente: string;
     nombre: string;
     rfc?: string;
     telefono: string;
@@ -10,7 +10,7 @@ export interface ClienteDto {
     contacto: string;
     numConvenio?: string;
     polizaSeguro?: string;
-    direcciones?: DireccionDto[];
+    direcciones?: DireccionClienteDto[];
 }
 
 export interface ClienteCreateDto {
@@ -22,6 +22,7 @@ export interface ClienteCreateDto {
     contacto: string;
     numConvenio?: string;
     polizaSeguro?: string;
+    direccionC: DireccionDto;
 }
 
 export interface ClienteUpdateDto {
@@ -34,4 +35,9 @@ export interface ClienteUpdateDto {
     contacto: string;
     numConvenio?: string;
     polizaSeguro?: string;
+}
+
+export interface DireccionClienteDto {
+    idDireccion: string;
+    direccion: DireccionDto;
 }

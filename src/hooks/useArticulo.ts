@@ -5,7 +5,7 @@ import { message } from 'antd';
 import {getErrorMessage} from "@utils";
 
 export const useArticulo = () => {
-    const [Articulos, setArticulos] = useState<ArticuloDto[]>([]);
+    const [articulos, setArticulos] = useState<ArticuloDto[]>([]);
     const [loading, setLoading] = useState(false);
 
     const fetchArticulos = async () => {
@@ -41,5 +41,5 @@ export const useArticulo = () => {
         void fetchArticulos();
     }, []);
 
-    return { Articulos, loading, handleCreate, refresh: fetchArticulos };
+    return { articulos, loading, handleCreate, refresh: fetchArticulos };
 };

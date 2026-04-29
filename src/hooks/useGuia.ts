@@ -5,7 +5,7 @@ import { getErrorMessage } from '@utils';
 import {message} from 'antd';
 
 export const useGuia = () => {
-    const [Guias, setGuias] = useState<GuiaDto[]>([]);
+    const [guias, setGuias] = useState<GuiaDto[]>([]);
     const [loading, setLoading] = useState(false);
 
     const fetchGuias = async () => {
@@ -54,5 +54,5 @@ export const useGuia = () => {
         void fetchGuias();
     }, []);
 
-    return { Guias, loading, fetchGuia, handleCreate, refresh: fetchGuias };
+    return { guias, loading, fetchGuia, handleCreate, refresh: fetchGuias };
 };

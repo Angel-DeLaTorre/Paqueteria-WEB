@@ -8,5 +8,5 @@ export interface DireccionDto {
     estado: string;
     localidad?: string;
     idMunicipio: string;
-    municipio: string;
+    municipioNombre: string;
 }

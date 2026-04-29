@@ -7,6 +7,11 @@ export const getMunicipios = async (): Promise<MunicipioDto[]> => {
     return data;
 };
 
+export const getMunicipiosByEstado = async (estadoId: string): Promise<MunicipioDto[]> => {
+    const { data } = await api.get<MunicipioDto[]>(ENDPOINTS.MUNICIPIO.GETBYESTADO(estadoId));
+    return data;
+};
+
 export const getMunicipioById = async (id: string): Promise<MunicipioDto> => {
     const { data } = await api.get<MunicipioDto>(ENDPOINTS.MUNICIPIO.GETBYID(id));
     return data;

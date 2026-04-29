@@ -3,6 +3,7 @@ const V1 = '/v1';
 const ARTICULO = 'articulo';
 const ASIGNACION = 'asignacion';
 const GUIA = 'guia';
+const SUCURSAL = 'sucursal';
 
 export const ENDPOINTS = {
     AUTH: {
@@ -49,7 +50,15 @@ export const ENDPOINTS = {
     },
     MUNICIPIO : {
         GETALL: `${V1}/municipio`,
+        GETBYESTADO : (estadoId: string)=> `${V1}/municipio/${estadoId}`,
         GETBYID: (id: string) => `${V1}/municipio/${id}`,
+    },
+    SUCURSAL : {
+        GETALL: `${V1}/${SUCURSAL}`,
+        GETBYID: (id: string) => `${V1}/${SUCURSAL}/${id}`,
+        CREATE : `${V1}/${SUCURSAL}`,
+        UPDATE : (id: string) => `${V1}/${SUCURSAL}/${id}`,
+        DELETE : (id: string) => `${V1}/${SUCURSAL}/${id}`,
     },
     USUARIO: {
         GETALL: `${V1}/usuario`,

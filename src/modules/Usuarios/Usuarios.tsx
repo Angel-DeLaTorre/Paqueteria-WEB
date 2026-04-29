@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Table, Button, Card, Space, Form, Input, Select } from 'antd';
+import { Table, Button, Card, Space, Form, Input, Select, Col } from 'antd';
 import { UserAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { CatalogoModal } from '@components/ModalCatalogo'
 import type { UsuarioDto } from '@types';
@@ -87,41 +87,49 @@ const UsuariosScreen = () => {
                 form = { form }
                 loading = { loading }
             >
-                <Form.Item
-                    name = "nombre"
-                    label = "Nombre"
-                    rules = {[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    name="usuario"
-                    label="Usuario"
-                    rules = {[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name = "password"
-                    label = "Contraseña"
-                    rules = {[{ required: true }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    name = "rol"
-                    label = "Rol"
-                    rules = {[{ required: true }]}
-                >
-                    <Select
-                        showSearch = {{ optionFilterProp: 'label', onSearch }}
-                        placeholder = "Selecciona un rol"
-                        onChange = { onChange }
-                        options = { rolOptions }
-                    />
+                <Col span={6}>
+                    <Form.Item
+                        name = "nombre"
+                        label = "Nombre"
+                        rules = {[{ required: true }]}
+                    >
+                        <Input />
                     </Form.Item>
+                </Col>
+                <Col span={6}>
+                    <Form.Item
+                        name="username"
+                        label="Usuario"
+                        rules = {[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                </Col>
+
+                <Col span={6}>
+                    <Form.Item
+                        name = "password"
+                        label = "Contraseña"
+                        rules = {[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                </Col>
+
+                <Col span={6}>
+                    <Form.Item
+                        name = "rol"
+                        label = "Rol"
+                        rules = {[{ required: true }]}
+                    >
+                        <Select
+                            showSearch = {{ optionFilterProp: 'label', onSearch }}
+                            placeholder = "Selecciona un rol"
+                            onChange = { onChange }
+                            options = { rolOptions }
+                        />
+                        </Form.Item>
+                </Col>
             </CatalogoModal>
         </div>
     );

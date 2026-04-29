@@ -1,11 +1,11 @@
-import {useEffect, useState} from 'react';
+import { useState, useCallback } from 'react';
 import * as municipioService from '@api/municipioService';
 import type { MunicipioDto } from '@types';
 import { getErrorMessage } from '@utils';
 
 export const useMunicipio = () => {
-    const [Municipios, setMunicipios] = useState<MunicipioDto[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [municipios, setMunicipios] = useState<MunicipioDto[]>([]);
+    const [loadMunicipio, setLoading] = useState(false);
 
     const fetchMunicipios = async () => {
         setLoading(true);
@@ -20,10 +20,11 @@ export const useMunicipio = () => {
         }
     };
 
-    const fetchMunicipio = async (id: string): Promise<MunicipioDto | null> => {
+    const fetchMunicipiosByEstado = useCallback( async (estadoId: string) => {
         setLoading(true);
         try {
-            return await municipioService.getMunicipioById(id);
+            const data = await municipioService.getMunicipiosByEstado(estadoId);
+            setMunicipios(data);
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -31,11 +32,7 @@ export const useMunicipio = () => {
         } finally {
             setLoading(false);
         }
-    }
+    }, [] );
 
-    useEffect(() => {
-        void fetchMunicipios();
-    }, []);
-
-    return { Municipios, loading, fetchMunicipio, refresh: fetchMunicipios };
+    return { municipios, loadMunicipio, fetchMunicipiosByEstado, refresh: fetchMunicipios, setMunicipios };
 };

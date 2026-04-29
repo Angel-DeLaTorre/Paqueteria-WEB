@@ -6,6 +6,9 @@ import Dashboard from '../modules/Dashboard';
 import Articulos from "../modules/catalogos/Articulos";
 import Clientes from "../modules/catalogos/Clientes";
 import UsuariosScreen from "../modules/Usuarios/Usuarios.tsx";
+import ChoferScreen from "../modules/catalogos/Choferes.tsx";
+import SucursalScreen from "../modules/catalogos/Sucursales.tsx";
+import GuiasScreen from "../modules/Guias/GuiasScreen.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -26,7 +29,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'guias',
-                element: <div>Módulo de Guías (Próximamente)</div>,
+                element: <GuiasScreen />,
             },
             {
                 path: 'asignaciones',
@@ -42,7 +45,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'sucursales',
-                element: <div>Modulo de sucursales</div>
+                element: <SucursalScreen />
             },
             {
                 path: 'usuarios',
@@ -54,7 +57,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'choferes',
-                element: <div> Modulo de Choferes </div>,
+                element: <ChoferScreen />,
             },
             {
                 path: 'articulos',

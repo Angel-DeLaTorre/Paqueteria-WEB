@@ -10,6 +10,7 @@ export default defineConfig({
             // Como tu baseUrl es ./src, path.resolve debe apuntar ahí
             '@api': path.resolve(__dirname, './src/api'),
             '@components': path.resolve(__dirname, './src/components'),
+            '@constants': path.resolve(__dirname, './src/constants'),
             '@hooks': path.resolve(__dirname, './src/hooks'),
             '@layouts': path.resolve(__dirname, './src/layouts'),
             '@store': path.resolve(__dirname, './src/store'),
