@@ -53,6 +53,13 @@ export const ENDPOINTS = {
         GETBYESTADO : (estadoId: string)=> `${V1}/municipio/${estadoId}`,
         GETBYID: (id: string) => `${V1}/municipio/${id}`,
     },
+    SEGURO : {
+        GETALL: `${V1}/seguro`,
+        GETBYID: (id: string) => `${V1}/seguro/${id}`,
+        CREATE : `${V1}/seguro`,
+        UPDATE : (id: string) => `${V1}/seguro/${id}`,
+        DELETE : (id: string) => `${V1}/seguro/${id}`,
+    },
     SUCURSAL : {
         GETALL: `${V1}/${SUCURSAL}`,
         GETBYID: (id: string) => `${V1}/${SUCURSAL}/${id}`,

@@ -8,6 +8,7 @@ export * from './GuiaDto';
 export * from './MunicipioDto';
 export * from './UsuarioDto';
 export * from './AuthDto';
-export * from './SucursalDto';
+export * from './SucursalDto'
+export * from './SeguroDto';
 
 export * from './enums';
