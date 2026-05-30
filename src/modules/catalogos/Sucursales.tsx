@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Table, Button, Card, Form, Input, Space, Col, Divider } from 'antd';
+import {Table, Button, Card, Form, Input, Space, Col } from 'antd';
 import { DeleteOutlined, EditOutlined, HomeOutlined } from '@ant-design/icons';
 import { CatalogoModal } from '@components/ModalCatalogo';
 import { useSucursal } from "@hooks";
@@ -76,7 +76,7 @@ const SucursalScreen: React.FC = () => {
                 <Table
                     columns={columns}
                     dataSource={sucursales}
-                    rowKey="id"
+                    rowKey="sucursalId"
                     pagination={{ pageSize: 10 }}
                     loading={loading}
                 />
@@ -90,10 +90,6 @@ const SucursalScreen: React.FC = () => {
                 form={form}
                 loading={loading}
             >
-                <Col span={24}>
-                    <Divider orientation="horizontal" plain>Identificación de Sucursal</Divider>
-                </Col>
-
                 <Col span={8}>
                     <Form.Item
                         name="codigo"

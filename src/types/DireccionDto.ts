@@ -1,5 +1,5 @@
 export interface DireccionDto {
-    id: string;
+    direccionId: string;
     calle: string;
     colonia: string;
     numeroExterior: string;
@@ -7,6 +7,6 @@ export interface DireccionDto {
     codigoPostal?: string;
     estado: string;
     localidad?: string;
-    idMunicipio: string;
+    municipioId: string;
     municipioNombre: string;
 }

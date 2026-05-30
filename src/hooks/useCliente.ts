@@ -3,16 +3,23 @@ import * as ClienteService from '@api/clienteService';
 import type {ClienteCreateDto, ClienteDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';
+import { useNotification } from "@hooks";
 
 export const useCliente = () => {
     const [clientes, setClientes] = useState<ClienteDto[]>([]);
     const [loading, setLoading] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchClientes = async () => {
         setLoading(true);
         try {
-            const data = await ClienteService.getClientes();
-            setClientes(data);
+            const result = await ClienteService.getClientes();
+            if (result.isSuccess && result.value) {
+                setClientes(result.value);
+            } else {
+                setClientes([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -24,7 +31,13 @@ export const useCliente = () => {
     const fetchCliente = async (id: string): Promise<ClienteDto | null> => {
         setLoading(true);
         try {
-            return await ClienteService.getClienteById(id);
+            const result = await ClienteService.getClienteById(id);
+            if (result.isSuccess && result.value) {
+                return result.value;
+            } else {
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
+            return null;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);

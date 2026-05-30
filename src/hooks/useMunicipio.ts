@@ -2,16 +2,23 @@ import { useState, useCallback } from 'react';
 import * as municipioService from '@api/municipioService';
 import type { MunicipioDto } from '@types';
 import { getErrorMessage } from '@utils';
+import { useNotification } from "@hooks";
 
 export const useMunicipio = () => {
     const [municipios, setMunicipios] = useState<MunicipioDto[]>([]);
-    const [loadMunicipio, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchMunicipios = async () => {
         setLoading(true);
         try {
-            const data = await municipioService.getMunicipios();
-            setMunicipios(data);
+            const result = await municipioService.getMunicipios();
+            if (result.isSuccess && result.value) {
+                setMunicipios(result.value);
+            } else {
+                setMunicipios([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -23,8 +30,13 @@ export const useMunicipio = () => {
     const fetchMunicipiosByEstado = useCallback( async (estadoId: string) => {
         setLoading(true);
         try {
-            const data = await municipioService.getMunicipiosByEstado(estadoId);
-            setMunicipios(data);
+            const result = await municipioService.getMunicipiosByEstado(estadoId);
+            if (result.isSuccess && result.value) {
+                setMunicipios(result.value);
+            } else {
+                setMunicipios([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -34,5 +46,11 @@ export const useMunicipio = () => {
         }
     }, [] );
 
-    return { municipios, loadMunicipio, fetchMunicipiosByEstado, refresh: fetchMunicipios, setMunicipios };
+    return {
+        municipios,
+        loading,
+        fetchMunicipiosByEstado,
+        refresh: fetchMunicipios,
+        setMunicipios
+    };
 };

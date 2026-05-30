@@ -1,5 +1,5 @@
 export interface EstadoDto {
-    id: string;
+    estadoId: string;
     nombre: string;
     pais: string;
     acronimo2: string;

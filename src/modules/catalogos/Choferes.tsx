@@ -13,7 +13,7 @@ const ChoferScreen: React.FC = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
     const columns = [
-        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', sorter: (a : ChoferDto, b: ChoferDto) => a.Nombre.localeCompare(b.Nombre) },
+        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', sorter: (a : ChoferDto, b: ChoferDto) => a.nombre.localeCompare(b.nombre) },
         { title: 'Apellido P', dataIndex: 'username', key: 'usermane' },
         { title: 'Apellido M', dataIndex: 'fechaUltimoAcesso', key: 'fechaUltimoAcesso' },
         { title: 'Telefono', dataIndex: 'fechaUltimoAcesso', key: 'fechaUltimoAcesso' },

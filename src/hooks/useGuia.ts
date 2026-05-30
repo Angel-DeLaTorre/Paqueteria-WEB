@@ -3,16 +3,24 @@ import * as guiaService from '@api/guiaService';
 import type {GuiaCreateDto, GuiaDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';
+import { useNotification } from "@hooks";
 
 export const useGuia = () => {
     const [guias, setGuias] = useState<GuiaDto[]>([]);
     const [loading, setLoading] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchGuias = async () => {
         setLoading(true);
         try {
-            const data = await guiaService.getGuias();
-            setGuias(data);
+            const result = await guiaService.getGuias();
+            if (result.isSuccess && result.value) {
+                setGuias(result.value);
+            } else {
+                setGuias([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
+
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -24,7 +32,13 @@ export const useGuia = () => {
     const fetchGuia = async (id: string): Promise<GuiaDto | null> => {
         setLoading(true);
         try {
-            return await guiaService.getGuiaById(id);
+            const result = await guiaService.getGuiaById(id);
+            if (result.isSuccess && result.value) {
+                return result.value;
+            } else {
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
+            return null;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);

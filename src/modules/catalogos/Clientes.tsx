@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Table, Button, Space, Card, Typography, Tag, Divider, message, Form, Input, Col } from 'antd';
+import {Table, Button, Space, Card, Typography, Tag, message, Form, Input, Col } from 'antd';
 import {
     PlusOutlined,
     EditOutlined,
@@ -87,7 +87,7 @@ const Clientes: React.FC = () => {
                         type="text"
                         danger
                         icon={<DeleteOutlined />}
-                        onClick={() => handleDelete(record.idCliente)}
+                        onClick={() => handleDelete(record.clienteId)}
                     />
                 </Space>
             ),
@@ -172,9 +172,6 @@ const Clientes: React.FC = () => {
                 form = { form }
                 loading = { loading }
             >
-                <Col span={24}>
-                    <Divider orientation="horizontal" plain>Datos generales</Divider>
-                </Col>
                 <Col span={12}>
                     <Form.Item name="nombre" label="Nombre Completo" rules={[{ required: true }]}>
                         <Input placeholder="" />

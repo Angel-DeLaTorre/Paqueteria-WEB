@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { Table, Button, Card, Space, Form, Input, Select, Col } from 'antd';
 import { UserAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { CatalogoModal } from '@components/ModalCatalogo'
-import type { UsuarioDto } from '@types';
-import { RolUsuario } from '@types';
-import { useUsuario } from '@hooks';
+import type {RolDto, UsuarioDto} from '@types';
+import { useUsuario, useRol } from '@hooks';
 
 const UsuariosScreen = () => {
     const { usuarios, loading, handleCreate } = useUsuario();
+    const { roles } = useRol();
     const [form] = Form.useForm();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
 
     // Columnas de la Tabla
     const columns = [
-        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', sorter: (a : UsuarioDto, b: UsuarioDto) => a.Nombre.localeCompare(b.Nombre) },
+        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', sorter: (a : UsuarioDto, b: UsuarioDto) => a.nombre.localeCompare(b.nombre) },
         { title: 'Username', dataIndex: 'username', key: 'usermane' },
         { title: 'Ultimo Acesso', dataIndex: 'fechaUltimoAcesso', key: 'fechaUltimoAcesso' },
         {
@@ -50,11 +50,6 @@ const UsuariosScreen = () => {
     const onSearch = (value: string) => {
         console.log('search:', value);
     };
-
-    const rolOptions = Object.entries(RolUsuario).map(([label, value]) => ({
-        label: label,
-        value: value
-    }));
 
     return (
         <div style={{ padding: '24px' }}>
@@ -126,7 +121,10 @@ const UsuariosScreen = () => {
                             showSearch = {{ optionFilterProp: 'label', onSearch }}
                             placeholder = "Selecciona un rol"
                             onChange = { onChange }
-                            options = { rolOptions }
+                            options={roles.map((rol: RolDto) => ({
+                                value: rol.rolId, // El UUID de tipo string
+                                label: rol.descripcion  // El texto que verá el usuario
+                            }))}
                         />
                         </Form.Item>
                 </Col>

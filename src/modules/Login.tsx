@@ -1,19 +1,30 @@
 import React from 'react';
 import { Form, Input, Button, Card } from 'antd';
-//import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useAuth } from "@hooks"
 import { useNavigate } from "react-router-dom";
 import type {LoginDto} from "@types";
-
+import { ROUTES } from '@router/rutas'
+import { useNotification } from '@hooks'
 
 const Login: React.FC = () => {
 
     const { executeLogin, loading } = useAuth();
+    const { showNotification } = useNotification();
     const navigate = useNavigate();
 
     const onFinish = async (values: LoginDto) => {
-        const success = await executeLogin(values);
-        if (success) navigate('/app/usuarios');
+        const result = await executeLogin(values);
+
+        if (result.isSuccess) {
+            navigate(ROUTES.DASHBOARD);
+        } else {
+            showNotification({
+                type: 'error',
+                message: 'Error de Autenticación',
+                description: result.detalleError?.description || 'Credenciales incorrectas.',
+                errorCode: result.detalleError?.code || 'ERR_UNKNOWN'
+            });
+        }
     };
 
     return (

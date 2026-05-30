@@ -89,7 +89,7 @@ export const ArticulosTable: React.FC<{ onChange: (data: ArticuloFila[]) => void
             title: 'Acciones',
             dataIndex: 'operation',
             width: '8%',
-            render: ( _, record: ArticuloFila) => (
+            render: ( _ : unknown, record: ArticuloFila) => (
                 <Popconfirm title="¿Eliminar?" onConfirm={() => handleDelete(record.key)}>
                     <Button type="text" danger icon={<DeleteOutlined />} />
                 </Popconfirm>

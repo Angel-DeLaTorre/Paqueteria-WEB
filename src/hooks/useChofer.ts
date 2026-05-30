@@ -3,16 +3,23 @@ import * as choferService from '@api/choferService';
 import type {ChoferCreateDto, ChoferDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';
+import { useNotification } from "@hooks";
 
 export const useChofer = () => {
     const [ choferes, setChoferes ] = useState<ChoferDto[]>([]);
     const [ loading, setLoading ] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchChoferes = async () => {
         setLoading(true);
         try {
-            const data = await choferService.getChoferes();
-            setChoferes(data);
+            const result = await choferService.getChoferes();
+            if (result.isSuccess && result.value) {
+                setChoferes(result.value);
+            } else {
+                setChoferes([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             console.error(error);
             message.error('Error al cargar Choferes ' );
@@ -24,7 +31,13 @@ export const useChofer = () => {
     const fetchChofer = async (id: string): Promise<ChoferDto | null> => {
         setLoading(true);
         try {
-            return await choferService.getChoferById(id);
+            const result = await choferService.getChoferById(id);
+            if (result.isSuccess && result.value) {
+                return result.value;
+            } else {
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
+            return null;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);

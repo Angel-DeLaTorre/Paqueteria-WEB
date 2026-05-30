@@ -1,23 +1,23 @@
 import api from '@api/config/axiosConfig';
 import { ENDPOINTS } from '@api/config/endpoints';
-import type {ClienteDto, ClienteCreateDto, ClienteUpdateDto} from '@types';
+import type {ClienteDto, ClienteCreateDto, ClienteUpdateDto, ApiResult} from '@types';
 
-export const getClientes = async (): Promise<ClienteDto[]> => {
-    const { data } = await api.get<ClienteDto[]>(ENDPOINTS.CLIENTE.GETALL);
+export const getClientes = async (): Promise<ApiResult<ClienteDto[]>> => {
+    const { data } = await api.get<ApiResult<ClienteDto[]>>(ENDPOINTS.CLIENTE.GETALL);
     return data;
 };
 
-export const getClienteById = async (id: string): Promise<ClienteDto> => {
-    const { data } = await api.get<ClienteDto>(ENDPOINTS.CLIENTE.GETBYID(id));
+export const getClienteById = async (id: string): Promise<ApiResult<ClienteDto>> => {
+    const { data } = await api.get<ApiResult<ClienteDto>>(ENDPOINTS.CLIENTE.GETBYID(id));
     return data;
 };
 
-export const createCliente = async (cliente: ClienteCreateDto): Promise<ClienteDto> => {
-    const { data } = await api.post<ClienteDto>(ENDPOINTS.CLIENTE.CREATE, cliente);
+export const createCliente = async (cliente: ClienteCreateDto): Promise<ApiResult<ClienteDto>> => {
+    const { data } = await api.post<ApiResult<ClienteDto>>(ENDPOINTS.CLIENTE.CREATE, cliente);
     return data;
 };
 
-export const updateCliente = async (id: string, cliente: ClienteUpdateDto): Promise<boolean> => {
-    const { data } = await api.post(ENDPOINTS.CLIENTE.UPDATE(id), cliente);
+export const updateCliente = async (cliente: ClienteUpdateDto): Promise<ApiResult<boolean>> => {
+    const { data } = await api.put<ApiResult<boolean>>(ENDPOINTS.CLIENTE.UPDATE(cliente.clienteId), cliente);
     return data;
 }

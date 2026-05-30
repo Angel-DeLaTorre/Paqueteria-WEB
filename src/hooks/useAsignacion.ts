@@ -11,8 +11,12 @@ export const useAsignacion = () => {
     const fetchAsignaciones = async () => {
         setLoading(true);
         try {
-            const data = await asignacionService.getAsignaciones();
-            setAsignaciones(data);
+            const result = await asignacionService.getAsignaciones();
+            if (result.isSuccess && result.value) {
+                setAsignaciones(result.value);
+            } else {
+                setAsignaciones([]);
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -24,7 +28,8 @@ export const useAsignacion = () => {
     const fetchAsignacion = async (id: string): Promise<AsignacionDto | null> => {
         setLoading(true);
         try {
-            return await asignacionService.getAsignacionById(id);
+            const result = await asignacionService.getAsignacionById(id);
+            return result.value;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);

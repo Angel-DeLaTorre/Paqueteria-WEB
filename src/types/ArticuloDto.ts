@@ -1,23 +1,23 @@
 export interface ArticuloDto {
-    ArticuloId: string;
-    Texto: string;
-    Similares: string;
-    MaterialPeligroso: string;
+    articuloId: string;
+    texto: string;
+    similares: string;
+    materialPeligroso: string;
 }
 export interface ArticuloCreateDto {
-    ArticuloId: string;
-    Texto: string;
-    Similares: string;
-    MaterialPeligroso: string;
-    VigenciaDesde: Date;
-    VigenciaHasta: Date;
+    articuloId: string;
+    texto: string;
+    similares: string;
+    materialPeligroso: string;
+    vigenciaDesde: Date;
+    vigenciaHasta: Date;
 }
 
 export interface ArticuloUpdateDto {
-    ArticuloId: string;
-    Texto: string;
-    Similares: string;
-    MaterialPeligroso: string;
-    VigenciaDesde: Date;
-    VigenciaHasta: Date;
+    articuloId: string;
+    texto: string;
+    similares: string;
+    materialPeligroso: string;
+    vigenciaDesde: Date;
+    vigenciaHasta: Date;
 }

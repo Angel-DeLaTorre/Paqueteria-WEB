@@ -3,16 +3,23 @@ import {message} from 'antd';
 import * as seguroService from '@api/seguroService';
 import type {SeguroCreateDto, SeguroDto, SeguroUpdateDto} from '@types';
 import {getErrorMessage} from "@utils";
+import { useNotification } from "@hooks";
 
 export const useSeguro = () => {
     const [seguros, setSeguros] = useState<SeguroDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const { showNotification } = useNotification();
 
     const fetchSeguros = useCallback(async () => {
         setLoading(true);
         try {
-            const data = await seguroService.getSeguros();
-            setSeguros(data);
+            const result = await seguroService.getSeguros();
+            if (result.isSuccess && result.value) {
+                setSeguros(result.value);
+            } else {
+                setSeguros([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             message.error(msg);

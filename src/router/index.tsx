@@ -1,14 +1,20 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import MainLayout from '../components/MainLayout';
 
-import Login from '../modules/Login';
-import Dashboard from '../modules/Dashboard';
-import Articulos from "../modules/catalogos/Articulos";
-import Clientes from "../modules/catalogos/Clientes";
-import UsuariosScreen from "../modules/Usuarios/Usuarios.tsx";
-import ChoferScreen from "../modules/catalogos/Choferes.tsx";
-import SucursalScreen from "../modules/catalogos/Sucursales.tsx";
-import GuiasScreen from "../modules/Guias/GuiasScreen.tsx";
+import { ROUTES } from '@router/rutas'
+import { PERMISOS } from '@router/permisos'
+import { ProtectedRoute } from "@router/ProtectedRoute";
+
+import MainLayout from '@components/MainLayout';
+import Login from '@modules/Login';
+import Dashboard from '@modules/Dashboard';
+import Articulos from "@modules/catalogos/Articulos";
+import Clientes from "@modules/catalogos/Clientes";
+import UsuariosScreen from "@modules/Usuarios/Usuarios";
+import ChoferScreen from "@modules/catalogos/Choferes";
+import SucursalScreen from "@modules/catalogos/Sucursales";
+import GuiasScreen from "@modules/Guias/GuiasScreen";
+
+import { Unauthorized } from "@modules/Unauthorize";
 
 export const router = createBrowserRouter([
     {
@@ -20,48 +26,101 @@ export const router = createBrowserRouter([
         element: <Login />,
     },
     {
-        path: '/app',
+        path: '/app/unauthorized',
+        element: <Unauthorized />,
+    },
+    {
         element: <MainLayout />,
         children: [
             {
-                path: 'dashboard',
-                element: <Dashboard />,
+                element: <ProtectedRoute />,
+                children: [
+                    {
+                        path: ROUTES.DASHBOARD,
+                        element: <Dashboard />,
+                    },
+                ]
             },
             {
-                path: 'guias',
-                element: <GuiasScreen />,
+                element: <ProtectedRoute requiredPermission = { PERMISOS.GUIAS.CONSULTA } />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.GUIAS,
+                        element: <GuiasScreen />,
+                    }
+                ]
             },
             {
-                path: 'asignaciones',
-                element: <div>Módulo de Asignaciones (Próximamente)</div>,
+                element: <ProtectedRoute requiredPermission="asignaciones.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.ASIGNACIONES,
+                        element: <div>Módulo de Asignaciones (Próximamente)</div>,
+                    }
+                ]
             },
             {
-                path: 'rutas',
-                element: <div>Modulo de rutas</div>
+                element: <ProtectedRoute requiredPermission="rutas.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.RUTAS,
+                        element: <div>Modulo de rutas</div>
+                    }
+                ]
             },
             {
-                path: 'seguros',
-                element: <div>Modulo de Seguros</div>
+                element: <ProtectedRoute requiredPermission="suguros.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.SEGUROS,
+                        element: <div>Modulo de Seguros</div>
+                    }
+                ]
             },
             {
-                path: 'sucursales',
-                element: <SucursalScreen />
+                element: <ProtectedRoute requiredPermission="sucursales.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.SUCURSALES,
+                        element: <SucursalScreen />
+                    }
+                ]
             },
             {
-                path: 'usuarios',
-                element: <UsuariosScreen />
+                element: <ProtectedRoute requiredPermission="usuarios.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.USUARIOS,
+                        element: <UsuariosScreen />
+                    }
+                ]
             },
             {
-                path: 'clientes',
-                element: <Clientes />,
+                element: <ProtectedRoute requiredPermission="clientes.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.CLIENTES,
+                        element: <Clientes />,
+                    }
+                ],
             },
             {
-                path: 'choferes',
-                element: <ChoferScreen />,
+                element: <ProtectedRoute requiredPermission="choferes.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.CHOFERES,
+                        element: <ChoferScreen />,
+                    }
+                ],
             },
             {
-                path: 'articulos',
-                element: <Articulos />,
+                element: <ProtectedRoute requiredPermission="articulos.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.ARTICULOS,
+                        element: <Articulos />,
+                    }
+                ]
             },
         ],
     },

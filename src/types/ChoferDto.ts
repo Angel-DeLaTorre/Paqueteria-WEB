@@ -1,34 +1,34 @@
-import type {DireccionDto} from "./DireccionDto.ts";
+import type { DireccionDto } from "@types";
 
 export interface ChoferDto {
-    ChoferId: string;
-    Nombre: string;
-    ApellidoPaterno: string;
-    ApellidoMaterno: string;
-    Direccion: DireccionDto;
-    Telefono: string;
-    NumCamion: string;
-    NumContenedor: string;
-    NumContenedor2: string;
+    choferId: string;
+    nombre: string;
+    apellidoPaterno: string;
+    apellidoMaterno: string;
+    direccion: DireccionDto;
+    telefono: string;
+    numCamion: string;
+    numContenedor: string;
+    numContenedor2: string;
 }
 export interface ChoferCreateDto {
-    Nombre: string;
-    ApellidoPaterno: string;
-    ApellidoMaterno: string;
-    Direccion: DireccionDto;
-    Telefono: string;
-    NumCamion: string;
-    NumContenedor: string;
-    NumContenedor2: string;
+    nombre: string;
+    apellidoPaterno: string;
+    apellidoMaterno: string;
+    direccion: DireccionDto;
+    telefono: string;
+    numCamion: string;
+    numContenedor: string;
+    numContenedor2: string;
 }
 export interface ChoferUpdateDto {
-    ChoferId: string;
-    Nombre: string;
-    ApellidoPaterno: string;
-    ApellidoMaterno: string;
-    Direccion: DireccionDto;
-    Telefono: string;
-    NumCamion: string;
-    NumContenedor: string;
-    NumContenedor2: string;
+    choferId: string;
+    nombre: string;
+    apellidoPaterno: string;
+    apellidoMaterno: string;
+    direccion: DireccionDto;
+    telefono: string;
+    numCamion: string;
+    numContenedor: string;
+    numContenedor2: string;
 }

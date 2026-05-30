@@ -1,26 +1,38 @@
 import { useState } from 'react';
 import { postLogin } from '@api/authService';
 import { useAuthStore } from '@store/useAuthStore';
-import { message } from 'antd';
-import type { LoginDto } from '@types';
-import { getErrorMessage } from '@utils'
+import {type ApiResult, type LoginDto, type SesionDto} from '@types';
 
 export const useAuth = () => {
     const [loading, setLoading] = useState(false);
     const setSession = useAuthStore((state) => state.setSession);
     const logout = useAuthStore((state) => state.clearSession);
 
-    const executeLogin = async (values: LoginDto) => {
+    const executeLogin = async (values: LoginDto) : Promise<ApiResult<SesionDto>> =>
+    {
         setLoading(true);
-        try {
-            const data = await postLogin(values);
-            setSession(data.token);
-            message.success('Acceso correcto');
-            return true;
-        } catch (error) {
-            message.error(getErrorMessage(error));
-            return false;
-        } finally {
+        try
+        {
+            const result = await postLogin(values);
+            if (result.isSuccess && result.value) {
+                setSession(result.value);
+            }
+            return result;
+        }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        catch (error : unknown)
+        {
+            return {
+                isSuccess: false,
+                value: null,
+                detalleError: {
+                    code: 'FRONTEND_EXCEPTION',
+                    description: 'Ocurrió un error inesperado al procesar la sesión en la aplicación.'
+                }
+            };
+        }
+        finally
+        {
             setLoading(false);
         }
     };

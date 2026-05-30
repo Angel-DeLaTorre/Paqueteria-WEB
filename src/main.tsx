@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import { ConfigProvider } from 'antd';
+import { App, ConfigProvider } from 'antd';
 import { router } from './router';
 
 import 'antd/dist/reset.css';
@@ -17,7 +17,9 @@ createRoot(document.getElementById('root')!).render(
                 },
             }}
         >
-            <RouterProvider router={router} />
+            <App>
+                <RouterProvider router={router} />
+            </App>
         </ConfigProvider>
     </StrictMode>
 );

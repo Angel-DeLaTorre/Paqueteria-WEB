@@ -3,16 +3,23 @@ import * as articuloService from '@api/articuloService';
 import type { ArticuloDto, ArticuloCreateDto } from '@types';
 import { message } from 'antd';
 import {getErrorMessage} from "@utils";
+import {useNotification} from "@hooks";
 
 export const useArticulo = () => {
     const [articulos, setArticulos] = useState<ArticuloDto[]>([]);
     const [loading, setLoading] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchArticulos = async () => {
         setLoading(true);
         try {
-            const data = await articuloService.getArticulos();
-            setArticulos(data);
+            const result = await articuloService.getArticulos();
+            if (result.isSuccess && result.value) {
+                setArticulos(result.value);
+            } else {
+                setArticulos([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);

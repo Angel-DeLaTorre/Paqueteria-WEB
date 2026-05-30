@@ -1,3 +1,6 @@
+export * from './ApiResult';
+export * from './ApiError';
+
 export * from './ArticuloDto';
 export * from './AsignacionDto'
 export * from './ChoferDto';
@@ -8,6 +11,7 @@ export * from './GuiaDto';
 export * from './MunicipioDto';
 export * from './UsuarioDto';
 export * from './AuthDto';
+export * from './RolDto';
 export * from './SucursalDto'
 export * from './SeguroDto';
 

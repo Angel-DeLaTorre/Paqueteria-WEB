@@ -1,7 +1,7 @@
 import type {DireccionDto} from "./DireccionDto.ts";
 
 export interface ClienteDto {
-    idCliente: string;
+    clienteId: string;
     nombre: string;
     rfc?: string;
     telefono: string;
@@ -26,7 +26,7 @@ export interface ClienteCreateDto {
 }
 
 export interface ClienteUpdateDto {
-    id: string;
+    clienteId: string;
     nombre: string;
     rfc: string;
     telefono: string;
@@ -38,6 +38,6 @@ export interface ClienteUpdateDto {
 }
 
 export interface DireccionClienteDto {
-    idDireccion: string;
+    direccionId: string;
     direccion: DireccionDto;
 }

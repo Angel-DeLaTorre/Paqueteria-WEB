@@ -32,6 +32,8 @@
       "@constants/*": ["constants/*"],
       "@hooks": ["hooks"],
       "@layouts": ["layouts"],
+      "@modules/*": ["modules/*"],
+      "@router/*": ["router/*"],
       "@store/*": ["store/*"],
       "@types": ["types"],
       "@utils": ["utils"],

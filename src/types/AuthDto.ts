@@ -6,7 +6,7 @@ export interface LoginDto {
 export interface SesionDto{
     username : string,
     nombre: string,
-    rol: string,
+    permisos: string[];
     token: string,
     expiracion: Date
 }

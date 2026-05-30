@@ -2,16 +2,23 @@ import {useEffect, useState} from 'react';
 import * as estadoService from '@api/estadoService';
 import type { EstadoDto } from '@types';
 import { getErrorMessage } from '@utils';
+import { useNotification } from "@hooks";
 
 export const useEstado = () => {
     const [Estados, setEstados] = useState<EstadoDto[]>([]);
     const [loading, setLoading] = useState(false);
+    const { showNotification } = useNotification();
 
     const fetchEstados = async () => {
         setLoading(true);
         try {
-            const data = await estadoService.getEstados();
-            setEstados(data);
+            const result = await estadoService.getEstados();
+            if (result.isSuccess && result.value) {
+                setEstados(result.value);
+            } else {
+                setEstados([]);
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -23,7 +30,13 @@ export const useEstado = () => {
     const fetchEstado = async (id: string): Promise<EstadoDto | null> => {
         setLoading(true);
         try {
-            return await estadoService.getEstadoById(id);
+            const result = await estadoService.getEstadoById(id);
+            if (result.isSuccess && result.value) {
+                return result.value;
+            } else {
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+            }
+            return null;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
