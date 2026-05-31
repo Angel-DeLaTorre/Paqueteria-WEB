@@ -1,15 +1,8 @@
 import React, {useCallback, useState} from 'react';
 import { Table, Button, Input, InputNumber, Popconfirm, Typography } from 'antd';
 import {DeleteOutlined, PlusOutlined} from '@ant-design/icons';
+import type { ArticuloFila } from '@types';
 
-interface ArticuloFila {
-    key: string;
-    articuloId?: string;
-    descripcion: string;
-    cantidad: number;
-    peso: number;
-    valorUnitario: number;
-}
 type ArticuloValue = string | number | undefined;
 
 export const ArticulosTable: React.FC<{ onChange: (data: ArticuloFila[]) => void }> = ({ onChange }) => {

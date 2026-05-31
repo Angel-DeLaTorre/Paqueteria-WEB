@@ -21,3 +21,12 @@ export interface ArticuloUpdateDto {
     vigenciaDesde: Date;
     vigenciaHasta: Date;
 }
+
+export interface ArticuloFila {
+    key: string;
+    articuloId?: string;
+    descripcion: string;
+    cantidad: number;
+    peso: number;
+    valorUnitario: number;
+}
