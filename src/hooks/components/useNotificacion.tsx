@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { App } from 'antd';
 
 type NotificationType = 'success' | 'error' | 'warning' | 'info';
@@ -12,7 +13,7 @@ interface NotificationParams {
 export const useNotification = () => {
     const { notification } = App.useApp();
 
-    const showNotification = ({ type, message, description, errorCode }: NotificationParams) => {
+    const showNotification = useCallback(({ type, message, description, errorCode }: NotificationParams) => {
         notification[type]({
             title: <span style={{ fontWeight: 600 }}>{message}</span>,
             placement: 'topRight',
@@ -35,7 +36,7 @@ export const useNotification = () => {
                 </div>
             ),
         });
-    };
+    }, [notification]);
 
     return { showNotification };
 };
