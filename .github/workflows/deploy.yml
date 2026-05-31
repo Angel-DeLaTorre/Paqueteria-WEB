@@ -1,0 +1,65 @@
+name: Build and Deploy React Vite Frontend
+
+on:
+  push:
+    branches: [ "main" ] # Se activa al hacer push a la rama main de paqueteria-web
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Iniciar sesión en GitHub Packages (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Convertir nombre de imagen a minúsculas
+        run: |
+          echo "IMAGE_NAME_LOWER=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Construir y subir imagen de Docker (Nginx + React)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Desplegar Frontend en el VPS vía SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/paqueteria
+            
+            # Autenticar Docker en el VPS usando el token temporal del Action
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            # Forzar la descarga únicamente de la nueva imagen de React
+            docker compose pull paqueteria-web
+            
+            # Levantar o recrear de forma aislada el contenedor del frontend en el puerto 80
+            docker compose up -d --force-recreate paqueteria-web
+            
+            # Limpieza automática de imágenes viejas de Nginx/Node para cuidar el disco
+            docker image prune -f
