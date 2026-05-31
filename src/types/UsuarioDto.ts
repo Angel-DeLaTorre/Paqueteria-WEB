@@ -11,11 +11,11 @@ export interface UsuarioCreateDto {
     nombre: string;
     username: string;
     password: string;
-    rol: RolUsuario;
+    roles: string[];
 }
 
 export interface UsuarioUpdateDto {
     usuarioId : string;
     nombre: string;
-    rol: RolUsuario;
+    rol: string[];
 }

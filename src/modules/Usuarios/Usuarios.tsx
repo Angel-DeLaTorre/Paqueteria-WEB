@@ -113,11 +113,13 @@ const UsuariosScreen = () => {
 
                 <Col span={6}>
                     <Form.Item
-                        name = "rol"
+                        name = "roles"
                         label = "Rol"
-                        rules = {[{ required: true }]}
+                        rules={[{ required: true, message: 'Selecciona al menos un rol' }]}
                     >
                         <Select
+                            mode="multiple"
+                            allowClear
                             showSearch = {{ optionFilterProp: 'label', onSearch }}
                             placeholder = "Selecciona un rol"
                             onChange = { onChange }
