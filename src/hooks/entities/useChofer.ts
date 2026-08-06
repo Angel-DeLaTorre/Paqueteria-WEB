@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import * as choferService from '@api/choferService';
+import * as choferService from '@api/choferService.ts';
 import type {ChoferCreateDto, ChoferDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';

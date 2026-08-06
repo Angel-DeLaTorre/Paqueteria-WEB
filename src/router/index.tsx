@@ -13,8 +13,13 @@ import UsuariosScreen from "@modules/Usuarios/Usuarios";
 import ChoferScreen from "@modules/catalogos/Choferes";
 import SucursalScreen from "@modules/catalogos/Sucursales";
 import GuiasScreen from "@modules/Guias/GuiasScreen";
+import GuiasAlta from "@modules/Guias/GuiasAlta";
+import RutaScreen from "@modules/catalogos/Rutas";
+import AsignacionesScreen from "@modules/Asignaciones/AsignacionScreen";
+import AsignacionesAlta from "@modules/Asignaciones/AsignacionesAlta";
 
 import { Unauthorized } from "@modules/Unauthorize";
+import SeguroScreen from "@modules/catalogos/Seguros.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -51,11 +56,29 @@ export const router = createBrowserRouter([
                 ]
             },
             {
+                element: <ProtectedRoute requiredPermission = { PERMISOS.GUIAS.CONSULTA } />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.GUIAS_ALTA,
+                        element: <GuiasAlta />,
+                    }
+                ]
+            },
+            {
                 element: <ProtectedRoute requiredPermission="asignaciones.consultar" />,
                 children: [
                     {
                         path: ROUTES.CATALOGOS.ASIGNACIONES,
-                        element: <div>Módulo de Asignaciones (Próximamente)</div>,
+                        element: <AsignacionesScreen />,
+                    }
+                ]
+            },
+            {
+                element: <ProtectedRoute requiredPermission="asignaciones.consultar" />,
+                children: [
+                    {
+                        path: ROUTES.CATALOGOS.ASIGNACIONES_ALTA,
+                        element: <AsignacionesAlta />,
                     }
                 ]
             },
@@ -64,16 +87,16 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         path: ROUTES.CATALOGOS.RUTAS,
-                        element: <div>Modulo de rutas</div>
+                        element: <RutaScreen />
                     }
                 ]
             },
             {
-                element: <ProtectedRoute requiredPermission="suguros.consultar" />,
+                element: <ProtectedRoute requiredPermission="seguros.consultar" />,
                 children: [
                     {
                         path: ROUTES.CATALOGOS.SEGUROS,
-                        element: <div>Modulo de Seguros</div>
+                        element: <SeguroScreen />
                     }
                 ]
             },

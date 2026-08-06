@@ -1,22 +1,23 @@
 import {useEffect, useState} from 'react';
-import * as estadoService from '@api/estadoService';
-import type { EstadoDto } from '@types';
+import * as ClienteService from '@api/clienteService.ts';
+import type {ClienteCreateDto, ClienteDto} from '@types';
 import { getErrorMessage } from '@utils';
+import {message} from 'antd';
 import { useNotification } from "@hooks";
 
-export const useEstado = () => {
-    const [Estados, setEstados] = useState<EstadoDto[]>([]);
+export const useCliente = () => {
+    const [clientes, setClientes] = useState<ClienteDto[]>([]);
     const [loading, setLoading] = useState(false);
     const { showNotification } = useNotification();
 
-    const fetchEstados = async () => {
+    const fetchClientes = async () => {
         setLoading(true);
         try {
-            const result = await estadoService.getEstados();
+            const result = await ClienteService.getClientes();
             if (result.isSuccess && result.value) {
-                setEstados(result.value);
+                setClientes(result.value);
             } else {
-                setEstados([]);
+                setClientes([]);
                 showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
             }
         } catch (error) {
@@ -27,10 +28,10 @@ export const useEstado = () => {
         }
     };
 
-    const fetchEstado = async (id: string): Promise<EstadoDto | null> => {
+    const fetchCliente = async (id: string): Promise<ClienteDto | null> => {
         setLoading(true);
         try {
-            const result = await estadoService.getEstadoById(id);
+            const result = await ClienteService.getClienteById(id);
             if (result.isSuccess && result.value) {
                 return result.value;
             } else {
@@ -46,9 +47,25 @@ export const useEstado = () => {
         }
     }
 
+    const handleCreate = async (nuevoCliente: ClienteCreateDto) => {
+        setLoading(true);
+        try {
+            await ClienteService.createCliente(nuevoCliente);
+            message.success('Cliente creado con éxito');
+            //await fetchClientes();
+            return true;
+        } catch (error) {
+            const msg = getErrorMessage(error);
+            console.error(msg);
+            return false;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        void fetchEstados();
+        void fetchClientes();
     }, []);
 
-    return { Estados, loading, fetchEstado, refresh: fetchEstados };
+    return { clientes, loading, fetchCliente, handleCreate, refresh: fetchClientes };
 };

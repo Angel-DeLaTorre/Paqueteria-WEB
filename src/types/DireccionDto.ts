@@ -10,3 +10,9 @@ export interface DireccionDto {
     municipioId: string;
     municipioNombre: string;
 }
+
+export interface DireccionClienteDto {
+    direccion: DireccionDto;
+    direccionGuiaId: string;
+    nombreMunicipio: string;
+}

@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
+import React, {useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Table, Button, Card, Tag, Space, Typography } from 'antd';
 import { FileAddOutlined, EyeOutlined, PrinterOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import type {GuiaCreateDto, GuiaDto} from "@types";
+import type {GuiaDto} from "@types";
 import { useGuia } from "@hooks";
-import { GuiaAltaModal } from './GuiaAltaModal';
+
+import { ROUTES } from '@router/rutas';
 
 const { Text } = Typography;
 
 const GuiasScreen: React.FC = () => {
 
-    const { guias, loading, handleCreate : handleCreateGuia } = useGuia();
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const navigate = useNavigate();
+
+    const { refresh, guias, loading } = useGuia();
+
+    useEffect(() => {
+        refresh();
+    }, [refresh]);
 
     const columns: ColumnsType<GuiaDto> = [
         {
@@ -33,14 +40,14 @@ const GuiasScreen: React.FC = () => {
             title: 'Origen',
             key: 'origen',
             render: (_, record) => (
-                <span>{record.direccionOrigen.calle}, {record.direccionOrigen.colonia}</span>
+                <span>{record.direccionOrigen.direccion.calle}, {record.direccionOrigen.direccion.colonia}</span>
             ),
         },
         {
             title: 'Destino',
             key: 'destino',
             render: (_, record) => (
-                <span>{record.direccionDestino.calle}, {record.direccionDestino.colonia}</span>
+                <span>{record.direccionDestino.direccion.calle}, {record.direccionDestino.direccion.colonia}</span>
             ),
         },
         {
@@ -74,13 +81,6 @@ const GuiasScreen: React.FC = () => {
         },
     ];
 
-    const onSaveGuia = async (values: GuiaCreateDto) => {
-        const success = await handleCreateGuia(values);
-        if (success) {
-            setIsModalVisible(false);
-        }
-    };
-
     return (
         <div style={{ padding: '24px' }}>
             <Card
@@ -89,7 +89,7 @@ const GuiasScreen: React.FC = () => {
                     <Button
                         type="primary"
                         icon={<FileAddOutlined />}
-                        onClick={() => setIsModalVisible(true)}
+                        onClick={() => navigate(ROUTES.CATALOGOS.GUIAS_ALTA)}
                     >
                         Nueva Guía
                     </Button>
@@ -109,14 +109,6 @@ const GuiasScreen: React.FC = () => {
                     }}
                 />
             </Card>
-
-            <GuiaAltaModal
-                open = { isModalVisible }
-                onCancel = { () => setIsModalVisible(false) }
-                onSave = { onSaveGuia }
-                loading = { loading }
-            />
-
         </div>
     );
 };

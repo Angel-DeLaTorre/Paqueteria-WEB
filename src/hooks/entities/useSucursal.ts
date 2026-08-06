@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getSucursales, createSucursal } from '@api/sucursalService';
+import { getSucursales, createSucursal } from '@api/sucursalService.ts';
 import type { SucursalDto, SucursalCreateDto } from '@types';
 import { message } from 'antd';
 import { useNotification } from "@hooks";

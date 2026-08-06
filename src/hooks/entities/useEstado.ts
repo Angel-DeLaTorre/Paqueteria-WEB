@@ -1,22 +1,22 @@
-import { useState, useCallback } from 'react';
-import * as municipioService from '@api/municipioService';
-import type { MunicipioDto } from '@types';
+import {useEffect, useState} from 'react';
+import * as estadoService from '@api/estadoService.ts';
+import type { EstadoDto } from '@types';
 import { getErrorMessage } from '@utils';
 import { useNotification } from "@hooks";
 
-export const useMunicipio = () => {
-    const [municipios, setMunicipios] = useState<MunicipioDto[]>([]);
+export const useEstado = () => {
+    const [Estados, setEstados] = useState<EstadoDto[]>([]);
     const [loading, setLoading] = useState(false);
     const { showNotification } = useNotification();
 
-    const fetchMunicipios = async () => {
+    const fetchEstados = async () => {
         setLoading(true);
         try {
-            const result = await municipioService.getMunicipios();
+            const result = await estadoService.getEstados();
             if (result.isSuccess && result.value) {
-                setMunicipios(result.value);
+                setEstados(result.value);
             } else {
-                setMunicipios([]);
+                setEstados([]);
                 showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
             }
         } catch (error) {
@@ -27,16 +27,16 @@ export const useMunicipio = () => {
         }
     };
 
-    const fetchMunicipiosByEstado = useCallback( async (estadoId: string) => {
+    const fetchEstado = async (id: string): Promise<EstadoDto | null> => {
         setLoading(true);
         try {
-            const result = await municipioService.getMunicipiosByEstado(estadoId);
+            const result = await estadoService.getEstadoById(id);
             if (result.isSuccess && result.value) {
-                setMunicipios(result.value);
+                return result.value;
             } else {
-                setMunicipios([]);
                 showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
             }
+            return null;
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
@@ -44,13 +44,11 @@ export const useMunicipio = () => {
         } finally {
             setLoading(false);
         }
-    }, [] );
+    }
 
-    return {
-        municipios,
-        loading,
-        fetchMunicipiosByEstado,
-        refresh: fetchMunicipios,
-        setMunicipios
-    };
+    useEffect(() => {
+        void fetchEstados();
+    }, []);
+
+    return { Estados, loading, fetchEstado, refresh: fetchEstados };
 };

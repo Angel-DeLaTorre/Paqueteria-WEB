@@ -1,4 +1,4 @@
-export * from './ApiResult';
+export * from './Result.ts';
 export * from './ApiError';
 
 export * from './ArticuloDto';
@@ -12,6 +12,7 @@ export * from './MunicipioDto';
 export * from './UsuarioDto';
 export * from './AuthDto';
 export * from './RolDto';
+export * from './RutaDto';
 export * from './SucursalDto'
 export * from './SeguroDto';
 

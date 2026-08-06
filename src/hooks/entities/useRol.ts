@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {message} from 'antd';
-import * as roleservice from '@api/rolService';
+import * as roleservice from '@api/rolService.ts';
 import type { RolDto } from '@types';
 import {getErrorMessage} from "@utils";
 import { useNotification } from "@hooks";

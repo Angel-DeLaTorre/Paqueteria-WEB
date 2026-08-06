@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import * as articuloService from '@api/articuloService';
+import * as articuloService from '@api/articuloService.ts';
 import type { ArticuloDto, ArticuloCreateDto } from '@types';
 import { message } from 'antd';
 import {getErrorMessage} from "@utils";
-import {useNotification} from "@hooks";
+import { useNotification } from "@hooks";
 
 export const useArticulo = () => {
     const [articulos, setArticulos] = useState<ArticuloDto[]>([]);

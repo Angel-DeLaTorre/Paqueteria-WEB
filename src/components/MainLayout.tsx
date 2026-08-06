@@ -7,9 +7,8 @@ import {
     SettingOutlined,
     LogoutOutlined,
     FolderOpenOutlined,
-    CarOutlined,
     NodeIndexOutlined,
-    BarcodeOutlined, UserOutlined
+    BarcodeOutlined, UserOutlined, FileProtectOutlined, ShopOutlined, TruckOutlined, ProfileOutlined
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '@router/rutas';
@@ -83,10 +82,41 @@ const MainLayout: React.FC = () => {
             permission: PERMISOS.CLIENTES.CONSULTA
         },
         {
+            key: ROUTES.CATALOGOS.ASIGNACIONES,
+            icon: <TruckOutlined />,
+            label: 'Asignaciones',
+            permission: PERMISOS.ASIGNACIONES.CONSULTA
+        },
+        {
+            key: 'Guias',
+            icon: <FolderOpenOutlined />,
+            label: 'Guias',
+            children: [
+                {
+                    key: ROUTES.CATALOGOS.GUIAS,
+                    icon: <ProfileOutlined />,
+                    label: 'Guias',
+                    permission: PERMISOS.GUIAS.CONSULTA
+                },
+                {
+                    key: ROUTES.CATALOGOS.GUIAS_ALTA,
+                    icon: <ProfileOutlined />,
+                    label: 'Nueva Guia',
+                    permission: PERMISOS.GUIAS.CONSULTA
+                },
+            ],
+        },
+        {
             key: 'Catalogos',
             icon: <FolderOpenOutlined />,
             label: 'Catálogos',
             children: [
+                {
+                    key: ROUTES.CATALOGOS.ARTICULOS,
+                    icon: <BarcodeOutlined />,
+                    label: 'Artículos',
+                    permission: PERMISOS.ARTICULOS.CONSULTA
+                },
                 {
                     key: ROUTES.CATALOGOS.CHOFERES,
                     icon: <TeamOutlined />,
@@ -100,16 +130,16 @@ const MainLayout: React.FC = () => {
                     permission: PERMISOS.RUTAS.CONSULTA
                 },
                 {
-                    key: ROUTES.CATALOGOS.ARTICULOS,
-                    icon: <BarcodeOutlined />,
-                    label: 'Artículos',
-                    permission: PERMISOS.ARTICULOS.CONSULTA
-                },
-                {
                     key: ROUTES.CATALOGOS.SUCURSALES,
-                    icon: <CarOutlined />,
+                    icon: <ShopOutlined />,
                     label: 'Sucursales',
                     permission: PERMISOS.SUCURSALES.CONSULTA
+                },
+                {
+                    key: ROUTES.CATALOGOS.SEGUROS,
+                    icon: <FileProtectOutlined />,
+                    label: 'Seguros',
+                    permission: PERMISOS.SEGUROS.CONSULTA
                 },
             ],
         },
