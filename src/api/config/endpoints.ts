@@ -29,6 +29,7 @@ export const ENDPOINTS = {
         CREATE : `${V1}/chofer`,
         UPDATE : (id: string) => `${V1}/chofer/${id}`,
         DELETE : (id: string) => `${V1}/chofer/${id}`,
+        DESACTIVAR : (id: string) => `${V1}/chofer/desactivar/${id}`,
     },
     CLIENTE : {
         GETALL: `${V1}/cliente`,
@@ -36,6 +37,7 @@ export const ENDPOINTS = {
         CREATE : `${V1}/cliente`,
         UPDATE : (id: string) => `${V1}/cliente/${id}`,
         DELETE : (id: string) => `${V1}/cliente/${id}`,
+        DESACTIVAR : (id: string) => `${V1}/cliente/desactivar/${id}`,
     },
     ESTADO : {
         GETALL: `${V1}/estado`,
@@ -55,6 +57,14 @@ export const ENDPOINTS = {
     },
     ROLES : {
         GETALL: `${V1}/rol`,
+        DESACTIVAR : (id: string) => `${V1}/roles/desactivar/${id}`,
+    },
+    RUTA : {
+        GETALL: `${V1}/ruta`,
+        GETBYID: (id: string) => `${V1}/ruta/${id}`,
+        CREATE : `${V1}/ruta`,
+        UPDATE : (id: string) => `${V1}/ruta/${id}`,
+        DELETE : (id: string) => `${V1}/ruta/${id}`,
     },
     SEGURO : {
         GETALL: `${V1}/seguro`,
@@ -62,6 +72,7 @@ export const ENDPOINTS = {
         CREATE : `${V1}/seguro`,
         UPDATE : (id: string) => `${V1}/seguro/${id}`,
         DELETE : (id: string) => `${V1}/seguro/${id}`,
+        DESACTIVAR : (id: string) => `${V1}/seguro/desactivar/${id}`,
     },
     SUCURSAL : {
         GETALL: `${V1}/${SUCURSAL}`,
@@ -69,12 +80,14 @@ export const ENDPOINTS = {
         CREATE : `${V1}/${SUCURSAL}`,
         UPDATE : (id: string) => `${V1}/${SUCURSAL}/${id}`,
         DELETE : (id: string) => `${V1}/${SUCURSAL}/${id}`,
+        DESACTIVAR : (id: string) => `${V1}/sucursal/desactivar/${id}`,
     },
     USUARIO: {
         GETALL: `${V1}/usuario`,
         BY_USERNAME: (username: string) => `${V1}/usuario/${username}`,
         CREATE: `${V1}/usuario`,
         UPDATE: (username: string) => `${V1}/usuario/${username}`,
+        DESACTIVAR : (id: string) => `${V1}/usuario/desactivar/${id}`,
     },
 
 } as const;

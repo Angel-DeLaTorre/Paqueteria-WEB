@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import * as asignacionService from '@api/asignacionService';
+import * as asignacionService from '@api/asignacionService.ts';
 import type {AsignacionCreateDto, AsignacionDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';

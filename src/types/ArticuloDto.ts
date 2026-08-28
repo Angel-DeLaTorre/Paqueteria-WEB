@@ -22,7 +22,7 @@ export interface ArticuloUpdateDto {
     vigenciaHasta: Date;
 }
 
-export interface ArticuloFila {
+export interface ArticuloGuiaCreateDtoo {
     key: string;
     articuloId?: string;
     descripcion: string;

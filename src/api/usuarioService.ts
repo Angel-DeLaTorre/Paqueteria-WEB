@@ -1,18 +1,23 @@
 import api from '@api/config/axiosConfig';
 import { ENDPOINTS } from '@api/config/endpoints';
-import type {UsuarioDto, UsuarioCreateDto, UsuarioUpdateDto, ApiResult} from '@types';
+import type {UsuarioDto, UsuarioCreateDto, UsuarioUpdateDto, Result} from '@types';
 
-export const getUsuarios = async (): Promise<ApiResult<UsuarioDto[]>> => {
-    const { data } = await api.get<ApiResult<UsuarioDto[]>>(ENDPOINTS.USUARIO.GETALL);
+export const getUsuarios = async (): Promise<Result<UsuarioDto[]>> => {
+    const { data } = await api.get<Result<UsuarioDto[]>>(ENDPOINTS.USUARIO.GETALL);
     return data;
 };
 
-export const createUsuario = async (usuario: UsuarioCreateDto): Promise<ApiResult<UsuarioDto>> => {
-    const { data } = await api.post<ApiResult<UsuarioDto>>(ENDPOINTS.USUARIO.CREATE, usuario);
+export const createUsuario = async (usuario: UsuarioCreateDto): Promise<Result<UsuarioDto>> => {
+    const { data } = await api.post<Result<UsuarioDto>>(ENDPOINTS.USUARIO.CREATE, usuario);
     return data;
 };
 
-export const updateUsuario = async (usuario: UsuarioUpdateDto): Promise<ApiResult<UsuarioDto>> => {
-    const { data } = await api.put<ApiResult<UsuarioDto>>(ENDPOINTS.USUARIO.UPDATE(usuario.usuarioId), usuario);
+export const updateUsuario = async (usuario: UsuarioUpdateDto): Promise<Result<UsuarioDto>> => {
+    const { data } = await api.put<Result<UsuarioDto>>(ENDPOINTS.USUARIO.UPDATE(usuario.usuarioId), usuario);
+    return data;
+};
+
+export const desactivarUsuario = async ( id : string ): Promise<Result<boolean>> => {
+    const { data } = await api.put<Result<boolean>>(ENDPOINTS.USUARIO.DESACTIVAR(id));
     return data;
 };

@@ -2,6 +2,9 @@ export const PERMISOS = {
     ARTICULOS : {
         CONSULTA : 'articulos.consultar',
     },
+    ASIGNACIONES : {
+        CONSULTA : 'asignaciones.consultar',
+    },
     CHOFERES : {
         CONSULTA : 'choferes.consultar',
     },

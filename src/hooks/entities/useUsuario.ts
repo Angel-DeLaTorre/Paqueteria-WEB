@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUsuarios, createUsuario } from '@api/usuarioService.ts';
 import type { UsuarioDto, UsuarioCreateDto } from '@types';
-import {useNotification} from "@hooks";
+import { useNotification } from "@hooks";
 
 export const useUsuario = () => {
     const [usuarios, setUsuarios] = useState<UsuarioDto[]>([]);

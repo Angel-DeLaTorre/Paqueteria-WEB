@@ -1,53 +1,53 @@
 import {useCallback, useEffect, useState} from 'react';
 import {message} from 'antd';
-import * as seguroService from '@api/seguroService';
-import type {SeguroCreateDto, SeguroDto, SeguroUpdateDto} from '@types';
-import {getErrorMessage} from "@utils";
+import type { RutaDto, RutaCreateDto, RutaUpdateDto} from '@types';
+import * as rutaService from '@api/rutaService.ts';
+import { getErrorMessage } from "@utils";
 import { useNotification } from "@hooks";
 
-export const useSeguro = () => {
-    const [seguros, setSeguros] = useState<SeguroDto[]>([]);
+export const useRuta = () => {
+    const [rutas, setRutas] = useState<RutaDto[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const { showNotification } = useNotification();
 
-    const fetchSeguros = useCallback(async () => {
+    const fetchRutas = useCallback(async () => {
         setLoading(true);
         try {
-            const result = await seguroService.getSeguros();
+            const result = await rutaService.getRutas();
             if (result.isSuccess && result.value) {
-                setSeguros(result.value);
+                setRutas(result.value);
             } else {
-                setSeguros([]);
+                setRutas([]);
                 showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
             message.error(msg);
-            console.error("Error al obtener seguros:", msg);
+            console.error("Error al obtener rutas:", msg);
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [showNotification]);
 
     const fetchSeguro = useCallback( async ( id : string) => {
         setLoading(true);
         try {
-            return await seguroService.getSeguro(id);
+            return await rutaService.getRuta(id);
         } catch (error) {
             const msg = getErrorMessage(error);
             message.error(msg);
-            console.error("Error al obtener seguros:", msg);
+            console.error("Error al obtener rutas:", msg);
         } finally {
             setLoading(false);
         }
     }, []);
 
-    const handleCreate = async (nuevoSeguro: SeguroCreateDto) => {
+    const handleCreate = async (nuevoSeguro: RutaCreateDto) => {
         setLoading(true);
         try {
-            await seguroService.createSeguro(nuevoSeguro);
-            message.success('Seguro creado con éxito');
-            await fetchSeguros();
+            await rutaService.createRuta(nuevoSeguro);
+            message.success('Ruta creada con éxito');
+            await fetchRutas();
             return true;
         } catch (error) {
             message.error(getErrorMessage(error));
@@ -57,12 +57,12 @@ export const useSeguro = () => {
         }
     };
 
-    const handleUpdate = async (seguroActualizado: SeguroUpdateDto) => {
+    const handleUpdate = async (rutaActualizado: RutaUpdateDto) => {
         setLoading(true);
         try {
-            await seguroService.updateSeguro(seguroActualizado);
-            message.success('Seguro actualizado correctamente');
-            await fetchSeguros();
+            await rutaService.updateRuta(rutaActualizado);
+            message.success('Ruta actualizada correctamente');
+            await fetchRutas();
             return true;
         } catch (error) {
             message.error(getErrorMessage(error));
@@ -75,9 +75,9 @@ export const useSeguro = () => {
     const handleDelete = async (id: string) => {
         setLoading(true);
         try {
-            await seguroService.deleteSeguro(id);
+            await rutaService.deleteRuta(id);
             message.warning('Seguro eliminado');
-            await fetchSeguros();
+            await fetchRutas();
             return true;
         } catch (error) {
             message.error(getErrorMessage(error));
@@ -88,16 +88,16 @@ export const useSeguro = () => {
     };
 
     useEffect(() => {
-        void fetchSeguros();
-    }, [fetchSeguros]);
+        void fetchRutas();
+    }, [fetchRutas]);
 
     return {
-        seguros,
+        rutas,
         loading,
         handleCreate,
         handleUpdate,
         handleDelete,
         fetchSeguro,
-        refresh: fetchSeguros
+        refresh: fetchRutas
     };
 };

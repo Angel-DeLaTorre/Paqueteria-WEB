@@ -1,8 +1,7 @@
-import {useEffect, useState} from 'react';
-import * as guiaService from '@api/guiaService';
+import {useCallback, useState} from 'react';
+import * as guiaService from '@api/guiaService.ts';
 import type {GuiaCreateDto, GuiaDto} from '@types';
 import { getErrorMessage } from '@utils';
-import {message} from 'antd';
 import { useNotification } from "@hooks";
 
 export const useGuia = () => {
@@ -10,7 +9,7 @@ export const useGuia = () => {
     const [loading, setLoading] = useState(false);
     const { showNotification } = useNotification();
 
-    const fetchGuias = async () => {
+    const fetchGuias = useCallback(async () => {
         setLoading(true);
         try {
             const result = await guiaService.getGuias();
@@ -27,7 +26,7 @@ export const useGuia = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [showNotification]);
 
     const fetchGuia = async (id: string): Promise<GuiaDto | null> => {
         setLoading(true);
@@ -51,22 +50,19 @@ export const useGuia = () => {
     const handleCreate = async (nuevoGuia: GuiaCreateDto) => {
         setLoading(true);
         try {
-            await guiaService.createGuia(nuevoGuia);
-            message.success('Guia creado con éxito');
-            await fetchGuias();
-            return true;
+            const resultado = await guiaService.createGuia(nuevoGuia);
+            if (resultado.isSuccess && resultado.value) {
+                return resultado;
+            } else {
+                showNotification({ type: 'error', message: 'Error', description: resultado.detalleError?.description || '' });
+            }
         } catch (error) {
             const msg = getErrorMessage(error);
-            console.error(msg);
-            return false;
+            showNotification({ type: 'error', message: 'Error', description: msg || '' });
         } finally {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        void fetchGuias();
-    }, []);
 
     return { guias, loading, fetchGuia, handleCreate, refresh: fetchGuias };
 };

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { postLogin } from '@api/authService';
-import { useAuthStore } from '@store/useAuthStore';
+import { postLogin } from '@api/authService.ts';
+import { useAuthStore } from '@store/useAuthStore.ts';
 import {type ApiResult, type LoginDto, type SesionDto} from '@types';
 
 export const useAuth = () => {
