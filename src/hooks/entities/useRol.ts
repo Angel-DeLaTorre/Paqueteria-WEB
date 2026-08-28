@@ -14,11 +14,11 @@ export const useRol = () => {
         setLoading(true);
         try {
             const result = await roleservice.getRoles();
-            if (result.isSuccess && result.value) {
-                setRoles(result.value);
+            if (result.esExitoso && result.datos) {
+                setRoles(result.datos);
             } else {
                 setRoles([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);

@@ -1,47 +1,87 @@
-import { useState, useEffect } from 'react';
-import { getUsuarios, createUsuario } from '@api/usuarioService.ts';
-import type { UsuarioDto, UsuarioCreateDto } from '@types';
-import { useNotification } from "@hooks";
+import { useState, useCallback } from 'react';
+import {getUsuarios, createUsuario, actualizarUsuarioApi} from '@api/usuarioService.ts';
+import type {UsuarioRespuestaDto, UsuarioCrearDto, Respuesta, UsuarioActualizarDto} from '@types';
 
 export const useUsuario = () => {
-    const [usuarios, setUsuarios] = useState<UsuarioDto[]>([]);
-    const [loading, setLoading] = useState(false);
-    const { showNotification } = useNotification();
+    const [usuarios, setUsuarios] = useState<UsuarioRespuestaDto[]>([]);
+    const [cargando, setCargando] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchUsuarios = async () => {
-        setLoading(true);
+    const obtenerUsuarios = useCallback(async (): Promise<Respuesta<UsuarioRespuestaDto[]>> => {
+        setCargando(true);
+        setError(null);
         try {
-            const result = await getUsuarios();
-            if (result.isSuccess && result.value) {
-                setUsuarios(result.value);
+            const respuesta = await getUsuarios();
+            if (respuesta.esExitoso && respuesta.datos) {
+                setUsuarios(respuesta.datos);
             } else {
                 setUsuarios([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                setError(respuesta.detalleError?.descripcion || 'Error al obtener usuarios');
             }
-        } catch (error) {
-            console.error(error);
+            return respuesta;
+        } catch (err) {
+            const mensajeError = err instanceof Error ? err.message : 'Error de conexión inesperado';
+            setError(mensajeError);
+            return {
+                esExitoso: false,
+                datos: null,
+                detalleError: { codigo: 'ErrorExcepcion', descripcion: mensajeError }
+            };
         } finally {
-            setLoading(false);
+            setCargando(false);
         }
-    };
-
-    const handleCreate = async (nuevoUsuario: UsuarioCreateDto) => {
-        setLoading(true);
-        try {
-            await createUsuario(nuevoUsuario);
-            await fetchUsuarios();
-            return true;
-        } catch (error) {
-            console.error(error);
-            return false;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        void fetchUsuarios();
     }, []);
 
-    return { usuarios, loading, handleCreate, refresh: fetchUsuarios };
+    const crearUsuario = useCallback(async (nuevoUsuario: UsuarioCrearDto): Promise<Respuesta<UsuarioRespuestaDto>> => {
+        setCargando(true);
+        setError(null);
+        try {
+            const respuesta = await createUsuario(nuevoUsuario);
+            if (!respuesta.esExitoso) {
+                setError(respuesta.detalleError?.descripcion || 'Error al crear usuario');
+            }
+            return respuesta;
+        } catch (err) {
+            const mensajeError = err instanceof Error ? err.message : 'Error al intentar crear el usuario';
+            setError(mensajeError);
+            return {
+                esExitoso: false,
+                datos: null,
+                detalleError: { codigo: 'ErrorExcepcion', descripcion: mensajeError }
+            };
+        } finally {
+            setCargando(false);
+        }
+    }, []);
+
+    const actualizarUsuario = useCallback( async ( actualizaUsuario: UsuarioActualizarDto ) : Promise<Respuesta<boolean>> => {
+        setCargando(true);
+        setError(null);
+        try{
+            const respuesta = await actualizarUsuarioApi(actualizaUsuario);
+            if (!respuesta.esExitoso) {
+                setError(respuesta.detalleError?.descripcion || 'Error al actualizar usuario');
+            }
+            return respuesta;
+        } catch (err) {
+            const mensajeError = err instanceof Error ? err.message : 'Error al intentar crear el usuario';
+            setError(mensajeError);
+            return {
+                esExitoso: false,
+                datos: null,
+                detalleError: { codigo: 'ErrorExcepcion', descripcion: mensajeError }
+            };
+        } finally {
+            setCargando(false);
+        }
+    }, [])
+
+    return {
+        usuarios,
+        cargando,
+        error,
+        obtenerUsuarios,
+        crearUsuario,
+        actualizarUsuario
+    };
 };

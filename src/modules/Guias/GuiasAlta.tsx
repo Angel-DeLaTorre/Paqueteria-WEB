@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     Form,
     Col,
@@ -11,67 +12,40 @@ import {
     Row,
     Switch,
     Input,
-    InputNumber, Tag
+    InputNumber,
+    Tag
 } from 'antd';
-import {useCliente, useGuia, useSeguro, useSucursal} from "@hooks";
-import type { GuiaCreateDto, DireccionClienteDto, ArticuloGuiaCreateDto } from "@types";
+import { useCliente, useGuia, useSeguro, useSucursal, useNotification } from "@hooks";
+import type { GuiaCrearDto, ClienteDireccionDto, ArticuloGuiaCrearDto } from "@types";
 import { ArticulosFormList } from "@modules/Guias/ArticulosFormList.tsx";
+import { formaPago, catSatProdServOptions, catSatUnidadOptions, catSatEmbalajeOptions } from "@types";
+import { ROUTES } from '@router/rutas';
 
 const { Title } = Typography;
 
-interface CatalogoOption {
-    value: string;
-    label: string;
-}
-
-interface CatalogoNumber {
-    value: number;
-    label: string;
-
-}
-
-const catSatProdServOptions: CatalogoOption[] = [
-    { value: '78101802', label: '78101802 - Servicios de transporte de carga' },
-    { value: '24111507', label: '24111507 - Cajas de cartón' },
-    { value: '31162800', label: '31162800 - Empaquetaduras' },
-];
-
-const catSatUnidadOptions: CatalogoOption[] = [
-    { value: 'KGM', label: 'KGM - Kilogramo' },
-    { value: 'H87', label: 'H87 - Pieza' },
-    { value: 'XBX', label: 'XBX - Caja' },
-];
-
-const catSatEmbalajeOptions: CatalogoOption[] = [
-    { value: '4G', label: '4G - Cajas de cartón' },
-    { value: '1A1', label: '1A1 - Tambores de acero' },
-    { value: '5H4', label: '5H4 - Bolsas de plástico' },
-];
-
-const formaPago: CatalogoNumber[] = [
-    { value: 1, label: 'CreditoOrigen' },
-    { value: 2, label: 'CreditoDestino' },
-    { value: 3, label: 'Prepagado' },
-    { value: 4, label: 'PorCobrarDestino' },
-    { value: 5, label: 'Pagado' },
-];
-
 const GuiasAlta: React.FC = () => {
-    const [form] = Form.useForm<GuiaCreateDto>();
+    const navigate = useNavigate();
+    const [form] = Form.useForm<GuiaCrearDto>();
+
     const { clientes } = useCliente();
-    const { sucursales, loading: loadingSucursales } = useSucursal();
+    const { sucursales, obtenerSucursales, cargando: loadingSucursales } = useSucursal();
     const { seguros, loading: loadingSeguros } = useSeguro();
-    const { handleCreate: guardarGuia } = useGuia();
+    const { crearGuia, cargando } = useGuia();
+    const { showNotification } = useNotification();
 
     const [estaAsegurado, setEstaAsegurado] = useState<boolean>(false);
     const [condonaIva, setCondonaIva] = useState<boolean>(false);
 
-    const [direccionesOrigen, setDireccionesOrigen] = useState<DireccionClienteDto[]>([]);
-    const [direccionesDestino, setDireccionesDestino] = useState<DireccionClienteDto[]>([]);
+    const [direccionesOrigen, setDireccionesOrigen] = useState<ClienteDireccionDto[]>([]);
+    const [direccionesDestino, setDireccionesDestino] = useState<ClienteDireccionDto[]>([]);
 
     const clienteOptions = clientes.map(c => ({ label: c.nombre, value: c.clienteId }));
     const sucursalOptions = sucursales.map(s => ({ label: s.nombre, value: s.sucursalId }));
     const segurosOptions = seguros.map(s => ({ label: s.nombre, value: s.seguroId }));
+
+    useEffect(() => {
+        void obtenerSucursales();
+    }, [obtenerSucursales]);
 
     const handleClienteChange = (clienteId: string, tipo: 'origen' | 'destino') => {
         const cliente = clientes.find(c => c.clienteId === clienteId);
@@ -93,12 +67,12 @@ const GuiasAlta: React.FC = () => {
         }
     };
 
-    const onFinish = async (values: GuiaCreateDto) => {
-        const payload = {
+    const onFinish = async (values: GuiaCrearDto) => {
+        const payload: GuiaCrearDto = {
             ...values,
             seguroId: values.estaAsegurado ? values.seguroId : null,
             polizaSeguro: values.estaAsegurado ? values.polizaSeguro : null,
-            articulosGuia: (values.articulosGuia || []).map((item: ArticuloGuiaCreateDto) => ({
+            articulosGuia: (values.articulosGuia || []).map((item: ArticuloGuiaCrearDto) => ({
                 claveProdServSat: item.claveProdServSat,
                 descripcion: item.descripcion,
                 cantidad: item.cantidad,
@@ -112,19 +86,32 @@ const GuiasAlta: React.FC = () => {
                 esMaterialPeligroso: item.esMaterialPeligroso ?? false,
             })),
         };
-        console.log("Datos a enviar:", payload);
-        const result = await guardarGuia(values);
-        console.log(result);
 
+        const respuesta = await crearGuia(payload);
+
+        if (respuesta.esExitoso) {
+            showNotification({
+                type: 'success',
+                message: 'Éxito',
+                description: 'La guía de embarque se ha generado correctamente.'
+            });
+            form.resetFields();
+            navigate(ROUTES.CATALOGOS.GUIAS || '/app/guias');
+        } else {
+            showNotification({
+                type: 'error',
+                message: 'Error al generar la guía',
+                description: respuesta.detalleError?.descripcion || 'Ocurrió un problema al procesar la solicitud.'
+            });
+        }
     };
 
-    const handleValuesChange = (changedValues: Partial<GuiaCreateDto>, allValues: GuiaCreateDto) => {
+    const handleValuesChange = (changedValues: Partial<GuiaCrearDto>, allValues: GuiaCrearDto) => {
         const camposCostos = [
             'flete', 'seguro', 'recoleccion', 'entregaA',
             'maniobras', 'peaje', 'lineas', 'condonaIva'
         ];
 
-        // Verificamos si la llave modificada pertenece a los costos
         const isCostoModificado = Object.keys(changedValues).some(key => camposCostos.includes(key));
 
         if (isCostoModificado) {
@@ -161,7 +148,7 @@ const GuiasAlta: React.FC = () => {
                 onValuesChange={handleValuesChange}
             >
                 <div style={{ display: 'flex', justifyContent: 'flex-end', borderBottom: '1px solid #f0f0f0', paddingBottom: '16px', marginBottom: '16px' }}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={cargando}>
                         Guardar Guía
                     </Button>
                 </div>
@@ -195,7 +182,7 @@ const GuiasAlta: React.FC = () => {
                                     disabled={direccionesOrigen.length === 0}
                                     placeholder={direccionesOrigen.length > 0 ? "Seleccione dirección..." : "Seleccione primero un cliente"}
                                     options={direccionesOrigen.map(d => ({
-                                        label: `${d.direccion.calle} #${d.direccion.numeroExterior}, Col. ${d.direccion.colonia}`,
+                                        label: `${d.direccion?.calle} #${d.direccion?.numeroExterior}, Col. ${d.direccion?.colonia}`,
                                         value: d.direccionId
                                     }))}
                                 />
@@ -230,7 +217,7 @@ const GuiasAlta: React.FC = () => {
                                     disabled={direccionesDestino.length === 0}
                                     placeholder={direccionesDestino.length > 0 ? "Seleccione dirección..." : "Seleccione primero un cliente"}
                                     options={direccionesDestino.map(d => ({
-                                        label: `${d.direccion.calle} #${d.direccion.numeroExterior}, Col. ${d.direccion.colonia}`,
+                                        label: `${d.direccion?.calle} #${d.direccion?.numeroExterior}, Col. ${d.direccion?.colonia}`,
                                         value: d.direccionId,
                                     }))}
                                 />
@@ -275,7 +262,6 @@ const GuiasAlta: React.FC = () => {
                 <Divider orientation="horizontal">Condiciones de Pago y Seguro</Divider>
 
                 <Row gutter={[16, 16]} align="middle">
-                    {/* Forma de Pago */}
                     <Col xs={24} sm={8}>
                         <Form.Item
                             name="formaPago"
@@ -293,7 +279,6 @@ const GuiasAlta: React.FC = () => {
                         </Form.Item>
                     </Col>
 
-                    {/* Valor Unitario Tonelada */}
                     <Col xs={24} sm={8}>
                         <Form.Item
                             name="valorUnitarioTonealda"
@@ -304,14 +289,12 @@ const GuiasAlta: React.FC = () => {
                         </Form.Item>
                     </Col>
 
-                    {/* Valor Declarado */}
                     <Col xs={24} sm={8}>
                         <Form.Item name="valorDeclarado" label="Valor declarado" initialValue={0}>
                             <InputNumber style={{ width: '100%' }} min={0} precision={2} />
                         </Form.Item>
                     </Col>
 
-                    {/* Switch: ¿Mercancía Asegurada? */}
                     <Col xs={24} sm={8}>
                         <Form.Item
                             name="estaAsegurado"
@@ -322,8 +305,8 @@ const GuiasAlta: React.FC = () => {
                             <Space>
                                 <Switch
                                     checked={estaAsegurado}
-                                    onChange={ (checked) => {
-                                        setEstaAsegurado(checked)
+                                    onChange={(checked) => {
+                                        setEstaAsegurado(checked);
                                         form.setFieldsValue({ estaAsegurado: checked });
                                         handleValuesChange({ estaAsegurado: checked }, form.getFieldsValue());
                                     }}
@@ -333,10 +316,8 @@ const GuiasAlta: React.FC = () => {
                         </Form.Item>
                     </Col>
 
-                    {/* CAMPOS CONDICIONALES BASADOS EN EL ESTADO LOCAL */}
                     {estaAsegurado && (
                         <>
-                            {/* Aseguradora */}
                             <Col xs={24} sm={8}>
                                 <Form.Item
                                     name="seguroId"
@@ -355,7 +336,6 @@ const GuiasAlta: React.FC = () => {
                                 </Form.Item>
                             </Col>
 
-                            {/* Número de Póliza */}
                             <Col xs={24} sm={8}>
                                 <Form.Item
                                     name="polizaSeguro"
@@ -372,7 +352,6 @@ const GuiasAlta: React.FC = () => {
                 <Divider orientation="horizontal">Costos</Divider>
 
                 <Row gutter={[16, 16]}>
-                    {/* --- BLOQUE 1: CONCEPTOS MANUALES (INPUTS) --- */}
                     <Col xs={24} sm={12} md={8}>
                         <Form.Item name="flete" label="Flete" initialValue={0}>
                             <InputNumber style={{ width: '100%' }} prefix="$" min={0} precision={2} />
@@ -415,7 +394,6 @@ const GuiasAlta: React.FC = () => {
                         </Form.Item>
                     </Col>
 
-                    {/* --- BLOQUE 2: CONFIGURACIÓN IMPUESTOS --- */}
                     <Col xs={24} sm={12} md={16} style={{ display: 'flex', alignItems: 'center' }}>
                         <Form.Item
                             name="condonaIva"
@@ -433,9 +411,9 @@ const GuiasAlta: React.FC = () => {
                                     }}
                                 />
                                 <div>
-                                <span style={{ fontWeight: 600, display: 'block' }}>
-                                    Condonar / Exentar IVA
-                                </span>
+                                    <span style={{ fontWeight: 600, display: 'block' }}>
+                                        Condonar / Exentar IVA
+                                    </span>
                                     {condonaIva
                                         ? 'Tasa de IVA del 0% aplicada'
                                         : 'Aplica IVA general del 16%'}
@@ -444,7 +422,6 @@ const GuiasAlta: React.FC = () => {
                         </Form.Item>
                     </Col>
 
-                    {/* --- BLOQUE 3: TOTALES Y LIQUIDACIÓN (RESUMEN DESTACADO) --- */}
                     <Col span={24}>
                         <Card
                             size="small"
@@ -452,14 +429,12 @@ const GuiasAlta: React.FC = () => {
                             style={{ backgroundColor: '#fafafa', border: '1px solid #d9d9d9' }}
                         >
                             <Row gutter={[16, 16]}>
-                                {/* Subtotal */}
                                 <Col xs={24} sm={12} md={6}>
                                     <Form.Item name="subtotal" label="Subtotal" initialValue={0}>
                                         <InputNumber style={{ width: '100%' }} prefix="$" disabled precision={2} />
                                     </Form.Item>
                                 </Col>
 
-                                {/* IVA Calculado */}
                                 <Col xs={24} sm={12} md={6}>
                                     <Form.Item
                                         name="iva"
@@ -477,14 +452,12 @@ const GuiasAlta: React.FC = () => {
                                     </Form.Item>
                                 </Col>
 
-                                {/* IVA Retenido */}
                                 <Col xs={24} sm={12} md={6}>
                                     <Form.Item name="ivaRetenido" label="Retención IVA (4%)" initialValue={0}>
                                         <InputNumber style={{ width: '100%' }} prefix="$" disabled precision={2} />
                                     </Form.Item>
                                 </Col>
 
-                                {/* Total Final */}
                                 <Col xs={24} sm={12} md={6}>
                                     <Form.Item name="total" label={<strong>Total a Cobrar</strong>} initialValue={0}>
                                         <InputNumber
@@ -511,7 +484,7 @@ const GuiasAlta: React.FC = () => {
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid #f0f0f0', paddingTop: '16px' }}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={cargando}>
                         Guardar Guía
                     </Button>
                 </div>

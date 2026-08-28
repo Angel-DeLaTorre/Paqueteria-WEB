@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { SesionDto } from '@types';
+import type { SesionRespuestaDto } from '@types';
 
 interface AuthState {
     token: string | null;
     user: UserSession | null;
     isAuthenticated: boolean;
     expiracion: string | null;
-    setSession: (sessionData: SesionDto) => void;
+    setSession: (sessionData: SesionRespuestaDto) => void;
     clearSession: () => void;
     hasPermission: (permisoRequerido: string) => boolean;
     isTokenActive: () => boolean;
@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>()(
             isAuthenticated: false,
             expiracion: null,
 
-            setSession: (sessionData: SesionDto) => {
+            setSession: (sessionData: SesionRespuestaDto) => {
                 set({
                     token: sessionData.token,
                     user: {

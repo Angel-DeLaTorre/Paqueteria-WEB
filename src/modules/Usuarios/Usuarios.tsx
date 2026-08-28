@@ -1,33 +1,87 @@
-import { useState } from 'react';
-import { Table, Button, Card, Space, Form, Input, Select, Col } from 'antd';
-import { UserAddOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { CatalogoModal } from '@components/ModalCatalogo'
-import type {RolDto, UsuarioDto} from '@types';
-import { useUsuario, useRol } from '@hooks';
+import { useState, useEffect } from 'react';
+import { Table, Button, Card, Space, Form, Input, Select, Col, Tooltip, Tag } from 'antd';
+import { UserAddOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { CatalogoModal } from '@components/ModalCatalogo';
+import { UsuarioDetalleModal } from './UsuarioDetalleModal';
+import type {RolDto, UsuarioRespuestaDto, UsuarioCrearDto, UsuarioActualizarDto} from '@types';
+import { useUsuario, useRol, useNotification } from '@hooks';
+import { formatearFechaLocal } from '@utils';
 
 const UsuariosScreen = () => {
-    const { usuarios, loading, handleCreate } = useUsuario();
+    const { usuarios, cargando, obtenerUsuarios, crearUsuario, actualizarUsuario } = useUsuario();
     const { roles } = useRol();
-    const [form] = Form.useForm();
+    const { showNotification } = useNotification();
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [form] = Form.useForm();
 
+    const [usuarioSeleccionado, setUsuarioSeleccionado] = useState<UsuarioRespuestaDto | null>(null);
+    const [isDetalleModalVisible, setIsDetalleModalVisible] = useState(false);
+
+    useEffect(() => {
+        const cargarDatos = async () => {
+            const respuesta = await obtenerUsuarios();
+            if (!respuesta.esExitoso) {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al obtener usuarios',
+                    description: respuesta.detalleError?.descripcion || 'No se pudo cargar la lista.'
+                });
+            }
+        };
+
+        void cargarDatos();
+    }, [obtenerUsuarios, showNotification]);
 
     // Columnas de la Tabla
     const columns = [
-        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', sorter: (a : UsuarioDto, b: UsuarioDto) => a.nombre.localeCompare(b.nombre) },
-        { title: 'Username', dataIndex: 'username', key: 'usermane' },
-        { title: 'Ultimo Acesso', dataIndex: 'fechaUltimoAcesso', key: 'fechaUltimoAcesso' },
+        {
+            title: 'Nombre',
+            dataIndex: 'nombre',
+            key: 'nombre',
+            sorter: (a: UsuarioRespuestaDto, b: UsuarioRespuestaDto) => a.nombre.localeCompare(b.nombre),
+            render: (text: string, record: UsuarioRespuestaDto) => (
+                <a onClick={() => {
+                    setUsuarioSeleccionado(record);
+                    setIsDetalleModalVisible(true);
+                }}>
+                    {text}
+                </a>
+            )
+        },
+        { title: 'Username', dataIndex: 'username', key: 'username' },
+        {
+            title: 'Ultimo Acceso',
+            dataIndex: 'fechaUltimoAcesso',
+            key: 'fechaUltimoAcesso',
+            render: (fecha: string | null) => fecha ? formatearFechaLocal(fecha) : 'Sin acceso registrado'
+        },
         {
             title: 'Rol',
-            dataIndex: 'rol',
-            key: 'rol',
+            dataIndex: 'roles',
+            key: 'roles',
+            render: (rolesUsuario: RolDto[]) => (
+                <Space wrap>
+                    {rolesUsuario?.map((r) => (
+                        <Tag key={r.rolId} color="blue">{r.descripcion || r.nombre}</Tag>
+                    ))}
+                </Space>
+            )
         },
         {
             title: 'Acciones',
             key: 'acciones',
-            render: () => (
+            render: (record: UsuarioRespuestaDto) => (
                 <Space size="middle">
-                    <Button icon={<EditOutlined />} type="text" />
+                    <Tooltip title="Ver / Editar detalles">
+                        <Button
+                            icon={<EyeOutlined />}
+                            type="text"
+                            onClick={() => {
+                                setUsuarioSeleccionado(record);
+                                setIsDetalleModalVisible(true);
+                            }}
+                        />
+                    </Tooltip>
                     <Button icon={<DeleteOutlined />} type="text" danger />
                 </Space>
             ),
@@ -35,20 +89,57 @@ const UsuariosScreen = () => {
     ];
 
     const onSave = async () => {
-        const values = await form.validateFields();
-        const success = await handleCreate(values);
-        if (success) {
-            setIsModalVisible(false);
-            form.resetFields();
+        try {
+            // Validamos y obtenemos los valores directamente de la instancia del formulario
+            const values = await form.validateFields();
+            const respuesta = await crearUsuario(values as UsuarioCrearDto);
+
+            if (respuesta.esExitoso) {
+                showNotification({
+                    type: 'success',
+                    message: 'Éxito',
+                    description: 'Usuario creado correctamente.'
+                });
+                setIsModalVisible(false);
+                form.resetFields();
+                await obtenerUsuarios();
+            } else {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al crear usuario',
+                    description: respuesta.detalleError?.descripcion || 'Ocurrió un error inesperado.'
+                });
+            }
+        } catch (error) {
+            console.error('Validación de formulario fallida:', error);
         }
     };
 
-    const onChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
-
-    const onSearch = (value: string) => {
-        console.log('search:', value);
+    const handleActualizarUsuarioExitoso = async (datosActualizados: UsuarioActualizarDto) => {
+        try {
+            const respuesta = await actualizarUsuario(datosActualizados);
+            if (respuesta?.esExitoso) {
+                showNotification({
+                    type: 'success',
+                    message: 'Éxito',
+                    description: 'Usuario actualizado correctamente.'
+                });
+                await obtenerUsuarios();
+            } else {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al actualizar el usuario',
+                    description: respuesta?.detalleError?.descripcion || 'Ocurrió un problema al procesar la solicitud.'
+                });
+            }
+        } catch (error) {
+            showNotification({
+                type: 'error',
+                message: 'Error al actualizar el usuario',
+                description: 'Ocurrió un problema al procesar la solicitud.'
+            });
+            console.error(error);
+        }
     };
 
     return (
@@ -66,27 +157,28 @@ const UsuariosScreen = () => {
                 }
             >
                 <Table
-                    columns = { columns }
-                    dataSource = { usuarios }
-                    rowKey = "id"
-                    pagination = {{ pageSize: 10 }}
-                    loading = { loading }
+                    columns={columns}
+                    dataSource={usuarios}
+                    rowKey="id"
+                    pagination={{ pageSize: 10 }}
+                    loading={cargando}
                 />
             </Card>
 
+            {/* Modal para Crear Usuario */}
             <CatalogoModal
-                title = "Gestión de Usuario"
-                open = { isModalVisible }
-                onCancel = { () => setIsModalVisible(false)}
-                onSave = { onSave }
-                form = { form }
-                loading = { loading }
+                title="Gestión de Usuario"
+                open={isModalVisible}
+                onCancel={() => setIsModalVisible(false)}
+                onSave = {onSave}
+                loading = {cargando}
+                form={form}
             >
                 <Col span={6}>
                     <Form.Item
-                        name = "nombre"
-                        label = "Nombre"
-                        rules = {[{ required: true }]}
+                        name="nombre"
+                        label="Nombre"
+                        rules={[{ required: true, message: 'El nombre es obligatorio' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -95,7 +187,7 @@ const UsuariosScreen = () => {
                     <Form.Item
                         name="username"
                         label="Usuario"
-                        rules = {[{ required: true }]}
+                        rules={[{ required: true, message: 'El usuario es obligatorio' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -103,34 +195,45 @@ const UsuariosScreen = () => {
 
                 <Col span={6}>
                     <Form.Item
-                        name = "password"
-                        label = "Contraseña"
-                        rules = {[{ required: true }]}
+                        name="password"
+                        label="Contraseña"
+                        rules={[{ required: true, message: 'La contraseña es obligatoria' }]}
                     >
-                        <Input />
+                        <Input.Password />
                     </Form.Item>
                 </Col>
 
                 <Col span={6}>
                     <Form.Item
-                        name = "roles"
-                        label = "Rol"
+                        name="roles"
+                        label="Rol"
                         rules={[{ required: true, message: 'Selecciona al menos un rol' }]}
                     >
                         <Select
                             mode="multiple"
                             allowClear
-                            showSearch = {{ optionFilterProp: 'label', onSearch }}
-                            placeholder = "Selecciona un rol"
-                            onChange = { onChange }
+                            placeholder="Selecciona un rol"
                             options={roles.map((rol: RolDto) => ({
-                                value: rol.rolId, // El UUID de tipo string
-                                label: rol.descripcion  // El texto que verá el usuario
+                                value: rol.rolId,
+                                label: rol.descripcion || rol.nombre
                             }))}
                         />
-                        </Form.Item>
+                    </Form.Item>
                 </Col>
             </CatalogoModal>
+
+            {/* Modal de Detalle y Edición por Usuario */}
+            <UsuarioDetalleModal
+                visible={isDetalleModalVisible}
+                usuario={usuarioSeleccionado}
+                rolesDisponibles={roles}
+                cargando={cargando}
+                onClose={() => {
+                    setIsDetalleModalVisible(false);
+                    setUsuarioSeleccionado(null);
+                }}
+                onSaveSuccess={handleActualizarUsuarioExitoso}
+            />
         </div>
     );
 };

@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import { Layout, Menu, theme } from 'antd';
 import {
     DashboardOutlined,
-    InboxOutlined,
     TeamOutlined,
     SettingOutlined,
     LogoutOutlined,
@@ -46,10 +45,8 @@ const filterMenu = (items: CustomMenuItem[], hasPermission: (p: string) => boole
         })
         .filter((item) => {
             // Si el ítem tiene la propiedad children pero el arreglo está vacío, lo ocultamos
-            if ('children' in item && Array.isArray(item.children) && item.children.length === 0) {
-                return false;
-            }
-            return true;
+            return !('children' in item && Array.isArray(item.children) && item.children.length === 0);
+
         }) as MenuItem[]; // Cast final para que Ant Design lo acepte sin quejas
 };
 
@@ -68,12 +65,6 @@ const MainLayout: React.FC = () => {
             icon: <DashboardOutlined />,
             label: 'Inicio',
             // Opcional: si el inicio es público, quita el permission
-        },
-        {
-            key: ROUTES.CATALOGOS.GUIAS,
-            icon: <InboxOutlined />,
-            label: 'Guías/Paquetes',
-            permission: PERMISOS.GUIAS.CONSULTA
         },
         {
             key: ROUTES.CATALOGOS.CLIENTES,

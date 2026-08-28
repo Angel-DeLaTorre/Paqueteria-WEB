@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import { useAuth } from "@hooks"
 import { useNavigate } from "react-router-dom";
-import type {LoginDto} from "@types";
+import type { LoginSolicitudDto } from "@types";
 import { ROUTES } from '@router/rutas'
 import { useNotification } from '@hooks'
 
@@ -12,17 +12,17 @@ const Login: React.FC = () => {
     const { showNotification } = useNotification();
     const navigate = useNavigate();
 
-    const onFinish = async (values: LoginDto) => {
+    const onFinish = async (values: LoginSolicitudDto) => {
         const result = await executeLogin(values);
 
-        if (result.isSuccess) {
+        if (result.esExitoso) {
             navigate(ROUTES.DASHBOARD);
         } else {
             showNotification({
                 type: 'error',
                 message: 'Error de Autenticación',
-                description: result.detalleError?.description || 'Credenciales incorrectas.',
-                errorCode: result.detalleError?.code || 'ERR_UNKNOWN'
+                description: result.detalleError?.descripcion || 'Credenciales incorrectas.',
+                errorCode: result.detalleError?.codigo || 'ERR_UNKNOWN'
             });
         }
     };

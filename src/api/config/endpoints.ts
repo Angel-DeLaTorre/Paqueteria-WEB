@@ -22,6 +22,7 @@ export const ENDPOINTS = {
         CREATE : `${V1}/${ASIGNACION}`,
         UPDATE : (id: string) => `${V1}/${ASIGNACION}/${id}`,
         DELETE : (id: string) => `${V1}/${ASIGNACION}/${id}`,
+        REPORTE_SALIDA : (id: string) => `${V1}/${ASIGNACION}/reporte-salidas/${id}`,
     },
     CHOFER : {
         GETALL: `${V1}/chofer`,
@@ -45,9 +46,12 @@ export const ENDPOINTS = {
     },
     GUIA : {
         GETALL: `${V1}/${GUIA}`,
+        GET_FILTRO: `${V1}/${GUIA}/filtro`,
         GETBYID: (id: string) => `${V1}/${GUIA}/${id}`,
         CREATE : `${V1}/${GUIA}`,
-        UPDATE : (id: string) => `${V1}/${GUIA}/${id}`,
+        UPDATE : (id: string) => `v1/guia/${id}`,
+        GENERAR_ETIQUETA : (id: string) => `v1/guia/etiqueta/${id}`,
+        GENERAR_CARTA : (id: string) => `v1/guia/remision-pdf/${id}`,
         DELETE : (id: string) => `${V1}/${GUIA}/${id}`,
     },
     MUNICIPIO : {

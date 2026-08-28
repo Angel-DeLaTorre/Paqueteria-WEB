@@ -6,7 +6,7 @@ import {
     DeleteOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import type {ClienteDto, DireccionClienteDto} from "@types";
+import type {ClienteDto, ClienteDireccionDto} from "@types";
 import { useCliente } from "@hooks";
 import { CatalogoModal } from "@components/ModalCatalogo";
 import { DireccionFormFields } from "@components/DireccionModal"
@@ -95,7 +95,7 @@ const Clientes: React.FC = () => {
     ];
 
     const expandedRowRender = (record: ClienteDto) => {
-        const columns : ColumnsType<DireccionClienteDto> = [
+        const columns : ColumnsType<ClienteDireccionDto> = [
             {
                 title: 'Dirección Completa',
                 key: 'direccionTexto',
@@ -128,7 +128,7 @@ const Clientes: React.FC = () => {
         return (
             <Table
                 columns={columns}
-                dataSource={record.direcciones}
+                dataSource={record.direcciones ?? []}
                 pagination={false}
                 rowKey="idDireccion"
                 size="small"

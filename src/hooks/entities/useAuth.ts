@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { postLogin } from '@api/authService.ts';
 import { useAuthStore } from '@store/useAuthStore.ts';
-import {type ApiResult, type LoginDto, type SesionDto} from '@types';
+import {type Respuesta, type LoginSolicitudDto, type SesionRespuestaDto} from '@types';
 
 export const useAuth = () => {
     const [loading, setLoading] = useState(false);
     const setSession = useAuthStore((state) => state.setSession);
     const logout = useAuthStore((state) => state.clearSession);
 
-    const executeLogin = async (values: LoginDto) : Promise<ApiResult<SesionDto>> =>
+    const executeLogin = async (values: LoginSolicitudDto) : Promise<Respuesta<SesionRespuestaDto>> =>
     {
         setLoading(true);
         try
         {
             const result = await postLogin(values);
-            if (result.isSuccess && result.value) {
-                setSession(result.value);
+            if (result.esExitoso && result.datos) {
+                setSession(result.datos);
             }
             return result;
         }
@@ -23,11 +23,11 @@ export const useAuth = () => {
         catch (error : unknown)
         {
             return {
-                isSuccess: false,
-                value: null,
+                esExitoso: false,
+                datos: null,
                 detalleError: {
-                    code: 'FRONTEND_EXCEPTION',
-                    description: 'Ocurrió un error inesperado al procesar la sesión en la aplicación.'
+                    codigo: 'FRONTEND_EXCEPTION',
+                    descripcion: 'Ocurrió un error inesperado al procesar la sesión en la aplicación.'
                 }
             };
         }

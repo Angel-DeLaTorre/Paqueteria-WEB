@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import * as choferService from '@api/choferService.ts';
-import type {ChoferCreateDto, ChoferDto} from '@types';
+import type { ChoferCrearDto, ChoferDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';
 import { useNotification } from "@hooks";
@@ -14,11 +14,11 @@ export const useChofer = () => {
         setLoading(true);
         try {
             const result = await choferService.getChoferes();
-            if (result.isSuccess && result.value) {
-                setChoferes(result.value);
+            if (result.esExitoso && result.datos) {
+                setChoferes(result.datos);
             } else {
                 setChoferes([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             console.error(error);
@@ -32,10 +32,10 @@ export const useChofer = () => {
         setLoading(true);
         try {
             const result = await choferService.getChoferById(id);
-            if (result.isSuccess && result.value) {
-                return result.value;
+            if (result.esExitoso && result.datos) {
+                return result.datos;
             } else {
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
             return null;
         } catch (error) {
@@ -48,7 +48,7 @@ export const useChofer = () => {
         }
     }
 
-    const handleCreate = async (nuevoChofer: ChoferCreateDto) => {
+    const handleCreate = async (nuevoChofer: ChoferCrearDto) => {
         setLoading(true);
         try {
             await choferService.createChofer(nuevoChofer);

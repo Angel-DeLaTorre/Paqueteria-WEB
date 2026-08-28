@@ -201,7 +201,7 @@ export const ArticulosFormList: React.FC<ArticulosFormListProps> = ({
                                 <Col xs={12} sm={8} md={4}>
                                     <Form.Item
                                         {...restField}
-                                        name={[name, 'alto']}
+                                        name={[name, 'volumen']}
                                         label="Volumen (cm)"
                                         initialValue={0}
                                     >

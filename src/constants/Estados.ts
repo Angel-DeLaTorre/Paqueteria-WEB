@@ -1,6 +1,42 @@
 import type { EstadoDto } from "@types";
 
 export const ESTADOS_MEXICO: EstadoDto[] = [
+    { estadoId: "AGU", nombre: "Aguascalientes",  acronimo: "AS" },
+    { estadoId: "BCN", nombre: "Baja California", acronimo: "BC" },
+    { estadoId: "BCS", nombre: "Baja California Sur", acronimo: "BS" },
+    { estadoId: "CAM", nombre: "Campeche", acronimo: "CC" },
+    { estadoId: "COA", nombre: "Coahuila", acronimo: "CL" },
+    { estadoId: "COL", nombre: "Colima", acronimo: "CM" },
+    { estadoId: "CHP", nombre: "Chiapas", acronimo: "CS" },
+    { estadoId: "CHH", nombre: "Chihuahua", acronimo: "CH" },
+    { estadoId: "DIF", nombre: "Ciudad de MEX", acronimo: "DF" },
+    { estadoId: "DUR", nombre: "Durango", acronimo: "DG" },
+    { estadoId: "GTO", nombre: "Guanajuato", acronimo: "GT" },
+    { estadoId: "GRO", nombre: "Guerrero", acronimo: "GR" },
+    { estadoId: "HGO", nombre: "Hidalgo", acronimo: "HG" },
+    { estadoId: "JAL", nombre: "Jalisco", acronimo: "JC" },
+    { estadoId: "MEX", nombre: "Estado de MEX", acronimo: "MC" },
+    { estadoId: "MIC", nombre: "Michoacán", acronimo: "MN" },
+    { estadoId: "MOR", nombre: "Morelos", acronimo: "MS" },
+    { estadoId: "NAY", nombre: "Nayarit", acronimo: "NT" },
+    { estadoId: "NLE", nombre: "Nuevo León", acronimo: "NL" },
+    { estadoId: "OAX", nombre: "Oaxaca", acronimo: "OC" },
+    { estadoId: "PUE", nombre: "Puebla", acronimo: "PL" },
+    { estadoId: "QRO", nombre: "Querétaro", acronimo: "QT" },
+    { estadoId: "ROO", nombre: "Quintana Roo", acronimo: "QR" },
+    { estadoId: "SLP", nombre: "San Luis Potosí", acronimo: "SP" },
+    { estadoId: "SIN", nombre: "Sinaloa", acronimo: "SL" },
+    { estadoId: "SON", nombre: "Sonora", acronimo: "SR" },
+    { estadoId: "TAB", nombre: "Tabasco", acronimo: "TC" },
+    { estadoId: "TAM", nombre: "Tamaulipas", acronimo: "TS" },
+    { estadoId: "TLA", nombre: "Tlaxcala", acronimo: "TL" },
+    { estadoId: "VER", nombre: "Veracruz", acronimo: "VZ" },
+    { estadoId: "YUC", nombre: "Yucatán", acronimo: "YN" },
+    { estadoId: "ZAC", nombre: "Zacatecas", acronimo: "ZS" }
+];
+
+/*
+export const ESTADOS_MEXICO: EstadoDto[] = [
     { estadoId: "AGU", nombre: "Aguascalientes", pais: "MEX", acronimo2: "AS" },
     { estadoId: "BCN", nombre: "Baja California", pais: "MEX", acronimo2: "BC" },
     { estadoId: "BCS", nombre: "Baja California Sur", pais: "MEX", acronimo2: "BS" },
@@ -34,3 +70,4 @@ export const ESTADOS_MEXICO: EstadoDto[] = [
     { estadoId: "YUC", nombre: "Yucatán", pais: "MEX", acronimo2: "YN" },
     { estadoId: "ZAC", nombre: "Zacatecas", pais: "MEX", acronimo2: "ZS" }
 ];
+*/

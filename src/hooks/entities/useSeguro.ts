@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import * as seguroService from '@api/seguroService.ts';
-import type {Result, SeguroCreateDto, SeguroDto, SeguroUpdateDto} from '@types';
+import type {Respuesta, SeguroCrearDto, SeguroDto, SeguroActualizarDto} from '@types';
 import { ResultFactory} from '@types';
 import {getErrorMessage} from "@utils";
 
@@ -12,8 +12,8 @@ export const useSeguro = (autoFetch = true) => {
         setLoading(true);
         try {
             const result = await seguroService.getSeguros();
-            if (result.isSuccess && result.value) {
-                setSeguros(result.value);
+            if (result.esExitoso && result.datos) {
+                setSeguros(result.datos);
             } else {
                 setSeguros([]);
             }
@@ -27,7 +27,7 @@ export const useSeguro = (autoFetch = true) => {
         }
     }, []);
 
-    const fetchSeguro = useCallback( async ( id : string) : Promise<Result<SeguroDto>> => {
+    const fetchSeguro = useCallback( async ( id : string) : Promise<Respuesta<SeguroDto>> => {
         setLoading(true);
         try {
             return await seguroService.getSeguro(id);
@@ -40,7 +40,7 @@ export const useSeguro = (autoFetch = true) => {
         }
     }, []);
 
-    const handleCreate = useCallback( async (nuevoSeguro: SeguroCreateDto) : Promise<Result<SeguroDto>> => {
+    const handleCreate = useCallback( async (nuevoSeguro: SeguroCrearDto) : Promise<Respuesta<SeguroDto>> => {
         setLoading(true);
         try {
             return await seguroService.createSeguro(nuevoSeguro);
@@ -53,7 +53,7 @@ export const useSeguro = (autoFetch = true) => {
         }
     }, []);
 
-    const handleUpdate = useCallback( async (seguroActualizado: SeguroUpdateDto) : Promise<Result<boolean>> => {
+    const handleUpdate = useCallback( async (seguroActualizado: SeguroActualizarDto) : Promise<Respuesta<boolean>> => {
         setLoading(true);
         try {
             return await seguroService.updateSeguro(seguroActualizado);
@@ -66,7 +66,7 @@ export const useSeguro = (autoFetch = true) => {
         }
     }, []);
 
-    const handleDelete = useCallback( async (id: string) : Promise<Result<boolean>> => {
+    const handleDelete = useCallback( async (id: string) : Promise<Respuesta<boolean>> => {
         setLoading(true);
         try {
             return await seguroService.deleteSeguro(id);
@@ -79,7 +79,7 @@ export const useSeguro = (autoFetch = true) => {
         }
     }, []);
 
-    const handleDesactivarSeguro = useCallback( async (id: string) : Promise<Result<boolean>>  => {
+    const handleDesactivarSeguro = useCallback( async (id: string) : Promise<Respuesta<boolean>>  => {
         setLoading(true);
         try {
             return await seguroService.desactivarSeguro(id);
