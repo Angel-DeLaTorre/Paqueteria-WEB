@@ -20,6 +20,7 @@ import AsignacionesAlta from "@modules/Asignaciones/AsignacionesAlta";
 
 import { Unauthorized } from "@modules/Unauthorize";
 import SeguroScreen from "@modules/catalogos/Seguros.tsx";
+import {GuiaDetalleScreen} from "@modules/Guias/GuiaDetalleScreen.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +64,16 @@ export const router = createBrowserRouter([
                         element: <GuiasAlta />,
                     }
                 ]
+            },
+            {
+                element: <ProtectedRoute requiredPermission = { PERMISOS.GUIAS.CONSULTA } />,
+                children: [
+                    {
+                        path: '/app/guias/:id',
+                        element: <GuiaDetalleScreen />,
+                    }
+                ]
+
             },
             {
                 element: <ProtectedRoute requiredPermission="asignaciones.consultar" />,

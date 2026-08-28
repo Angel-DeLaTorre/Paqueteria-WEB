@@ -19,29 +19,17 @@ import {
 import { SearchOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { useSucursal, useChofer, useGuia, useAsignacion } from '@hooks';
-import type { GuiaDto } from '@types';
+import type {GuiaDto, AsignacionCrearDto, GuiaFiltroDto} from '@types';
 
 const { Title, Text } = Typography;
 
-export interface AsignacionCreateDto {
-    sucursalOrigenId: string;
-    sucursalDestinoId: string;
-    choferId?: string;
-    fechaPartida?: string | Date;
-    guiasIds: string[];
-    st1?: string;
-    st2?: string;
-    st3?: string;
-    st4?: string;
-}
-
 const AsignacionesAlta: React.FC = () => {
-    const [form] = Form.useForm<AsignacionCreateDto>();
+    const [form] = Form.useForm<AsignacionCrearDto>();
 
     // Estados locales para selección y búsqueda
     const [selectedGuiaIds, setSelectedGuiaIds] = useState<React.Key[]>([]);
     // Almacena la entidad completa de las guías seleccionadas para evitar que 'desaparezcan' de la vista
-    const [guiasSeleccionadasObjetos, setGuiasSeleccionadasObjetos] = useState<any[]>([]);
+    const [guiasSeleccionadasObjetos, setGuiasSeleccionadasObjetos] = useState<GuiaDto[]>([]);
 
     const [desactivarFiltroSucursal, setDesactivarFiltroSucursal] = useState<boolean>(false);
     const [searchFolio, setSearchFolio] = useState<string>('');
@@ -50,14 +38,20 @@ const AsignacionesAlta: React.FC = () => {
     const sucursalOrigenSeleccionada = Form.useWatch('sucursalOrigenId', form);
 
     // Hooks de datos
-    const { sucursales, loading: loadingSucursales } = useSucursal();
+    const { sucursales, cargando: loadingSucursales } = useSucursal();
     const { choferes, loading: loadingChoferes } = useChofer();
-    const { guias, loading: loadingGuias, refresh: refreshGuias } = useGuia();
+    const { guias, cargando: loadingGuias, obtenerGuiasFiltro } = useGuia();
     const { handleCreate: guardarAsignacion } = useAsignacion();
 
+    const [filtro] = useState<GuiaFiltroDto>({
+        estaAsignado: false, // Muestra asignados y no asignados por defecto
+        pagina: 1,
+        tamanoPagina: 20
+    });
+
     useEffect(() => {
-        refreshGuias();
-    }, [refreshGuias, form]);
+        void obtenerGuiasFiltro(filtro);
+    }, [obtenerGuiasFiltro, filtro, form]);
 
     // Mapeos para Selects
     const sucursalOptions = sucursales.map((s) => ({
@@ -72,7 +66,7 @@ const AsignacionesAlta: React.FC = () => {
 
     // 1. Filtrado de guías según el criterio actual (sucursal y búsqueda)
     const guiasBusqueda = useMemo(() => {
-        return guias.filter((g: any) => {
+        return guias.filter((g: GuiaDto) => {
             const cumpleSucursal = desactivarFiltroSucursal
                 ? true
                 : sucursalOrigenSeleccionada
@@ -90,13 +84,13 @@ const AsignacionesAlta: React.FC = () => {
     // 2. Combinación de los resultados de búsqueda con las guías previamente seleccionadas
     // Evita duplicados comparando la propiedad 'guiaId'
     const guiasParaTabla = useMemo(() => {
-        const mapaGuias = new Map<string, any>();
+        const mapaGuias = new Map<string, GuiaDto>();
 
         // Agregamos las guías de la búsqueda actual
-        guiasBusqueda.forEach((g: any) => mapaGuias.set(g.guiaId, g));
+        guiasBusqueda.forEach((g: GuiaDto) => mapaGuias.set(g.guiaId, g));
 
         // Forzamos la inclusión de las guías seleccionadas anteriormente
-        guiasSeleccionadasObjetos.forEach((g: any) => {
+        guiasSeleccionadasObjetos.forEach((g: GuiaDto) => {
             if (!mapaGuias.has(g.guiaId)) {
                 mapaGuias.set(g.guiaId, g);
             }
@@ -106,12 +100,12 @@ const AsignacionesAlta: React.FC = () => {
     }, [guiasBusqueda, guiasSeleccionadasObjetos]);
 
     // Handler para la selección de filas
-    const handleRowSelectionChange = (newSelectedRowKeys: React.Key[], selectedRows: any[]) => {
+    const handleRowSelectionChange = (newSelectedRowKeys: React.Key[], selectedRows: GuiaDto[]) => {
         setSelectedGuiaIds(newSelectedRowKeys);
 
         // Actualizamos el acumulador de objetos manteniendo los anteriores seleccionados
         setGuiasSeleccionadasObjetos((prevObjetos) => {
-            const mapa = new Map<string, any>();
+            const mapa = new Map<string, GuiaDto>();
             // Mantenemos objetos previos si su ID sigue estando en newSelectedRowKeys
             prevObjetos.forEach((obj) => {
                 if (newSelectedRowKeys.includes(obj.guiaId)) {
@@ -144,14 +138,14 @@ const AsignacionesAlta: React.FC = () => {
         {
             title: 'Origen',
             key: 'origen',
-            render: (_, record: any) => (
+            render: (_, record: GuiaDto) => (
                 <span>{record.direccionOrigen?.direccion?.colonia || 'Origen N/A'}</span>
             ),
         },
         {
             title: 'Destino',
             key: 'destino',
-            render: (_, record: any) => (
+            render: (_, record: GuiaDto) => (
                 <span>{record.direccionDestino?.direccion?.colonia || 'Destino N/A'}</span>
             ),
         },
@@ -175,13 +169,11 @@ const AsignacionesAlta: React.FC = () => {
         },
     ];
 
-    const onFinish = async (values: AsignacionCreateDto) => {
-        const payload: AsignacionCreateDto = {
+    const onFinish = async (values: AsignacionCrearDto) => {
+        const payload: AsignacionCrearDto = {
             ...values,
-            guiasIds: selectedGuiaIds.map((id) => id.toString()),
+            guiasId: selectedGuiaIds.map((id) => id.toString()),
             fechaPartida: values.fechaPartida
-                ? new Date(values.fechaPartida as any).toISOString()
-                : undefined,
         };
 
         console.log('Datos de asignación a guardar:', payload);
@@ -200,7 +192,7 @@ const AsignacionesAlta: React.FC = () => {
                 <div
                     style={{
                         display: 'flex',
-                        justify: 'flex-end',
+                        justifyContent: 'flex-end',
                         borderBottom: '1px solid #f0f0f0',
                         paddingBottom: '16px',
                         marginBottom: '16px',
@@ -256,7 +248,7 @@ const AsignacionesAlta: React.FC = () => {
                 <Divider orientation="horizontal">Guías Disponibles para Asignar</Divider>
 
                 <Card size="small" style={{ marginBottom: 24 }}>
-                    <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                    <Space orientation="vertical" style={{ width: '100%' }} size="middle">
 
                         {/* BARRA DE CONTROLES SOBRE LA TABLA */}
                         <Row gutter={[16, 16]} align="middle" justify="space-between">
@@ -280,7 +272,7 @@ const AsignacionesAlta: React.FC = () => {
                         </Row>
 
                         <Alert
-                            message={`Mostrando ${guiasParaTabla.length} guías en la vista (${selectedGuiaIds.length} seleccionadas en total). Las guías previamente marcadas permanecerán seleccionadas aunque cambies la búsqueda.`}
+                            title={`Mostrando ${guiasParaTabla.length} guías en la vista (${selectedGuiaIds.length} seleccionadas en total). Las guías previamente marcadas permanecerán seleccionadas aunque cambies la búsqueda.`}
                             type="info"
                             showIcon
                         />
@@ -370,7 +362,7 @@ const AsignacionesAlta: React.FC = () => {
                 <div
                     style={{
                         display: 'flex',
-                        justify: 'flex-end',
+                        justifyContent: 'flex-end',
                         borderTop: '1px solid #f0f0f0',
                         paddingTop: '16px',
                         marginTop: '24px',

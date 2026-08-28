@@ -14,11 +14,11 @@ export const useArticulo = () => {
         setLoading(true);
         try {
             const result = await articuloService.getArticulos();
-            if (result.isSuccess && result.value) {
-                setArticulos(result.value);
+            if (result.esExitoso && result.datos) {
+                setArticulos(result.datos);
             } else {
                 setArticulos([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);

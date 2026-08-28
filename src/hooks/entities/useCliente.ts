@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import * as ClienteService from '@api/clienteService.ts';
-import type {ClienteCreateDto, ClienteDto} from '@types';
+import type { ClienteCrearDto, ClienteDto} from '@types';
 import { getErrorMessage } from '@utils';
 import {message} from 'antd';
 import { useNotification } from "@hooks";
@@ -14,11 +14,11 @@ export const useCliente = () => {
         setLoading(true);
         try {
             const result = await ClienteService.getClientes();
-            if (result.isSuccess && result.value) {
-                setClientes(result.value);
+            if (result.esExitoso && result.datos) {
+                setClientes(result.datos);
             } else {
                 setClientes([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -32,10 +32,10 @@ export const useCliente = () => {
         setLoading(true);
         try {
             const result = await ClienteService.getClienteById(id);
-            if (result.isSuccess && result.value) {
-                return result.value;
+            if (result.esExitoso && result.datos) {
+                return result.datos;
             } else {
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
             return null;
         } catch (error) {
@@ -47,7 +47,7 @@ export const useCliente = () => {
         }
     }
 
-    const handleCreate = async (nuevoCliente: ClienteCreateDto) => {
+    const handleCreate = async (nuevoCliente: ClienteCrearDto) => {
         setLoading(true);
         try {
             await ClienteService.createCliente(nuevoCliente);

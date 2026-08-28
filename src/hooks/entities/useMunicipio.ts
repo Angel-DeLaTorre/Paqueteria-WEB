@@ -13,11 +13,11 @@ export const useMunicipio = () => {
         setLoading(true);
         try {
             const result = await municipioService.getMunicipios();
-            if (result.isSuccess && result.value) {
-                setMunicipios(result.value);
+            if (result.esExitoso && result.datos) {
+                setMunicipios(result.datos);
             } else {
                 setMunicipios([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -31,11 +31,11 @@ export const useMunicipio = () => {
         setLoading(true);
         try {
             const result = await municipioService.getMunicipiosByEstado(estadoId);
-            if (result.isSuccess && result.value) {
-                setMunicipios(result.value);
+            if (result.esExitoso && result.datos) {
+                setMunicipios(result.datos);
             } else {
                 setMunicipios([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -44,7 +44,7 @@ export const useMunicipio = () => {
         } finally {
             setLoading(false);
         }
-    }, [] );
+    }, [showNotification] );
 
     return {
         municipios,

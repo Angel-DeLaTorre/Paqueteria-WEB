@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
 import {message} from 'antd';
-import type { RutaDto, RutaCreateDto, RutaUpdateDto} from '@types';
+import type { RutaDto, RutaCrearDto, RutaActualizarDto} from '@types';
 import * as rutaService from '@api/rutaService.ts';
 import { getErrorMessage } from "@utils";
 import { useNotification } from "@hooks";
@@ -14,11 +14,11 @@ export const useRuta = () => {
         setLoading(true);
         try {
             const result = await rutaService.getRutas();
-            if (result.isSuccess && result.value) {
-                setRutas(result.value);
+            if (result.esExitoso && result.datos) {
+                setRutas(result.datos);
             } else {
                 setRutas([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -42,7 +42,7 @@ export const useRuta = () => {
         }
     }, []);
 
-    const handleCreate = async (nuevoSeguro: RutaCreateDto) => {
+    const handleCreate = async (nuevoSeguro: RutaCrearDto) => {
         setLoading(true);
         try {
             await rutaService.createRuta(nuevoSeguro);
@@ -57,7 +57,7 @@ export const useRuta = () => {
         }
     };
 
-    const handleUpdate = async (rutaActualizado: RutaUpdateDto) => {
+    const handleUpdate = async (rutaActualizado: RutaActualizarDto) => {
         setLoading(true);
         try {
             await rutaService.updateRuta(rutaActualizado);

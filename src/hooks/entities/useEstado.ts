@@ -13,11 +13,11 @@ export const useEstado = () => {
         setLoading(true);
         try {
             const result = await estadoService.getEstados();
-            if (result.isSuccess && result.value) {
-                setEstados(result.value);
+            if (result.esExitoso && result.datos) {
+                setEstados(result.datos);
             } else {
                 setEstados([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
         } catch (error) {
             const msg = getErrorMessage(error);
@@ -31,10 +31,10 @@ export const useEstado = () => {
         setLoading(true);
         try {
             const result = await estadoService.getEstadoById(id);
-            if (result.isSuccess && result.value) {
-                return result.value;
+            if (result.esExitoso && result.datos) {
+                return result.datos;
             } else {
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.descripcion || '' });
             }
             return null;
         } catch (error) {

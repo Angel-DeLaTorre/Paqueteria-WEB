@@ -1,51 +1,101 @@
-import { useState, useEffect } from 'react';
-import { getSucursales, createSucursal } from '@api/sucursalService.ts';
-import type { SucursalDto, SucursalCreateDto } from '@types';
-import { message } from 'antd';
-import { useNotification } from "@hooks";
+import { useCallback, useState } from 'react';
+import * as sucursalService from '@api/sucursalService.ts';
+import {
+    type SucursalDto,
+    type SucursalCrearDto,
+    type SucursalActualizarDto,
+    ResultFactory,
+    type Respuesta
+} from '@types';
+import { getErrorMessage } from '@utils';
 
 export const useSucursal = () => {
     const [sucursales, setSucursales] = useState<SucursalDto[]>([]);
-    const [loading, setLoading] = useState(false);
-    const { showNotification } = useNotification();
+    const [cargando, setCargando] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchSucursales = async () => {
-        setLoading(true);
+    const obtenerSucursales = useCallback(async (): Promise<Respuesta<SucursalDto[]>> => {
+        setCargando(true);
+        setError(null);
         try {
-            const result = await getSucursales();
-            if (result.isSuccess && result.value) {
-                setSucursales(result.value);
+            const respuesta = await sucursalService.getSucursales();
+            if (respuesta.esExitoso && respuesta.datos) {
+                setSucursales(respuesta.datos);
             } else {
                 setSucursales([]);
-                showNotification({ type: 'error', message: 'Error', description: result.detalleError?.description || '' });
+                setError(respuesta.detalleError?.descripcion || 'Error al obtener las sucursales');
             }
-        } catch (error) {
-            console.error(error);
-            message.error('Error al cargar usuarios ' );
+            return respuesta;
+        } catch (err) {
+            const mensajeError = getErrorMessage(err);
+            setError(mensajeError);
+            return ResultFactory.failure<SucursalDto[]>(mensajeError);
         } finally {
-            setLoading(false);
+            setCargando(false);
         }
-    };
-
-    const handleCreate = async (sucursal: SucursalCreateDto) => {
-        setLoading(true);
-        try {
-            await createSucursal(sucursal);
-            message.success('Sucursal creado con éxito');
-            await fetchSucursales();
-            return true;
-        } catch (error) {
-            console.error(error);
-            message.error('Error al crear sucursal');
-            return false;
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        void fetchSucursales();
     }, []);
 
-    return { sucursales, loading, handleCreate, refresh: fetchSucursales };
+    const obtenerSucursalPorId = useCallback(async (id: string): Promise<Respuesta<SucursalDto>> => {
+        setCargando(true);
+        setError(null);
+        try {
+            const respuesta = await sucursalService.getSucursalById(id);
+            if (!respuesta.esExitoso) {
+                setError(respuesta.detalleError?.descripcion || 'Error al obtener la sucursal');
+            }
+            return respuesta;
+        } catch (err) {
+            const mensajeError = getErrorMessage(err);
+            setError(mensajeError);
+            return ResultFactory.failure<SucursalDto>(mensajeError);
+        } finally {
+            setCargando(false);
+        }
+    }, []);
+
+    const crearSucursal = useCallback(async (nuevaSucursal: SucursalCrearDto): Promise<Respuesta<SucursalDto>> => {
+        setCargando(true);
+        setError(null);
+        try {
+            const respuesta = await sucursalService.createSucursal(nuevaSucursal);
+            if (!respuesta.esExitoso) {
+                setError(respuesta.detalleError?.descripcion || 'Error al crear la sucursal');
+            }
+            return respuesta;
+        } catch (err) {
+            const mensajeError = getErrorMessage(err);
+            setError(mensajeError);
+            return ResultFactory.failure<SucursalDto>(mensajeError);
+        } finally {
+            setCargando(false);
+        }
+    }, []);
+
+    const actualizarSucursal = useCallback(async (sucursalUpdate: SucursalActualizarDto): Promise<Respuesta<boolean>> => {
+        setCargando(true);
+        setError(null);
+        try {
+            const respuesta = await sucursalService.updateSucursal(sucursalUpdate);
+            if (!respuesta.esExitoso) {
+                setError(respuesta.detalleError?.descripcion || 'Error al actualizar la sucursal');
+            }
+            return respuesta;
+        } catch (err) {
+            const mensajeError = getErrorMessage(err);
+            setError(mensajeError);
+            return ResultFactory.failure<boolean>(mensajeError);
+        } finally {
+            setCargando(false);
+        }
+    }, []);
+
+    return {
+        sucursales,
+        cargando,
+        error,
+        obtenerSucursales,
+        obtenerSucursalPorId,
+        crearSucursal,
+        actualizarSucursal
+    };
 };

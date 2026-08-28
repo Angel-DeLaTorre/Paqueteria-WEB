@@ -1,28 +1,28 @@
-import type {Result, RutaCreateDto, RutaDto, RutaUpdateDto} from "@types";
+import type {Respuesta, RutaCrearDto, RutaDto, RutaActualizarDto} from "@types";
 import api from "@api/config/axiosConfig.ts";
 import {ENDPOINTS} from "@api/config/endpoints.ts";
 
-export const getRutas = async (): Promise<Result<RutaDto[]>> => {
-    const { data } = await api.get<Result<RutaDto[]>>(ENDPOINTS.RUTA.GETALL);
+export const getRutas = async (): Promise<Respuesta<RutaDto[]>> => {
+    const { data } = await api.get<Respuesta<RutaDto[]>>(ENDPOINTS.RUTA.GETALL);
     return data;
 };
 
-export const getRuta = async ( id : string): Promise<Result<RutaDto>> => {
-    const { data } = await api.get<Result<RutaDto>>(ENDPOINTS.RUTA.GETBYID(id));
+export const getRuta = async ( id : string): Promise<Respuesta<RutaDto>> => {
+    const { data } = await api.get<Respuesta<RutaDto>>(ENDPOINTS.RUTA.GETBYID(id));
     return data;
 };
 
-export const createRuta = async (ruta: RutaCreateDto): Promise<Result<RutaDto>> => {
-    const { data } = await api.post<Result<RutaDto>>(ENDPOINTS.RUTA.CREATE, ruta);
+export const createRuta = async (ruta: RutaCrearDto): Promise<Respuesta<RutaDto>> => {
+    const { data } = await api.post<Respuesta<RutaDto>>(ENDPOINTS.RUTA.CREATE, ruta);
     return data;
 };
 
-export const updateRuta = async (ruta: RutaUpdateDto): Promise<Result<boolean>> => {
-    const { data } = await api.put<Result<boolean>>(ENDPOINTS.RUTA.UPDATE(ruta.rutaId), ruta);
+export const updateRuta = async (ruta: RutaActualizarDto): Promise<Respuesta<boolean>> => {
+    const { data } = await api.put<Respuesta<boolean>>(ENDPOINTS.RUTA.UPDATE(ruta.rutaId), ruta);
     return data;
 };
 
-export const deleteRuta = async ( id : string ): Promise<Result<boolean>> => {
-    const { data } = await api.delete<Result<boolean>>(ENDPOINTS.RUTA.DELETE(id));
+export const deleteRuta = async ( id : string ): Promise<Respuesta<boolean>> => {
+    const { data } = await api.delete<Respuesta<boolean>>(ENDPOINTS.RUTA.DELETE(id));
     return data;
 };

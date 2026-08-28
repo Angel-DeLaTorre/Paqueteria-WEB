@@ -1,24 +1,56 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, Card, Tag, Space, Typography } from 'antd';
 import { FileAddOutlined, EyeOutlined, PrinterOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
-import type {GuiaDto} from "@types";
-import { useGuia } from "@hooks";
-
+import type { GuiaDto } from "@types";
+import { useGuia, useNotification } from "@hooks";
 import { ROUTES } from '@router/rutas';
+import {pdfImprimirUtil} from "@utils";
 
 const { Text } = Typography;
 
 const GuiasScreen: React.FC = () => {
-
     const navigate = useNavigate();
+    const { guias, cargando, obtenerGuias, generarEtiquita } = useGuia();
+    const { showNotification } = useNotification();
 
-    const { refresh, guias, loading } = useGuia();
+    const [idImprimiendo, setIdImprimiendo] = useState<string | null>(null);
 
     useEffect(() => {
-        refresh();
-    }, [refresh]);
+        const cargarDatos = async () => {
+            const respuesta = await obtenerGuias();
+            if (!respuesta.esExitoso) {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al consultar guías',
+                    description: respuesta.detalleError?.descripcion || 'No se pudo cargar la lista de guías.'
+                });
+            }
+        };
+
+        void cargarDatos();
+    }, [obtenerGuias, showNotification]);
+
+    const handleImprimir =  async (guiaId : string) => {
+        setIdImprimiendo(guiaId);
+        try{
+            const respuesta = await generarEtiquita(guiaId);
+
+            if (respuesta.esExitoso && respuesta.datos) {
+                pdfImprimirUtil(respuesta.datos);
+            } else {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al generar el reporte',
+                    description: respuesta.detalleError?.descripcion || 'No se pudo generar el reporte.'
+                });
+            }
+        } finally {
+            setIdImprimiendo(null);
+        }
+
+    };
 
     const columns: ColumnsType<GuiaDto> = [
         {
@@ -34,20 +66,24 @@ const GuiasScreen: React.FC = () => {
             dataIndex: 'fechaEnvio',
             key: 'fechaEnvio',
             render: (fecha: Date) => new Date(fecha).toLocaleDateString(),
-            sorter: (a, b) => new Date(a.fechaEnvio).getTime() - new Date(b.fechaEnvio).getTime(),
+            sorter: (a, b) => {
+                const fechaA = a.fechaEnvio ? new Date(a.fechaEnvio).getTime() : 0;
+                const fechaB = b.fechaEnvio ? new Date(b.fechaEnvio).getTime() : 0;
+                return fechaA - fechaB;
+            },
         },
         {
             title: 'Origen',
             key: 'origen',
             render: (_, record) => (
-                <span>{record.direccionOrigen.direccion.calle}, {record.direccionOrigen.direccion.colonia}</span>
+                <span>{record.direccionOrigen?.direccion?.calle}, {record.direccionOrigen?.direccion?.colonia}</span>
             ),
         },
         {
             title: 'Destino',
             key: 'destino',
             render: (_, record) => (
-                <span>{record.direccionDestino.direccion.calle}, {record.direccionDestino.direccion.colonia}</span>
+                <span>{record.direccionDestino?.direccion?.calle}, {record.direccionDestino?.direccion?.colonia}</span>
             ),
         },
         {
@@ -72,12 +108,30 @@ const GuiasScreen: React.FC = () => {
             key: 'acciones',
             fixed: 'right',
             width: 120,
-            render: () => (
-                <Space size="small">
-                    <Button icon={<EyeOutlined />} type="text" title="Ver detalle" />
-                    <Button icon={<PrinterOutlined />} type="text" title="Imprimir Guía" />
-                </Space>
-            ),
+            render: (_, record) => {
+                const estaCargandoEste = idImprimiendo === record.guiaId;
+                const hayAlgunaCargaActiva = idImprimiendo !== null;
+
+                return (
+                    <Space size="small">
+                        <Button
+                            icon={<EyeOutlined />}
+                            type="text"
+                            title="Ver detalle"
+                            disabled={hayAlgunaCargaActiva}
+                            onClick={() => navigate(`/app/guias/${record.guiaId}`)}
+                        />
+                        <Button
+                            icon={<PrinterOutlined />}
+                            type="text"
+                            title="Imprimir Guía"
+                            loading={estaCargandoEste}
+                            disabled={hayAlgunaCargaActiva} // Bloquea los demás botones mientras uno imprime
+                            onClick={() => handleImprimir(record.guiaId)}
+                        />
+                    </Space>
+                );
+            },
         },
     ];
 
@@ -96,11 +150,11 @@ const GuiasScreen: React.FC = () => {
                 }
             >
                 <Table
-                    columns={columns}
+                    columns = {columns}
                     dataSource={guias}
                     rowKey="guiaId"
-                    loading={loading}
-                    scroll={{ x: 1300 }} // Scroll horizontal para laptops de sucursal
+                    loading={cargando}
+                    scroll={{ x: 1300 }}
                     pagination={{
                         total: guias.length,
                         pageSize: 10,

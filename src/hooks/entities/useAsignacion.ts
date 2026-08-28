@@ -1,63 +1,83 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useState} from 'react';
 import * as asignacionService from '@api/asignacionService.ts';
-import type {AsignacionCreateDto, AsignacionDto} from '@types';
+import {type AsignacionCrearDto, type AsignacionDto, ResultFactory} from '@types';
 import { getErrorMessage } from '@utils';
-import {message} from 'antd';
+
 
 export const useAsignacion = () => {
-    const [Asignaciones, setAsignaciones] = useState<AsignacionDto[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [asignaciones, setAsignaciones] = useState<AsignacionDto[]>([]);
+    const [cargando, setCargando] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
-    const fetchAsignaciones = async () => {
-        setLoading(true);
+    const fetchAsignaciones = useCallback(async () => {
+        setCargando(true);
         try {
-            const result = await asignacionService.getAsignaciones();
-            if (result.isSuccess && result.value) {
-                setAsignaciones(result.value);
+            const respuesta = await asignacionService.getAsignaciones();
+            if (respuesta.esExitoso && respuesta.datos) {
+                setAsignaciones(respuesta.datos);
             } else {
                 setAsignaciones([]);
+                setError(respuesta.detalleError?.descripcion || 'Error al obtener usuarios');
             }
+            return respuesta;
         } catch (error) {
-            const msg = getErrorMessage(error);
-            console.error(msg);
+            const mensajeError = error instanceof Error ? error.message : 'Error de conexión inesperado';
+            setError(mensajeError);
+            return {
+                esExitoso: false,
+                datos: null,
+                detalleError: { codigo: 'ErrorExcepcion', descripcion: mensajeError }
+            };
         } finally {
-            setLoading(false);
+            setCargando(false);
         }
-    };
+    },[]);
 
     const fetchAsignacion = async (id: string): Promise<AsignacionDto | null> => {
-        setLoading(true);
+        setCargando(true);
         try {
             const result = await asignacionService.getAsignacionById(id);
-            return result.value;
+            return result.datos;
+
+
+
+
+
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
             return null;
         } finally {
-            setLoading(false);
+            setCargando(false);
         }
     }
 
-    const handleCreate = async (nuevoAsignacion: AsignacionCreateDto) => {
-        setLoading(true);
+    const handleCreate = async (nuevoAsignacion: AsignacionCrearDto) => {
+        setCargando(true);
         try {
-            await asignacionService.createAsignacion(nuevoAsignacion);
-            message.success('Asignacion creado con éxito');
-            await fetchAsignaciones();
-            return true;
+            return await asignacionService.createAsignacion(nuevoAsignacion);
         } catch (error) {
             const msg = getErrorMessage(error);
             console.error(msg);
-            return false;
+            return ResultFactory.failure<AsignacionDto>(msg)
         } finally {
-            setLoading(false);
+            setCargando(false);
         }
     };
 
-    useEffect(() => {
-        void fetchAsignaciones();
-    }, []);
+    const generarReporteSalida = async (idAsignacion: string) => {
+        setCargando(true);
+        try {
+            const blobData = await asignacionService.generarReporteSalida(idAsignacion);
+            return ResultFactory.success(blobData);
+        } catch (error) {
+            const msg = getErrorMessage(error);
+            console.error(msg);
+            return ResultFactory.failure<Blob>(msg);
+        } finally {
+            setCargando(false);
+        }
+    }
 
-    return { Asignaciones, loading, fetchAsignacion, handleCreate, refresh: fetchAsignaciones };
+    return { asignaciones, cargando, error, fetchAsignacion, handleCreate, generarReporteSalida, fetchAsignaciones };
 };

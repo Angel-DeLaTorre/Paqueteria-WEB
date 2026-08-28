@@ -1,53 +1,87 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Table, Button, Card, Tag, Space, Typography } from 'antd';
 import { FileAddOutlined, EyeOutlined, PrinterOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
+import { ROUTES } from '@router/rutas';
+import {useAsignacion, useNotification} from "@hooks";
+import type { AsignacionDto } from "@types";
+
+// Importación del Modal extra
+import { AsignacionDetalleModal } from './AsignacionDetalle';
 
 const { Text } = Typography;
 
-// 1. Interfaces basadas en el récord AsignacionResponseDto
-export interface Sucursal {
-    id: string;
-    nombre: string;
-    direccion?: string;
-}
-
-export interface AsignacionResponseDto {
-    id: string; // Mapeado de Guid
-    sucursalOrigen?: Sucursal | null;
-    sucursalDestino?: Sucursal | null;
-    choferId?: string | null; // Mapeado de Guid?
-    fechaPartida?: string | Date | null; // Mapeado de DateTime?
-    st1?: string | null;
-    st2?: string | null;
-    st3?: string | null;
-    st4?: string | null;
-}
-
-// Mock/Hook ficticio de asignaciones para mantener el patrón de diseño original
-const useAsignacion = () => {
-    return {
-        asignaciones: [] as AsignacionResponseDto[],
-        loading: false,
-        refresh: () => {},
-    };
-};
-
 const AsignacionesScreen: React.FC = () => {
     const navigate = useNavigate();
-    const { refresh, asignaciones, loading } = useAsignacion();
+    const { showNotification } = useNotification();
+    const { fetchAsignaciones, generarReporteSalida, asignaciones, cargando } = useAsignacion();
+
+    // Estado para controlar el Modal
+    const [selectedAsignacion, setSelectedAsignacion] = useState<AsignacionDto | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
-        refresh();
-    }, [refresh]);
+        const cargarDatos = async () => {
+            const respuesta = await fetchAsignaciones();
+            if (!respuesta.esExitoso) {
+                showNotification({
+                    type: 'error',
+                    message: 'Error al obtener asiganciones',
+                    description: respuesta.detalleError?.descripcion || 'No se pudo cargar la lista.'
+                });
+            }
+        };
 
-    // 2. Definición de columnas ajustadas al DTO de Asignaciones
-    const columns: ColumnsType<AsignacionResponseDto> = [
+        void cargarDatos();
+    }, [fetchAsignaciones, showNotification]);
+
+
+    // Handlers para acciones
+    const handleVerDetalle = (record: AsignacionDto) => {
+        setSelectedAsignacion(record);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedAsignacion(null);
+    };
+
+    const handleImprimir =  async (record: AsignacionDto) => {
+        const respuesta = await generarReporteSalida(record.id);
+
+        if (respuesta.esExitoso && respuesta.datos) {
+            // Creamos la URL temporal del Blob y lanzamos la impresión
+            const blob = new Blob([respuesta.datos], { type: 'application/pdf' });
+            const blobUrl = URL.createObjectURL(blob);
+
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = blobUrl;
+            document.body.appendChild(iframe);
+
+            iframe.onload = () => {
+                try {
+                    iframe.contentWindow?.print();
+                } catch (error) {
+                    console.error('Error al invocar la impresión:', error);
+                }
+            };
+        } else {
+            showNotification({
+                type: 'error',
+                message: 'Error al generar el reporte',
+                description: respuesta.detalleError?.descripcion || 'No se pudo generar el reporte.'
+            });
+        }
+    };
+
+    const columns: ColumnsType<AsignacionDto> = [
         {
             title: 'ID Asignación',
-            dataIndex: 'id',
-            key: 'id',
+            dataIndex: 'clave',
+            key: 'clave',
             render: (text: string) => <Text strong copyable>{text}</Text>,
             fixed: 'left',
             width: 180,
@@ -99,16 +133,25 @@ const AsignacionesScreen: React.FC = () => {
             key: 'acciones',
             fixed: 'right',
             width: 120,
-            render: () => (
+            render: (_, record) => (
                 <Space size="small">
-                    <Button icon={<EyeOutlined />} type="text" title="Ver detalle" />
-                    <Button icon={<PrinterOutlined />} type="text" title="Imprimir Asignación" />
+                    <Button
+                        icon={<EyeOutlined />}
+                        type="text"
+                        title="Ver detalle"
+                        onClick={() => handleVerDetalle(record)}
+                    />
+                    <Button
+                        icon={<PrinterOutlined />}
+                        type="text"
+                        title="Imprimir Asignación"
+                        onClick={() => handleImprimir(record)}
+                    />
                 </Space>
             ),
         },
     ];
 
-    // 3. Renderizado del contenedor y la tabla
     return (
         <div style={{ padding: '24px' }}>
             <Card
@@ -117,7 +160,7 @@ const AsignacionesScreen: React.FC = () => {
                     <Button
                         type="primary"
                         icon={<FileAddOutlined />}
-                        onClick={() => navigate('/asignaciones/alta')}
+                        onClick={() => navigate(ROUTES.CATALOGOS.ASIGNACIONES_ALTA)}
                     >
                         Nueva Asignación
                     </Button>
@@ -127,7 +170,7 @@ const AsignacionesScreen: React.FC = () => {
                     columns={columns}
                     dataSource={asignaciones}
                     rowKey="id"
-                    loading={loading}
+                    loading={cargando}
                     scroll={{ x: 1300 }}
                     pagination={{
                         total: asignaciones.length,
@@ -137,6 +180,14 @@ const AsignacionesScreen: React.FC = () => {
                     }}
                 />
             </Card>
+
+            {/* Modal de Detalle */}
+            <AsignacionDetalleModal
+                visible={isModalOpen}
+                asignacion={selectedAsignacion}
+                onClose={handleCloseModal}
+                onPrint={handleImprimir}
+            />
         </div>
     );
 };

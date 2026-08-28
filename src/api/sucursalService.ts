@@ -1,28 +1,28 @@
 import api from '@api/config/axiosConfig';
 import { ENDPOINTS } from '@api/config/endpoints';
-import type {SucursalDto, SucursalCreateDto, SucursalUpdateDto, Result} from '@types';
+import type {SucursalDto, SucursalCrearDto, SucursalActualizarDto, Respuesta} from '@types';
 
-export const getSucursales = async (): Promise<Result<SucursalDto[]>> => {
-    const { data } = await api.get<Result<SucursalDto[]>>(ENDPOINTS.SUCURSAL.GETALL);
+export const getSucursales = async (): Promise<Respuesta<SucursalDto[]>> => {
+    const { data } = await api.get<Respuesta<SucursalDto[]>>(ENDPOINTS.SUCURSAL.GETALL);
     return data;
 };
 
-export const getSucursalById = async (id: string): Promise<Result<SucursalDto>> => {
-    const { data } = await api.get<Result<SucursalDto>>(ENDPOINTS.SUCURSAL.GETBYID(id));
+export const getSucursalById = async (id: string): Promise<Respuesta<SucursalDto>> => {
+    const { data } = await api.get<Respuesta<SucursalDto>>(ENDPOINTS.SUCURSAL.GETBYID(id));
     return data;
 };
 
-export const createSucursal = async (sucursal: SucursalCreateDto): Promise<Result<SucursalDto>> => {
-    const { data } = await api.post<Result<SucursalDto>>(ENDPOINTS.SUCURSAL.CREATE, sucursal);
+export const createSucursal = async (sucursal: SucursalCrearDto): Promise<Respuesta<SucursalDto>> => {
+    const { data } = await api.post<Respuesta<SucursalDto>>(ENDPOINTS.SUCURSAL.CREATE, sucursal);
     return data;
 };
 
-export const updateSucursal = async (sucursal: SucursalUpdateDto): Promise<Result<SucursalDto>> => {
-    const { data } = await api.put<Result<SucursalDto>>(ENDPOINTS.SUCURSAL.UPDATE(sucursal.sucursalId), sucursal);
+export const updateSucursal = async (sucursal: SucursalActualizarDto): Promise<Respuesta<boolean>> => {
+    const { data } = await api.put<Respuesta<boolean>>(ENDPOINTS.SUCURSAL.UPDATE(sucursal.sucursalId), sucursal);
     return data;
 };
 
-export const desactivarSucursal = async ( id : string ): Promise<Result<boolean>> => {
-    const { data } = await api.put<Result<boolean>>(ENDPOINTS.SUCURSAL.DESACTIVAR(id));
+export const desactivarSucursal = async ( id : string ): Promise<Respuesta<boolean>> => {
+    const { data } = await api.put<Respuesta<boolean>>(ENDPOINTS.SUCURSAL.DESACTIVAR(id));
     return data;
 };
