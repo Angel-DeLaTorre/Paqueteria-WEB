@@ -38,7 +38,7 @@ const AsignacionesAlta: React.FC = () => {
     const sucursalOrigenSeleccionada = Form.useWatch('sucursalOrigenId', form);
 
     // Hooks de datos
-    const { sucursales, cargando: loadingSucursales } = useSucursal();
+    const { sucursales, cargando: loadingSucursales, obtenerSucursales } = useSucursal();
     const { choferes, loading: loadingChoferes } = useChofer();
     const { guias, cargando: loadingGuias, obtenerGuiasFiltro } = useGuia();
     const { handleCreate: guardarAsignacion } = useAsignacion();
@@ -50,8 +50,9 @@ const AsignacionesAlta: React.FC = () => {
     });
 
     useEffect(() => {
+        void obtenerSucursales();
         void obtenerGuiasFiltro(filtro);
-    }, [obtenerGuiasFiltro, filtro, form]);
+    }, [obtenerGuiasFiltro, obtenerSucursales, filtro, form, ]);
 
     // Mapeos para Selects
     const sucursalOptions = sucursales.map((s) => ({
