@@ -1,8 +1,8 @@
-name: Build and Deploy React Vite Frontend
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ "main" ] # Se activa al hacer push a la rama main de paqueteria-web
+    branches: [ "qa", "main" ]
 
 env:
   REGISTRY: ghcr.io
@@ -19,31 +19,51 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Iniciar sesión en GitHub Packages (GHCR)
+      - name: Iniciar sesión en GHCR
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Convertir nombre de imagen a minúsculas
-        run: |
-          echo "IMAGE_NAME_LOWER=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      - name: Minúsculas para imagen
+        run: echo "IMAGE_NAME_LOWER=$(echo ${{ env.IMAGE_NAME }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: Construir y subir imagen de Docker (Nginx + React)
+      - name: Construir y subir imagen
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:latest
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LOWER }}:${{ github.ref_name }}
 
-  deploy:
+  deploy-qa:
     needs: build-and-push
+    if: github.ref == 'refs/heads/qa'
     runs-on: ubuntu-latest
+    environment: qa # Utiliza secretos del entorno QA (servidor de pruebas)
 
     steps:
-      - name: Desplegar Frontend en el VPS vía SSH
+      - name: Desplegar en servidor QA vía SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ~/paqueteria-qa
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker compose pull paqueteria-web
+            docker compose up -d --force-recreate paqueteria-web
+
+  deploy-prod:
+    needs: build-and-push
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: prod # Requiere aprobación manual previa configurada en GitHub
+
+    steps:
+      - name: Desplegar en servidor de Producción vía SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -51,15 +71,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/paqueteria
-            
-            # Autenticar Docker en el VPS usando el token temporal del Action
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            # Forzar la descarga únicamente de la nueva imagen de React
             docker compose pull paqueteria-web
-            
-            # Levantar o recrear de forma aislada el contenedor del frontend en el puerto 80
             docker compose up -d --force-recreate paqueteria-web
-            
-            # Limpieza automática de imágenes viejas de Nginx/Node para cuidar el disco
             docker image prune -f
