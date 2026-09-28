@@ -26,9 +26,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ArticuloResponseDto"][];
-                        "application/json": components["schemas"]["ArticuloResponseDto"][];
-                        "text/json": components["schemas"]["ArticuloResponseDto"][];
+                        "text/plain": components["schemas"]["ArticuloRespuestaDto"][];
+                        "application/json": components["schemas"]["ArticuloRespuestaDto"][];
+                        "text/json": components["schemas"]["ArticuloRespuestaDto"][];
                     };
                 };
             };
@@ -40,11 +40,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["ArticuloUpdateDto"];
-                    "text/json": components["schemas"]["ArticuloUpdateDto"];
-                    "application/*+json": components["schemas"]["ArticuloUpdateDto"];
+                    "application/json": components["schemas"]["ArticuloActualizarDto"];
+                    "text/json": components["schemas"]["ArticuloActualizarDto"];
+                    "application/*+json": components["schemas"]["ArticuloActualizarDto"];
                 };
             };
             responses: {
@@ -110,9 +110,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ArticuloResponseDto"];
-                        "application/json": components["schemas"]["ArticuloResponseDto"];
-                        "text/json": components["schemas"]["ArticuloResponseDto"];
+                        "text/plain": components["schemas"]["ArticuloRespuestaDto"];
+                        "application/json": components["schemas"]["ArticuloRespuestaDto"];
+                        "text/json": components["schemas"]["ArticuloRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -163,11 +163,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["ArticuloCreateDto"];
-                    "text/json": components["schemas"]["ArticuloCreateDto"];
-                    "application/*+json": components["schemas"]["ArticuloCreateDto"];
+                    "application/json": components["schemas"]["ArticuloCrearDto"];
+                    "text/json": components["schemas"]["ArticuloCrearDto"];
+                    "application/*+json": components["schemas"]["ArticuloCrearDto"];
                 };
             };
             responses: {
@@ -177,9 +177,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ArticuloResponseDto"];
-                        "application/json": components["schemas"]["ArticuloResponseDto"];
-                        "text/json": components["schemas"]["ArticuloResponseDto"];
+                        "text/plain": components["schemas"]["ArticuloRespuestaDto"];
+                        "application/json": components["schemas"]["ArticuloRespuestaDto"];
+                        "text/json": components["schemas"]["ArticuloRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -294,7 +294,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["AsignacionActualizarDto"];
                     "text/json": components["schemas"]["AsignacionActualizarDto"];
@@ -340,7 +340,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["AsignacionCrearDto"];
                     "text/json": components["schemas"]["AsignacionCrearDto"];
@@ -544,7 +544,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["LoginSolicitudDto"];
                     "text/json": components["schemas"]["LoginSolicitudDto"];
@@ -593,9 +593,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ChoferResponseDto"][];
-                        "application/json": components["schemas"]["ChoferResponseDto"][];
-                        "text/json": components["schemas"]["ChoferResponseDto"][];
+                        "text/plain": components["schemas"]["ChoferRespuestaDto"][];
+                        "application/json": components["schemas"]["ChoferRespuestaDto"][];
+                        "text/json": components["schemas"]["ChoferRespuestaDto"][];
                     };
                 };
             };
@@ -607,11 +607,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["ChoferUpdateDto"];
-                    "text/json": components["schemas"]["ChoferUpdateDto"];
-                    "application/*+json": components["schemas"]["ChoferUpdateDto"];
+                    "application/json": components["schemas"]["ChoferActualizarDto"];
+                    "text/json": components["schemas"]["ChoferActualizarDto"];
+                    "application/*+json": components["schemas"]["ChoferActualizarDto"];
                 };
             };
             responses: {
@@ -677,9 +677,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ChoferResponseDto"];
-                        "application/json": components["schemas"]["ChoferResponseDto"];
-                        "text/json": components["schemas"]["ChoferResponseDto"];
+                        "text/plain": components["schemas"]["ChoferRespuestaDto"];
+                        "application/json": components["schemas"]["ChoferRespuestaDto"];
+                        "text/json": components["schemas"]["ChoferRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -771,11 +771,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["ChoferCreateDto"];
-                    "text/json": components["schemas"]["ChoferCreateDto"];
-                    "application/*+json": components["schemas"]["ChoferCreateDto"];
+                    "application/json": components["schemas"]["ChoferCrearDto"];
+                    "text/json": components["schemas"]["ChoferCrearDto"];
+                    "application/*+json": components["schemas"]["ChoferCrearDto"];
                 };
             };
             responses: {
@@ -785,9 +785,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ChoferResponseDto"];
-                        "application/json": components["schemas"]["ChoferResponseDto"];
-                        "text/json": components["schemas"]["ChoferResponseDto"];
+                        "text/plain": components["schemas"]["ChoferRespuestaDto"];
+                        "application/json": components["schemas"]["ChoferRespuestaDto"];
+                        "text/json": components["schemas"]["ChoferRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -831,30 +831,73 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ClienteResponseDto"][];
-                        "application/json": components["schemas"]["ClienteResponseDto"][];
-                        "text/json": components["schemas"]["ClienteResponseDto"][];
+                        "text/plain": components["schemas"]["ClienteRespuestaDto"][];
+                        "application/json": components["schemas"]["ClienteRespuestaDto"][];
+                        "text/json": components["schemas"]["ClienteRespuestaDto"][];
                     };
                 };
             };
         };
-        put: {
+        put?: never;
+        post: {
             parameters: {
                 query?: never;
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["ClienteUpdateDto"];
-                    "text/json": components["schemas"]["ClienteUpdateDto"];
-                    "application/*+json": components["schemas"]["ClienteUpdateDto"];
+                    "application/json": components["schemas"]["ClienteCrearDto"];
+                    "text/json": components["schemas"]["ClienteCrearDto"];
+                    "application/*+json": components["schemas"]["ClienteCrearDto"];
                 };
             };
             responses: {
-                /** @description No Content */
-                204: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ClienteRespuestaDto"];
+                        "application/json": components["schemas"]["ClienteRespuestaDto"];
+                        "text/json": components["schemas"]["ClienteRespuestaDto"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["ClienteActualizarDto"];
+                    "text/json": components["schemas"]["ClienteActualizarDto"];
+                    "application/*+json": components["schemas"]["ClienteActualizarDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -884,49 +927,6 @@ export interface paths {
                 };
             };
         };
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["ClienteCreateDto"];
-                    "text/json": components["schemas"]["ClienteCreateDto"];
-                    "application/*+json": components["schemas"]["ClienteCreateDto"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ClienteResponseDto"];
-                        "application/json": components["schemas"]["ClienteResponseDto"];
-                        "text/json": components["schemas"]["ClienteResponseDto"];
-                    };
-                };
-                /** @description Unauthorized */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
         trace?: never;
     };
     "/api/v1/Cliente/{id}": {
@@ -953,9 +953,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ClienteResponseDto"];
-                        "application/json": components["schemas"]["ClienteResponseDto"];
-                        "text/json": components["schemas"]["ClienteResponseDto"];
+                        "text/plain": components["schemas"]["ClienteRespuestaDto"];
+                        "application/json": components["schemas"]["ClienteRespuestaDto"];
+                        "text/json": components["schemas"]["ClienteRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -1161,7 +1161,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/Cliente/clientes/{clienteId}/direcciones/{direccionId}/activar": {
+    "/api/v1/Cliente/{clienteId}/direccion": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    clienteId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["DireccionDto"];
+                    "text/json": components["schemas"]["DireccionDto"];
+                    "application/*+json": components["schemas"]["DireccionDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/Cliente/{clienteId}/direccion/{direccionId}/activar": {
         parameters: {
             query?: never;
             header?: never;
@@ -1219,7 +1282,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/Cliente/clientes/{clienteId}/direcciones/{direccionId}/desactivar": {
+    "/api/v1/Cliente/{clienteId}/direccion/{direccionId}/desactivar": {
         parameters: {
             query?: never;
             header?: never;
@@ -1332,9 +1395,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["EmpresaResponseDto"][];
-                        "application/json": components["schemas"]["EmpresaResponseDto"][];
-                        "text/json": components["schemas"]["EmpresaResponseDto"][];
+                        "text/plain": components["schemas"]["EmpresaRespuestaDto"][];
+                        "application/json": components["schemas"]["EmpresaRespuestaDto"][];
+                        "text/json": components["schemas"]["EmpresaRespuestaDto"][];
                     };
                 };
             };
@@ -1346,11 +1409,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["EmpresaUpdateDto"];
-                    "text/json": components["schemas"]["EmpresaUpdateDto"];
-                    "application/*+json": components["schemas"]["EmpresaUpdateDto"];
+                    "application/json": components["schemas"]["EmpresaActualizarDto"];
+                    "text/json": components["schemas"]["EmpresaActualizarDto"];
+                    "application/*+json": components["schemas"]["EmpresaActualizarDto"];
                 };
             };
             responses: {
@@ -1416,9 +1479,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["EmpresaResponseDto"];
-                        "application/json": components["schemas"]["EmpresaResponseDto"];
-                        "text/json": components["schemas"]["EmpresaResponseDto"];
+                        "text/plain": components["schemas"]["EmpresaRespuestaDto"];
+                        "application/json": components["schemas"]["EmpresaRespuestaDto"];
+                        "text/json": components["schemas"]["EmpresaRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -1469,11 +1532,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["EmpresaCreateDto"];
-                    "text/json": components["schemas"]["EmpresaCreateDto"];
-                    "application/*+json": components["schemas"]["EmpresaCreateDto"];
+                    "application/json": components["schemas"]["EmpresaCrearDto"];
+                    "text/json": components["schemas"]["EmpresaCrearDto"];
+                    "application/*+json": components["schemas"]["EmpresaCrearDto"];
                 };
             };
             responses: {
@@ -1483,9 +1546,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["EmpresaResponseDto"];
-                        "application/json": components["schemas"]["EmpresaResponseDto"];
-                        "text/json": components["schemas"]["EmpresaResponseDto"];
+                        "text/plain": components["schemas"]["EmpresaRespuestaDto"];
+                        "application/json": components["schemas"]["EmpresaRespuestaDto"];
+                        "text/json": components["schemas"]["EmpresaRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -1586,9 +1649,48 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["EstadoResponseDto"][];
-                        "application/json": components["schemas"]["EstadoResponseDto"][];
-                        "text/json": components["schemas"]["EstadoResponseDto"][];
+                        "text/plain": components["schemas"]["EstadoRespuestaDto"][];
+                        "application/json": components["schemas"]["EstadoRespuestaDto"][];
+                        "text/json": components["schemas"]["EstadoRespuestaDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/Estado/{pais}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    pais: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EstadoRespuestaDto"][];
+                        "application/json": components["schemas"]["EstadoRespuestaDto"][];
+                        "text/json": components["schemas"]["EstadoRespuestaDto"][];
                     };
                 };
             };
@@ -1625,9 +1727,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["EstadoResponseDto"];
-                        "application/json": components["schemas"]["EstadoResponseDto"];
-                        "text/json": components["schemas"]["EstadoResponseDto"];
+                        "text/plain": components["schemas"]["EstadoRespuestaDto"];
+                        "application/json": components["schemas"]["EstadoRespuestaDto"];
+                        "text/json": components["schemas"]["EstadoRespuestaDto"];
                     };
                 };
             };
@@ -1677,7 +1779,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["GuiaCrearDto"];
                     "text/json": components["schemas"]["GuiaCrearDto"];
@@ -1823,7 +1925,7 @@ export interface paths {
                 };
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["GuiaActualizarDto"];
                     "text/json": components["schemas"]["GuiaActualizarDto"];
@@ -1880,7 +1982,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["GuiaFiltroDto"];
                     "text/json": components["schemas"]["GuiaFiltroDto"];
@@ -1942,7 +2044,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/pdf": string;
+                        "application/pdf": components["schemas"]["FileContentResult"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2001,7 +2103,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/pdf": string;
+                        "application/pdf": components["schemas"]["FileContentResult"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2058,9 +2160,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["MunicipioResponseDto"][];
-                        "application/json": components["schemas"]["MunicipioResponseDto"][];
-                        "text/json": components["schemas"]["MunicipioResponseDto"][];
+                        "text/plain": components["schemas"]["MunicipioRespuestaDto"][];
+                        "application/json": components["schemas"]["MunicipioRespuestaDto"][];
+                        "text/json": components["schemas"]["MunicipioRespuestaDto"][];
                     };
                 };
             };
@@ -2073,7 +2175,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/Municipio/{estado}": {
+    "/api/v1/Municipio/estado/{estado}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2097,9 +2199,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["MunicipioResponseDto"][];
-                        "application/json": components["schemas"]["MunicipioResponseDto"][];
-                        "text/json": components["schemas"]["MunicipioResponseDto"][];
+                        "text/plain": components["schemas"]["MunicipioRespuestaDto"][];
+                        "application/json": components["schemas"]["MunicipioRespuestaDto"][];
+                        "text/json": components["schemas"]["MunicipioRespuestaDto"][];
                     };
                 };
             };
@@ -2136,9 +2238,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["MunicipioResponseDto"];
-                        "application/json": components["schemas"]["MunicipioResponseDto"];
-                        "text/json": components["schemas"]["MunicipioResponseDto"];
+                        "text/plain": components["schemas"]["MunicipioRespuestaDto"];
+                        "application/json": components["schemas"]["MunicipioRespuestaDto"];
+                        "text/json": components["schemas"]["MunicipioRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2173,6 +2275,223 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/PermisoControlador": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PermisoRespuestaDto"][];
+                        "application/json": components["schemas"]["PermisoRespuestaDto"][];
+                        "text/json": components["schemas"]["PermisoRespuestaDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PermisoCrearDto"];
+                    "text/json": components["schemas"]["PermisoCrearDto"];
+                    "application/*+json": components["schemas"]["PermisoCrearDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PermisoRespuestaDto"];
+                        "application/json": components["schemas"]["PermisoRespuestaDto"];
+                        "text/json": components["schemas"]["PermisoRespuestaDto"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/PermisoControlador/{permisoId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    permisoId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PermisoRespuestaDto"];
+                        "application/json": components["schemas"]["PermisoRespuestaDto"];
+                        "text/json": components["schemas"]["PermisoRespuestaDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    permisoId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    permisoId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["PermisoActualizarDto"];
+                    "text/json": components["schemas"]["PermisoActualizarDto"];
+                    "application/*+json": components["schemas"]["PermisoActualizarDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/v1/PermisoControlador/{permisoId}/activar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    permisoId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/v1/PermisoControlador/{permisoId}/desactivar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    permisoId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        trace?: never;
+    };
     "/api/v1/Rol": {
         parameters: {
             query?: never;
@@ -2195,9 +2514,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["RolResponseDto"][];
-                        "application/json": components["schemas"]["RolResponseDto"][];
-                        "text/json": components["schemas"]["RolResponseDto"][];
+                        "text/plain": components["schemas"]["RolRespuestaDto"][];
+                        "application/json": components["schemas"]["RolRespuestaDto"][];
+                        "text/json": components["schemas"]["RolRespuestaDto"][];
                     };
                 };
             };
@@ -2246,7 +2565,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["RutaActualizarDto"];
                     "text/json": components["schemas"]["RutaActualizarDto"];
@@ -2270,7 +2589,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["RutaCrearDto"];
                     "text/json": components["schemas"]["RutaCrearDto"];
@@ -2377,59 +2696,14 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SeguroResponseDto"][];
-                        "application/json": components["schemas"]["SeguroResponseDto"][];
-                        "text/json": components["schemas"]["SeguroResponseDto"][];
+                        "text/plain": components["schemas"]["SeguroRespuestaDto"][];
+                        "application/json": components["schemas"]["SeguroRespuestaDto"][];
+                        "text/json": components["schemas"]["SeguroRespuestaDto"][];
                     };
                 };
             };
         };
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["SeguroUpdateDto"];
-                    "text/json": components["schemas"]["SeguroUpdateDto"];
-                    "application/*+json": components["schemas"]["SeguroUpdateDto"];
-                };
-            };
-            responses: {
-                /** @description No Content */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-                /** @description Not Found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-            };
-        };
+        put?: never;
         post: {
             parameters: {
                 query?: never;
@@ -2437,11 +2711,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["SeguroCreateDto"];
-                    "text/json": components["schemas"]["SeguroCreateDto"];
-                    "application/*+json": components["schemas"]["SeguroCreateDto"];
+                    "application/json": components["schemas"]["SeguroCrearDto"];
+                    "text/json": components["schemas"]["SeguroCrearDto"];
+                    "application/*+json": components["schemas"]["SeguroCrearDto"];
                 };
             };
             responses: {
@@ -2451,9 +2725,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SeguroResponseDto"];
-                        "application/json": components["schemas"]["SeguroResponseDto"];
-                        "text/json": components["schemas"]["SeguroResponseDto"];
+                        "text/plain": components["schemas"]["SeguroRespuestaDto"];
+                        "application/json": components["schemas"]["SeguroRespuestaDto"];
+                        "text/json": components["schemas"]["SeguroRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2499,9 +2773,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SeguroResponseDto"];
-                        "application/json": components["schemas"]["SeguroResponseDto"];
-                        "text/json": components["schemas"]["SeguroResponseDto"];
+                        "text/plain": components["schemas"]["SeguroRespuestaDto"];
+                        "application/json": components["schemas"]["SeguroRespuestaDto"];
+                        "text/json": components["schemas"]["SeguroRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2533,7 +2807,43 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["SeguroActualizarDto"];
+                    "text/json": components["schemas"]["SeguroActualizarDto"];
+                    "application/*+json": components["schemas"]["SeguroActualizarDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
+        };
         trace?: never;
     };
     "/api/v1/Seguro/{seguroId}": {
@@ -2672,9 +2982,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SucursalResponseDto"][];
-                        "application/json": components["schemas"]["SucursalResponseDto"][];
-                        "text/json": components["schemas"]["SucursalResponseDto"][];
+                        "text/plain": components["schemas"]["SucursalRespuestaDto"][];
+                        "application/json": components["schemas"]["SucursalRespuestaDto"][];
+                        "text/json": components["schemas"]["SucursalRespuestaDto"][];
                     };
                 };
             };
@@ -2686,11 +2996,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["SucursaUpdateDto"];
-                    "text/json": components["schemas"]["SucursaUpdateDto"];
-                    "application/*+json": components["schemas"]["SucursaUpdateDto"];
+                    "application/json": components["schemas"]["SucursalActualizarDto"];
+                    "text/json": components["schemas"]["SucursalActualizarDto"];
+                    "application/*+json": components["schemas"]["SucursalActualizarDto"];
                 };
             };
             responses: {
@@ -2732,11 +3042,11 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
-                    "application/json": components["schemas"]["SucursalCreateDto"];
-                    "text/json": components["schemas"]["SucursalCreateDto"];
-                    "application/*+json": components["schemas"]["SucursalCreateDto"];
+                    "application/json": components["schemas"]["SucursalCrearDto"];
+                    "text/json": components["schemas"]["SucursalCrearDto"];
+                    "application/*+json": components["schemas"]["SucursalCrearDto"];
                 };
             };
             responses: {
@@ -2746,9 +3056,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SucursalResponseDto"];
-                        "application/json": components["schemas"]["SucursalResponseDto"];
-                        "text/json": components["schemas"]["SucursalResponseDto"];
+                        "text/plain": components["schemas"]["SucursalRespuestaDto"];
+                        "application/json": components["schemas"]["SucursalRespuestaDto"];
+                        "text/json": components["schemas"]["SucursalRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2794,9 +3104,9 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["SucursalResponseDto"];
-                        "application/json": components["schemas"]["SucursalResponseDto"];
-                        "text/json": components["schemas"]["SucursalResponseDto"];
+                        "text/plain": components["schemas"]["SucursalRespuestaDto"];
+                        "application/json": components["schemas"]["SucursalRespuestaDto"];
+                        "text/json": components["schemas"]["SucursalRespuestaDto"];
                     };
                 };
                 /** @description Unauthorized */
@@ -2924,7 +3234,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["UsuarioActualizarDto"];
                     "text/json": components["schemas"]["UsuarioActualizarDto"];
@@ -2948,7 +3258,7 @@ export interface paths {
                 path?: never;
                 cookie?: never;
             };
-            requestBody?: {
+            requestBody: {
                 content: {
                     "application/json": components["schemas"]["UsuarioCrearDto"];
                     "text/json": components["schemas"]["UsuarioCrearDto"];
@@ -3053,79 +3363,79 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        ArticuloCreateDto: {
-            articuloId?: string | null;
-            texto?: string | null;
-            similares?: string | null;
-            materialPeligroso?: string | null;
-            /** Format: date-time */
-            vigenciaDesde?: string;
-            /** Format: date-time */
-            vigenciaHasta?: string;
-        };
-        ArticuloResponseDto: {
+        ArticuloActualizarDto: {
             /** Format: uuid */
-            articuloId?: string;
-            texto?: string | null;
-            similares?: string | null;
-            materialPeligroso?: string | null;
+            articuloId: string;
+            texto: string;
+            similares: string;
+            materialPeligroso: string;
+            /** Format: date-time */
+            vigenciaDesde: string;
+            /** Format: date-time */
+            vigenciaHasta: string;
         };
-        ArticuloUpdateDto: {
+        ArticuloCrearDto: {
+            articuloId: string;
+            texto: string;
+            similares: string;
+            materialPeligroso: string;
+            /** Format: date-time */
+            vigenciaDesde: string;
+            /** Format: date-time */
+            vigenciaHasta: string;
+        };
+        ArticuloRespuestaDto: {
             /** Format: uuid */
-            articuloId?: string;
-            texto?: string | null;
-            similares?: string | null;
-            materialPeligroso?: string | null;
-            /** Format: date-time */
-            vigenciaDesde?: string;
-            /** Format: date-time */
-            vigenciaHasta?: string;
+            articuloId: string;
+            texto: string;
+            similares: string;
+            materialPeligroso: string;
         };
         ArticulosGuiaCrearDto: {
-            claveProdServSat?: string | null;
-            descripcion?: string | null;
+            claveProdServSat: string;
+            descripcion: string;
             /** Format: int32 */
-            cantidad?: number;
-            claveUnidadSat?: string | null;
+            cantidad: number | string;
+            claveUnidadSat: string;
             /** Format: double */
-            pesoUnitarioKg?: number;
-            claveTipoEmbalajeSat?: string | null;
+            pesoUnitarioKg: number | string;
+            claveTipoEmbalajeSat: null | string;
             /** Format: double */
-            valorUnidad?: number;
+            valorUnidad: number | string;
             /** Format: double */
-            largo?: number;
+            largo: number | string;
             /** Format: double */
-            ancho?: number;
+            ancho: number | string;
             /** Format: double */
-            alto?: number;
-            esMaterialPeligroso?: boolean;
-            claveMaterialPeligrosoSat?: string | null;
+            alto: number | string;
+            esMaterialPeligroso: boolean;
+            claveMaterialPeligrosoSat: null | string;
         };
         ArticulosGuiaDto: {
             /** Format: uuid */
-            articuloGuiaId?: string;
-            claveProdServSat?: string | null;
-            descripcion?: string | null;
+            articuloGuiaId: string;
+            claveProdServSat: string;
+            descripcion: string;
             /** Format: int32 */
-            cantidad?: number;
-            claveUnidadSat?: string | null;
+            cantidad: number | string;
+            claveUnidadSat: string;
             /** Format: double */
-            pesoUnitarioKg?: number;
+            pesoUnitarioKg: number | string;
             /** Format: double */
-            pesoTotalKg?: number;
-            claveTipoEmbalajeSat?: string | null;
+            pesoTotalKg: number | string;
+            claveTipoEmbalajeSat: null | string;
             /** Format: double */
-            valorUnidad?: number;
+            valorUnidad: number | string;
             /** Format: double */
-            largo?: number;
+            largo: number | string;
             /** Format: double */
-            ancho?: number;
+            ancho: number | string;
             /** Format: double */
-            alto?: number;
-            esMaterialPeligroso?: boolean;
-            claveMaterialPeligrosoSat?: string | null;
+            alto: number | string;
+            esMaterialPeligroso: boolean;
+            claveMaterialPeligrosoSat: null | string;
             /** Format: uuid */
-            articuloId?: string | null;
+            articuloId: null | string;
         };
         AsignacionActualizarDto: {
             /** Format: uuid */
@@ -3136,66 +3446,40 @@ export interface components {
             sucursalDestinoId: string;
             /** Format: date-time */
             fechaPartida: string;
-            st1?: string | null;
-            st2?: string | null;
-            st3?: string | null;
-            st4?: string | null;
         };
         AsignacionCrearDto: {
             /** Format: uuid */
             asignacionId: string;
             /** Format: date-time */
-            fechaPartida?: string | null;
+            fechaPartida: null | string;
             /** Format: uuid */
             sucursalOrigenId: string;
             /** Format: uuid */
             sucursalDestinoId: string;
             guiasId: string[];
-            st1?: string | null;
-            st2?: string | null;
-            st3?: string | null;
-            st4?: string | null;
+            st1: null | string;
+            st2: null | string;
+            st3: null | string;
+            st4: null | string;
             /** Format: uuid */
-            choferId?: string | null;
+            choferId: null | string;
         };
         AsignacionRespuestaDto: {
             /** Format: uuid */
-            id: string;
+            asignacionId: string;
             clave: string;
-            sucursalOrigen?: components["schemas"]["Sucursal"];
-            sucursalDestino?: components["schemas"]["Sucursal"];
+            sucursalOrigen: null | components["schemas"]["SucursalRespuestaDto"];
+            sucursalDestino: null | components["schemas"]["SucursalRespuestaDto"];
             /** Format: uuid */
-            choferId?: string | null;
+            choferId: null | string;
             /** Format: date-time */
-            fechaPartida?: string | null;
-            st1?: string | null;
-            st2?: string | null;
-            st3?: string | null;
-            st4?: string | null;
+            fechaPartida: null | string;
+            st1: null | string;
+            st2: null | string;
+            st3: null | string;
+            st4: null | string;
         };
-        ChoferCreateDto: {
-            nombre: string;
-            apellidoPaterno: string;
-            apellidoMaterno: string;
-            direccion: components["schemas"]["DireccionDto"];
-            telefono: string;
-            numCamion?: string | null;
-            numContenedor?: string | null;
-            numContenedor2?: string | null;
-        };
-        ChoferResponseDto: {
-            /** Format: uuid */
-            choferId: string;
-            nombre: string;
-            apellidoPaterno: string;
-            apellidoMaterno?: string | null;
-            direccion: components["schemas"]["DireccionResponseDto"];
-            telefono?: string | null;
-            numCamion?: string | null;
-            numContenedor?: string | null;
-            numContenedor2?: string | null;
-        };
-        ChoferUpdateDto: {
+        ChoferActualizarDto: {
             /** Format: uuid */
             choferId: string;
             nombre: string;
@@ -3203,287 +3487,254 @@ export interface components {
             apellidoMaterno: string;
             direccion: components["schemas"]["DireccionDto"];
             telefono: string;
-            numCamion?: string | null;
-            numContenedor?: string | null;
-            numContenedor2?: string | null;
+            numCamion: null | string;
+            numContenedor: null | string;
+            numContenedor2: null | string;
         };
-        ClienteCreateDto: {
-            nombre?: string | null;
-            rfc?: string | null;
-            telefono?: string | null;
-            telefono2?: string | null;
-            correo?: string | null;
-            contacto?: string | null;
-            numConvenio?: string | null;
-            polizaSeguro?: string | null;
-            direccionC?: components["schemas"]["DireccionDto"];
+        ChoferCrearDto: {
+            nombre: string;
+            apellidoPaterno: string;
+            apellidoMaterno: string;
+            direccion: components["schemas"]["DireccionDto"];
+            telefono: string;
+            numCamion: null | string;
+            numContenedor: null | string;
+            numContenedor2: null | string;
         };
-        ClienteDireccionResponseDto: {
+        ChoferRespuestaDto: {
             /** Format: uuid */
-            direccionId?: string;
-            direccion?: components["schemas"]["DireccionResponseDto"];
-            estatus?: components["schemas"]["EstatusBasico"];
+            choferId: string;
+            nombre: string;
+            apellidoPaterno: string;
+            apellidoMaterno: null | string;
+            direccion: null | components["schemas"]["DireccionRespuestaDto"];
+            telefono: null | string;
+            numCamion: null | string;
+            numContenedor: null | string;
+            numContenedor2: null | string;
+        };
+        ClienteActualizarDto: {
+            /** Format: uuid */
+            clienteId: string;
+            nombre: string;
+            rfc: string;
+            telefono: string;
+            telefono2: null | string;
+            correo: string;
+            contacto: string;
+            numConvenio: null | string;
+            polizaSeguro: null | string;
+        };
+        ClienteCrearDto: {
+            nombre: string;
+            rfc: string;
+            tipoPersona: components["schemas"]["TipoPersona"];
+            telefono: string;
+            telefono2: null | string;
+            correo: string;
+            contacto: string;
+            numConvenio: null | string;
+            polizaSeguro: null | string;
+            direccionC: null | components["schemas"]["DireccionDto"];
         };
         ClienteDireccionRespuestaDto: {
             /** Format: uuid */
-            direccionId?: string;
-            direccion?: components["schemas"]["DireccionRespuestaDto"];
-            estatus?: components["schemas"]["EstatusBasico"];
-        };
-        ClienteResponseDto: {
-            /** Format: uuid */
-            clienteId: string;
-            nombre?: string | null;
-            rfc?: string | null;
-            estatus?: components["schemas"]["EstatusBasico"];
-            telefono?: string | null;
-            telefono2?: string | null;
-            correo?: string | null;
-            contacto?: string | null;
-            numConvenio?: string | null;
-            polizaSeguro?: string | null;
-            direcciones?: components["schemas"]["ClienteDireccionResponseDto"][] | null;
+            direccionId: string;
+            direccion: components["schemas"]["DireccionRespuestaDto"];
+            estatus: components["schemas"]["EstatusBasico"];
         };
         ClienteRespuestaDto: {
             /** Format: uuid */
             clienteId: string;
             nombre: string;
-            rfc?: string | null;
+            rfc: null | string;
             estatus: components["schemas"]["EstatusBasico"];
-            telefono?: string | null;
-            telefono2?: string | null;
-            correo?: string | null;
-            contacto?: string | null;
-            numConvenio?: string | null;
-            polizaSeguro?: string | null;
-            direcciones?: components["schemas"]["ClienteDireccionRespuestaDto"][] | null;
-        };
-        ClienteUpdateDto: {
-            /** Format: uuid */
-            clienteId: string;
-            nombre?: string | null;
-            rfc?: string | null;
-            telefono?: string | null;
-            telefono2?: string | null;
-            correo?: string | null;
-            contacto?: string | null;
-            numConvenio?: string | null;
-            polizaSeguro?: string | null;
-        };
-        Direccion: {
-            calle?: string | null;
-            numeroExterior?: string | null;
-            numeroInterior?: string | null;
-            colonia?: string | null;
-            codigoPostal?: string | null;
-            localidad?: string | null;
-            /** Format: uuid */
-            municipioId?: string;
-            municipio?: components["schemas"]["Municipio"];
+            telefono: null | string;
+            telefono2: null | string;
+            correo: null | string;
+            contacto: null | string;
+            numConvenio: null | string;
+            polizaSeguro: null | string;
+            direcciones: null | components["schemas"]["ClienteDireccionRespuestaDto"][];
         };
         DireccionDto: {
-            calle?: string | null;
-            numeroExterior?: string | null;
-            numeroInterior?: string | null;
-            colonia?: string | null;
-            codigoPostal?: string | null;
-            localidad?: string | null;
+            calle: string;
+            numeroExterior: string;
+            numeroInterior: null | string;
+            colonia: string;
+            codigoPostal: string;
+            localidad: null | string;
             /** Format: uuid */
-            municipioId?: string;
+            municipioId: string;
         };
         DireccionGuiaSnapRespuestaDto: {
             /** Format: uuid */
-            direccionGuiaId?: string;
-            direccion?: components["schemas"]["DireccionRespuestaDto"];
-            municipioNombre?: string | null;
-        };
-        DireccionResponseDto: {
-            calle?: string | null;
-            numeroExterior?: string | null;
-            numeroInterior?: string | null;
-            colonia?: string | null;
-            codigoPostal?: string | null;
-            localidad?: string | null;
-            /** Format: uuid */
-            municipioId?: string | null;
-            municipioNombre?: string | null;
-            estado?: string | null;
+            direccionGuiaId: string;
+            direccion: components["schemas"]["DireccionRespuestaDto"];
+            municipioNombre: string;
         };
         DireccionRespuestaDto: {
-            calle?: string | null;
-            numeroExterior?: string | null;
-            numeroInterior?: string | null;
-            colonia?: string | null;
-            codigoPostal?: string | null;
-            localidad?: string | null;
+            calle: null | string;
+            numeroExterior: null | string;
+            numeroInterior: null | string;
+            colonia: null | string;
+            codigoPostal: null | string;
+            localidad: null | string;
             /** Format: uuid */
-            municipioId?: string | null;
-            municipioNombre?: string | null;
-            estado?: string | null;
+            municipioId: null | string;
+            municipioNombre: null | string;
+            estado: null | string;
         };
-        Empresa: {
-            /** Format: uuid */
-            id?: string;
-            nombre?: string | null;
-            nombreCorto?: string | null;
-            rfc?: string | null;
-            direccion?: components["schemas"]["Direccion"];
-            /** Format: date-time */
-            fechaAlta?: string;
-        };
-        EmpresaCreateDto: {
-            nombre?: string | null;
-            nombreCorto?: string | null;
-            rfc?: string | null;
-            direccion?: components["schemas"]["DireccionDto"];
-        };
-        EmpresaResponseDto: {
+        EmpresaActualizarDto: {
             /** Format: uuid */
             empresaId: string;
-            nombre?: string | null;
-            nombreCorto?: string | null;
-            rfc?: string | null;
-            direccion?: components["schemas"]["DireccionResponseDto"];
-            /** Format: date-time */
-            fechaAlta?: string;
+            nombre: string;
+            nombreCorto: null | string;
+            rfc: string;
+            direccion: components["schemas"]["DireccionDto"];
         };
-        EmpresaUpdateDto: {
+        EmpresaCrearDto: {
+            nombre: string;
+            nombreCorto: string;
+            rfc: string;
+            direccion: components["schemas"]["DireccionDto"];
+        };
+        EmpresaRespuestaDto: {
             /** Format: uuid */
             empresaId: string;
-            nombre?: string | null;
-            nombreCorto?: string | null;
-            rfc?: string | null;
-            direccion?: components["schemas"]["DireccionDto"];
+            nombre: string;
+            nombreCorto: null | string;
+            rfc: string;
+            direccion: null | components["schemas"]["DireccionRespuestaDto"];
+            /** Format: date-time */
+            fechaAlta: string;
         };
-        Estado: {
-            id?: string | null;
-            nombre?: string | null;
-            pais?: string | null;
-            acronimo?: string | null;
+        EntityTagHeaderValue: {
+            tag?: components["schemas"]["StringSegment"];
+            isWeak?: boolean;
         };
-        EstadoResponseDto: {
+        EstadoRespuestaDto: {
             estadoId: string;
-            nombre?: string | null;
-            acronimo?: string | null;
+            nombre: string;
+            acronimo: string;
+            pais: string;
         };
-        /**
-         * Format: int32
-         * @enum {integer}
-         */
-        EstatusBasico: 0 | 1;
-        /**
-         * Format: int32
-         * @enum {integer}
-         */
-        EstatusGuia: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-        /**
-         * Format: int32
-         * @enum {integer}
-         */
-        FormaPago: 1 | 2 | 3 | 4 | 5;
+        EstatusBasico: number;
+        EstatusGuia: number;
+        FileContentResult: {
+            /** Format: byte */
+            fileContents?: string;
+            contentType?: null | string;
+            fileDownloadName?: null | string;
+            /** Format: date-time */
+            lastModified?: null | string;
+            entityTag?: null | components["schemas"]["EntityTagHeaderValue"];
+            enableRangeProcessing?: boolean;
+        };
+        FormaPago: number;
         GuiaActualizarDto: {
             /** Format: uuid */
             guiaId: string;
-            formaPago?: components["schemas"]["FormaPago"];
+            formaPago: components["schemas"]["FormaPago"];
             /** Format: date-time */
-            fechaEnvio?: string | null;
+            fechaEnvio: null | string;
             /** Format: date-time */
-            fechaPago?: string | null;
+            fechaPago: null | string;
             /** Format: uuid */
-            clienteOrigenId?: string;
+            clienteOrigenId: string;
             /** Format: uuid */
-            clienteDestinoId?: string;
+            clienteDestinoId: string;
             /** Format: uuid */
-            sucursalOrigenId?: string;
+            sucursalOrigenId: string;
             /** Format: uuid */
-            sucursalDestinoId?: string;
+            sucursalDestinoId: string;
             /** Format: double */
-            costoFlete?: number;
+            costoFlete: number | string;
             /** Format: double */
-            iva?: number;
+            iva: number | string;
             /** Format: double */
-            ivaRetenido?: number;
+            ivaRetenido: number | string;
             /** Format: double */
-            subtotal?: number;
+            subtotal: number | string;
             /** Format: double */
-            total?: number;
+            total: number | string;
             /** Format: double */
-            cobroSeguro?: number;
-            importeTexto?: string | null;
-            observaciones?: string | null;
-            polizaSeguro?: string | null;
+            cobroSeguro: number | string;
+            importeTexto: null | string;
+            observaciones: null | string;
+            polizaSeguro: null | string;
         };
         GuiaCreadaDto: {
             /** Format: uuid */
-            id?: string;
-            clave?: string | null;
+            id: string;
+            clave: string;
             /** Format: date-time */
-            fechaCaptura?: string;
+            fechaCaptura: string;
         };
         GuiaCrearDto: {
-            formaPago?: components["schemas"]["FormaPago"];
+            formaPago: components["schemas"]["FormaPago"];
             /** Format: uuid */
-            clienteOrigenId?: string;
+            clienteOrigenId: string;
             /** Format: uuid */
-            direccionOrigenId?: string;
+            direccionOrigenId: string;
             /** Format: uuid */
-            clienteDestinoId?: string;
+            clienteDestinoId: string;
             /** Format: uuid */
-            direccionDestinoId?: string;
+            direccionDestinoId: string;
             /** Format: uuid */
-            sucursalOrigenId?: string;
+            sucursalOrigenId: string;
             /** Format: uuid */
-            sucursalDestinoId?: string;
+            sucursalDestinoId: string;
             /** Format: uuid */
-            usuarioCobroId?: string;
+            usuarioCobroId: string;
             /** Format: double */
-            flete?: number;
+            flete: number | string;
             /** Format: double */
-            cobroSeguro?: number;
+            cobroSeguro: number | string;
             /** Format: double */
-            recoleccion?: number;
+            recoleccion: number | string;
             /** Format: double */
-            entregaA?: number;
+            entregaA: number | string;
             /** Format: double */
-            maniobras?: number;
+            maniobras: number | string;
             /** Format: double */
-            peaje?: number;
+            peaje: number | string;
             /** Format: double */
-            lineas?: number;
-            condonaIva?: boolean;
+            lineas: number | string;
+            condonaIva: boolean;
             /** Format: double */
-            iva?: number;
+            iva: number | string;
             /** Format: double */
-            ivaRetenido?: number;
+            ivaRetenido: number | string;
             /** Format: double */
-            subtotal?: number;
+            subtotal: number | string;
             /** Format: double */
-            total?: number;
-            observaciones?: string | null;
-            estaAsegurado?: boolean;
-            polizaSeguro?: string | null;
+            total: number | string;
+            observaciones: null | string;
+            estaAsegurado: boolean;
+            polizaSeguro: null | string;
             /** Format: uuid */
-            seguroId?: string | null;
-            articulosGuia?: components["schemas"]["ArticulosGuiaCrearDto"][] | null;
+            seguroId: null | string;
+            articulosGuia: components["schemas"]["ArticulosGuiaCrearDto"][];
         };
         GuiaFiltroDto: {
-            clave?: string | null;
-            estatus?: components["schemas"]["EstatusGuia"];
-            formaPago?: components["schemas"]["FormaPago"];
+            clave?: null | string;
+            estatus?: null | components["schemas"]["EstatusGuia"];
+            formaPago?: null | components["schemas"]["FormaPago"];
             /** Format: uuid */
-            sucursalOrigenId?: string | null;
+            sucursalOrigenId?: null | string;
             /** Format: uuid */
-            sucursalDestinoId?: string | null;
+            sucursalDestinoId?: null | string;
             /** Format: uuid */
-            clienteOrigenId?: string | null;
-            estaAsignado?: boolean | null;
+            clienteOrigenId?: null | string;
+            estaAsignado?: null | boolean;
             /** Format: date-time */
-            fechaInicio?: string | null;
-            estaAsegurado?: boolean | null;
+            fechaInicio?: null | string;
+            estaAsegurado?: null | boolean;
             /** Format: int32 */
-            pagina?: number;
+            pagina?: number | string;
             /** Format: int32 */
-            tamanoPagina?: number;
+            tamanoPagina?: number | string;
         };
         GuiaRespuestaDto: {
             /** Format: uuid */
@@ -3491,9 +3742,9 @@ export interface components {
             clave: string;
             formaPago: components["schemas"]["FormaPago"];
             /** Format: date-time */
-            fechaEnvio?: string | null;
+            fechaEnvio: null | string;
             /** Format: date-time */
-            fechaPago?: string | null;
+            fechaPago: null | string;
             /** Format: uuid */
             clienteOrigenId: string;
             clienteOrigen: components["schemas"]["ClienteRespuestaDto"];
@@ -3509,131 +3760,119 @@ export interface components {
             sucursalDestinoId: string;
             sucursalDestinoNombre: string;
             /** Format: uuid */
-            usuarioCobroId?: string | null;
-            usuarioCobroNombre?: string | null;
+            usuarioCobroId: null | string;
+            usuarioCobroNombre: null | string;
             /** Format: double */
-            flete: number;
+            flete: number | string;
             /** Format: double */
-            cobroSeguro: number;
+            cobroSeguro: number | string;
             /** Format: double */
-            recoleccion: number;
+            recoleccion: number | string;
             /** Format: double */
-            entregaA: number;
+            entregaA: number | string;
             /** Format: double */
-            maniobras: number;
+            maniobras: number | string;
             /** Format: double */
-            peaje: number;
+            peaje: number | string;
             /** Format: double */
-            lineas: number;
+            lineas: number | string;
             condonaIva: boolean;
             /** Format: double */
-            iva: number;
+            iva: number | string;
             /** Format: double */
-            ivaRetenido: number;
+            ivaRetenido: number | string;
             /** Format: double */
-            subtotal: number;
+            subtotal: number | string;
             /** Format: double */
-            total: number;
-            importeTexto?: string | null;
-            observaciones?: string | null;
+            total: number | string;
+            importeTexto: null | string;
+            observaciones: null | string;
             estaAsegurado: boolean;
-            polizaSeguro?: string | null;
+            /** Format: uuid */
+            seguroId: null | string;
+            polizaSeguro: null | string;
             articulosGuia: components["schemas"]["ArticulosGuiaDto"][];
         };
         LoginSolicitudDto: {
-            username?: string | null;
-            password?: string | null;
+            username: string;
+            password: string;
         };
-        Municipio: {
-            /** Format: uuid */
-            id?: string;
-            satId?: string | null;
-            nombre?: string | null;
-            estadoId?: string | null;
-            estado?: components["schemas"]["Estado"];
-        };
-        MunicipioResponseDto: {
+        MunicipioRespuestaDto: {
             /** Format: uuid */
             municipioId: string;
-            nombre?: string | null;
-            estadoId?: string | null;
-            estadoNombre?: string | null;
+            nombre: string;
+            estadoId: string;
+            estadoNombre: null | string;
         };
-        PermisoResponseDto: {
-            /** Format: uuid */
-            permisoId: string;
-            nombre?: string | null;
-            descripcion?: string | null;
+        PermisoActualizarDto: {
+            nombre: string;
+            descripcion: string;
+        };
+        PermisoCrearDto: {
+            nombre: string;
+            descripcion: string;
         };
         PermisoRespuestaDto: {
             /** Format: uuid */
-            permisoId?: string;
-            nombre?: string | null;
-            descripcion?: string | null;
+            permisoId: string;
+            nombre: string;
+            descripcion: string;
         };
         ProblemDetails: {
-            type?: string | null;
-            title?: string | null;
+            type?: null | string;
+            title?: null | string;
             /** Format: int32 */
-            status?: number | null;
-            detail?: string | null;
-            instance?: string | null;
-        } & {
-            [key: string]: unknown;
-        };
-        RolResponseDto: {
-            /** Format: uuid */
-            rolId: string;
-            nombre?: string | null;
-            descripcion?: string | null;
-            permissions?: components["schemas"]["PermisoResponseDto"][] | null;
+            status?: null | number | string;
+            detail?: null | string;
+            instance?: null | string;
         };
         RolRespuestaDto: {
             /** Format: uuid */
-            rolId?: string;
-            nombre?: string | null;
-            descripcion?: string | null;
-            permisos?: components["schemas"]["PermisoRespuestaDto"][] | null;
+            rolId: string;
+            nombre: string;
+            descripcion: string;
+            permisos: components["schemas"]["PermisoRespuestaDto"][];
         };
         RutaActualizarDto: {
             /** Format: uuid */
             rutaId: string;
             /** Format: uuid */
-            sucursalOrigenId?: string;
+            sucursalOrigenId: string;
             /** Format: uuid */
-            sucursalDestinoId?: string;
-            descripcion?: string | null;
+            sucursalDestinoId: string;
+            descripcion: null | string;
         };
         RutaCrearDto: {
-            descripcion?: string | null;
+            descripcion: string;
             /** Format: uuid */
-            sucursalOrigenId?: string;
+            sucursalOrigenId: string;
             /** Format: uuid */
-            sucursalDestinoId?: string;
+            sucursalDestinoId: string;
         };
         RutaRespuestaDto: {
             /** Format: uuid */
             rutaId: string;
             /** Format: uuid */
-            sucursalOrigenId?: string;
-            sucursalOrigen?: components["schemas"]["SucursalResponseDto"];
+            sucursalOrigenId: string;
+            sucursalOrigen: components["schemas"]["SucursalRespuestaDto"];
             /** Format: uuid */
-            sucursalDestinoId?: string;
-            sucursalDestino?: components["schemas"]["SucursalResponseDto"];
-            descripcion?: string | null;
+            sucursalDestinoId: string;
+            sucursalDestino: components["schemas"]["SucursalRespuestaDto"];
+            descripcion: null | string;
         };
-        SeguroCreateDto: {
-            nombre?: string | null;
-        };
-        SeguroResponseDto: {
+        SeguroActualizarDto: {
             /** Format: uuid */
             seguroId: string;
-            nombre?: string | null;
+            nombre: string;
         };
-        SeguroUpdateDto: {
+        SeguroCrearDto: {
+            nombre: string;
+        };
+        SeguroRespuestaDto: {
             /** Format: uuid */
             seguroId: string;
-            nombre?: string | null;
+            nombre: string;
+            estatus: components["schemas"]["EstatusBasico"];
         };
         SesionRespuestaDto: {
             username: string;
@@ -3643,7 +3882,16 @@ export interface components {
             /** Format: date-time */
             expiracion: string;
         };
-        SucursaUpdateDto: {
+        StringSegment: {
+            buffer?: null | string;
+            /** Format: int32 */
+            offset?: number | string;
+            /** Format: int32 */
+            length?: number | string;
+            value?: null | string;
+            hasValue?: boolean;
+        };
+        SucursalActualizarDto: {
             /** Format: uuid */
             sucursalId: string;
             nombre: string;
@@ -3652,56 +3900,43 @@ export interface components {
             direccion: components["schemas"]["DireccionDto"];
             telefono: string;
         };
-        Sucursal: {
-            /** Format: uuid */
-            id?: string;
-            nombre?: string | null;
-            codigo?: string | null;
-            esMatriz?: boolean;
-            direccion?: components["schemas"]["Direccion"];
-            telefono?: string | null;
-            estatus?: components["schemas"]["EstatusBasico"];
-            servidorIp?: string | null;
-            /** Format: uuid */
-            empresaId?: string;
-            empresa?: components["schemas"]["Empresa"];
+        SucursalCrearDto: {
+            nombre: string;
+            codigo: string;
+            esMatriz: boolean;
+            direccion: components["schemas"]["DireccionDto"];
+            telefono: string;
         };
-        SucursalCreateDto: {
-            nombre?: string | null;
-            codigo?: string | null;
-            esMatriz?: boolean;
-            direccion?: components["schemas"]["DireccionDto"];
-            telefono?: string | null;
-        };
-        SucursalResponseDto: {
+        SucursalRespuestaDto: {
             /** Format: uuid */
             sucursalId: string;
             nombre: string;
             codigo: string;
             esMatriz: boolean;
-            direccion: components["schemas"]["DireccionResponseDto"];
-            telefono?: string | null;
+            direccion: components["schemas"]["DireccionRespuestaDto"];
+            telefono: null | string;
             estatus: components["schemas"]["EstatusBasico"];
         };
+        TipoPersona: number;
         UsuarioActualizarDto: {
             /** Format: uuid */
-            usuarioId?: string;
-            nombre?: string | null;
+            usuarioId: string;
+            nombre: string;
         };
         UsuarioCrearDto: {
-            nombre?: string | null;
-            username?: string | null;
-            password?: string | null;
-            roles?: string[] | null;
+            nombre: string;
+            username: string;
+            password: string;
+            roles: string[];
         };
         UsuarioRespuestaDto: {
             /** Format: uuid */
             id: string;
             nombre: string;
             username: string;
-            roles?: components["schemas"]["RolRespuestaDto"][] | null;
+            roles: components["schemas"]["RolRespuestaDto"][];
             /** Format: date-time */
-            fechaUltimoAcesso?: string | null;
+            fechaUltimoAcesso: null | string;
         };
     };
     responses: never;

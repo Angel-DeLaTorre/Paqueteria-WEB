@@ -7,7 +7,6 @@ import { ROUTES } from '@router/rutas';
 import {useAsignacion, useNotification} from "@hooks";
 import type { AsignacionDto } from "@types";
 
-// Importación del Modal extra
 import { AsignacionDetalleModal } from './AsignacionDetalle';
 
 const { Text } = Typography;
@@ -49,7 +48,7 @@ const AsignacionesScreen: React.FC = () => {
     };
 
     const handleImprimir =  async (record: AsignacionDto) => {
-        const respuesta = await generarReporteSalida(record.id);
+        const respuesta = await generarReporteSalida(record.asignacionId);
 
         if (respuesta.esExitoso && respuesta.datos) {
             // Creamos la URL temporal del Blob y lanzamos la impresión

@@ -1,25 +1,27 @@
-import type { Dto } from 'types/utils.ts';
+import type {components} from "types/api/api";
+
+type Dto<T extends keyof components["schemas"]> = components["schemas"][T];
 
 export type LoginSolicitudDto = Omit<Dto<'LoginSolicitudDto'>, never>;
 export type SesionRespuestaDto = Omit<Dto<'SesionRespuestaDto'>, never>;
 
 
-export type ChoferDto = Omit<Dto<'ChoferResponseDto'>, never>;
-export type ChoferCrearDto = Omit<Dto<'ChoferCreateDto'>, never>;
-export type ChoferActualizarDto = Omit<Dto<'ChoferUpdateDto'>, never>;
+export type ChoferDto = Omit<Dto<'ChoferRespuestaDto'>, never>;
+export type ChoferCrearDto = Omit<Dto<'ChoferCrearDto'>, never>;
+export type ChoferActualizarDto = Omit<Dto<'ChoferActualizarDto'>, never>;
 
 export type AsignacionDto = Omit<Dto<'AsignacionRespuestaDto'>, never>;
 export type AsignacionCrearDto = Omit<Dto<'AsignacionCrearDto'>, never>;
 export type AsignacionActualizarDto = Omit<Dto<'AsignacionActualizarDto'>, never>;
 
 export type ClienteDto = Omit<Dto<'ClienteRespuestaDto'>, never>;
-export type ClienteCrearDto = Omit<Dto<'ClienteCreateDto'>, never>;
-export type ClienteActualizarDto = Omit<Dto<'ClienteUpdateDto'>, never>;
+export type ClienteCrearDto = Omit<Dto<'ClienteCrearDto'>, never>;
+export type ClienteActualizarDto = Omit<Dto<'ClienteActualizarDto'>, never>;
 export type ClienteDireccionDto = Omit<Dto<'ClienteDireccionRespuestaDto'>, never>;
 
 export type DireccionDto = Omit<Dto<'DireccionDto'>, never>;
 
-export type EstadoDto = Omit<Dto<'EstadoResponseDto'>, never>;
+export type EstadoDto = Omit<Dto<'EstadoRespuestaDto'>, never>;
 
 export type GuiaDto = Omit<Dto<'GuiaRespuestaDto'>, never>;
 export type GuiaCrearDto = Omit<Dto<'GuiaCrearDto'>, never>;
@@ -29,23 +31,21 @@ export type GuiaFiltroDto = Omit<Dto<'GuiaFiltroDto'>, never>;
 export type ArticulosGuiaDto = Omit<Dto<'ArticulosGuiaDto'>, never>;
 export type ArticuloGuiaCrearDto = Omit<Dto<'ArticulosGuiaCrearDto'>, never>;
 
-export type MunicipioDto = Omit<Dto<'MunicipioResponseDto'>, never>;
+export type MunicipioDto = Omit<Dto<'MunicipioRespuestaDto'>, never>;
 
 export type RolDto = Omit<Dto<'RolRespuestaDto'>, never>;
-export type RolCreateDto = Omit<RolDto, 'rolId'>
-export type RolUpdateDto = RolDto
 
 export type RutaDto = Omit<Dto<'RutaRespuestaDto'>, never>;
 export type RutaCrearDto = Omit<Dto<'RutaCrearDto'>, never>;
 export type RutaActualizarDto = Omit<Dto<'RutaActualizarDto'>, never>;
 
-export type SeguroDto = Omit<Dto<'SeguroResponseDto'>, never>;
-export type SeguroActualizarDto = Omit<Dto<'SeguroUpdateDto'>, never>;
-export type SeguroCrearDto = Omit<Dto<'SeguroCreateDto'>, never>;
+export type SeguroDto = Omit<Dto<'SeguroRespuestaDto'>, never>;
+export type SeguroActualizarDto = Omit<Dto<'SeguroActualizarDto'>, never>;
+export type SeguroCrearDto = Omit<Dto<'SeguroCrearDto'>, never>;
 
-export type SucursalDto = Omit<Dto<'SucursalResponseDto'>, never>;
-export type SucursalCrearDto = Omit<Dto<'SucursalCreateDto'>, never>;
-export type SucursalActualizarDto = Omit<Dto<'SucursaUpdateDto'>, never>;
+export type SucursalDto = Omit<Dto<'SucursalRespuestaDto'>, never>;
+export type SucursalCrearDto = Omit<Dto<'SucursalCrearDto'>, never>;
+export type SucursalActualizarDto = Omit<Dto<'SucursalActualizarDto'>, never>;
 
 export type UsuarioRespuestaDto = Omit<Dto<'UsuarioRespuestaDto'>, never>;
 export type UsuarioCrearDto = Omit<Dto<'UsuarioCrearDto'>, never>;

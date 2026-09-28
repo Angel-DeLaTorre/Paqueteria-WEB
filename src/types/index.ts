@@ -10,5 +10,3 @@ export * from './data/catSatUnidadOptions.ts';
 export * from './ArticuloDto';
 
 export * from './enums';
-
-export * from './utils';

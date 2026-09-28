@@ -84,6 +84,7 @@ const GuiasAlta: React.FC = () => {
                 ancho: item.ancho,
                 alto: item.alto,
                 esMaterialPeligroso: item.esMaterialPeligroso ?? false,
+                claveMaterialPeligrosoSat: ''
             })),
         };
 
@@ -123,7 +124,7 @@ const GuiasAlta: React.FC = () => {
             const peaje = allValues.peaje || 0;
             const lineas = allValues.lineas || 0;
 
-            const subtotal = flete + cobroSeguro + recoleccion + entregaA + maniobras + peaje + lineas;
+            const subtotal = Number(flete) + Number(cobroSeguro) + Number(recoleccion) + Number(entregaA) + Number(maniobras) + Number(peaje) + Number(lineas);
             const iva = allValues.condonaIva ? 0 : (subtotal * 0.16);
             const ivaRetenido = subtotal * 0.04;
             const total = (subtotal + iva) - ivaRetenido;

@@ -10,7 +10,7 @@ RUN npm ci
 COPY . .
 
 # Compilar la aplicación para producción aplicando las variables de entorno de Vite
-RUN npm run build
+RUN npm run build:web
 
 # --- Etapa 2: Servidor de producción con Nginx ---
 FROM nginx:1.25-alpine AS production

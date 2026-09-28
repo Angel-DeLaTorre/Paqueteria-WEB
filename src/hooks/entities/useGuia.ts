@@ -86,7 +86,7 @@ export const useGuia = () => {
         } catch (err) {
             const mensajeError = getErrorMessage(err);
             setError(mensajeError);
-            return ResultFactory.failure<GuiaDto>(mensajeError);
+            return ResultFactory.failure<GuiaCreadaDto>(mensajeError);
         } finally {
             setCargando(false);
         }

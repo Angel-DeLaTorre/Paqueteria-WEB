@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {Table, Button, Card, Form, Input, Space, Col, Modal, message} from 'antd';
 import {DeleteOutlined, EditOutlined, ExclamationCircleOutlined, PlusOutlined} from '@ant-design/icons';
 import { CatalogoModal } from '@components/ModalCatalogo';
 import { useSeguro } from "@hooks";
 import type {SeguroDto} from "@types";
 
-const SeguroScreen: React.FC = () => {
+const PermisosModulo: React.FC = () => {
 
     const { seguros, loading, refreshSeguros, handleCreate, handleDesactivarSeguro } = useSeguro();
     const [form] = Form.useForm();
@@ -117,4 +117,4 @@ const SeguroScreen: React.FC = () => {
     );
 };
 
-export default SeguroScreen;
+export default PermisosModulo;
